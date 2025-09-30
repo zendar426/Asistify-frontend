@@ -1,0 +1,732 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Backend Asistify",
+    "version": "1.0.0"
+
+  },
+  "servers": [{"url": "http://localhost:9000"
+  }
+  ],
+  "tags": [
+    {
+      "name": "Enterprises",
+      "description": "Operaciones relacionadas con las empresas"
+    },
+    {
+      "name": "Auth",
+      "description": "Operaciones de autenticación y registro de usuarios"
+    },
+    {
+      "name": "Receptionists",
+      "description": "Operaciones relacionadas con los recepcionistas"
+    }
+    ,
+    {
+      "name": "Memberships",
+      "description": "Operaciones relacionadas con las membresías"
+    },
+    {
+        "name": "Profile",
+        "description": "manage the profile of the user"
+    }
+  ],
+
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/profileCreate"
+              }
+            }
+          }
+        },
+        "description": "registro usuario",
+        "responses": {
+          "200": {
+            "description": "Registro exitoso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "format": "jwt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          }
+        },
+        "description": "login usuario",
+        "responses": {
+          "200": {
+            "description": "Login exitoso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "description": "logout usuario",
+        "responses": {
+          "204": {
+            "description": "Logout exitoso"
+
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "description": "refresh",
+        "responses": {
+          "200": {
+            "description": "Token refrescado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "format": "jwt"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+    },
+    "/profiles/{id}": {
+
+      "patch": {
+        "tags": [
+          "Profile"
+        ],
+        "summary": "Actualiza los datos de un perfil",
+        "description": "Actualiza los datos de un perfil existente.",
+        "operationId": "updateProfile",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "ID del perfil"
+          },
+          {
+            "name": "X-API-Version",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "1"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "minLength": 3
+                  },
+                  "avatarId": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                },
+                "required": ["name", "email", "lastName"]
+              },
+              "example": {
+                "id": "XXXXXX",
+                "name": "Carlos",
+                "email": "carlos@email.com",
+                "lastName": "Rodriguez",
+                "avatarId": "XXXXXX"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Perfil actualizado correctamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string", "format": "uuid" },
+                    "name": { "type": "string" },
+                    "email": { "type": "string", "format": "email" },
+                    "lastName": { "type": "string" },
+                    "avatarId": { "type": "string", "format": "uuid" }
+                  }
+                },
+                "example": {
+                  "id": "XXXXXX",
+                  "name": "Carlos",
+                  "email": "carlos@email.com",
+                  "lastName": "Rodriguez",
+                  "avatarId": "XXXXX"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud incorrecta",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "invalidId": {
+                    "summary": "ID inválido",
+                    "value": { "error": "ID no válido. Debe ser un uuid." }
+                  },
+                  "invalidName": {
+                    "summary": "Nombre inválido",
+                    "value": { "error": "Nombre invalido, debe tener por lo menos 3 caracteres." }
+                  },
+                  "invalidLastName": {
+                    "summary": "Apellido inválido",
+                    "value": { "error": "Apellido  invalido, debe tener por lo menos 3 caracteres." }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token ausente o inválido",
+            "content": {
+              "application/json": {
+                "example": { "error": "No autorizado. Token inválido o expirado." }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "profileNotFound": {
+                    "summary": "Perfil no encontrado",
+                    "value": { "error": "Perfil con ID XXXXXX no encontrado." }
+                  },
+                  "avatarNotFound": {
+                    "summary": "Avatar no encontrado",
+                    "value": { "error": "Avatar no encontrado con el id XXXXX." }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "application/json": {
+                "example": { "error": "Ocurrió un error interno. Intente más tarde." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprises/{id}": {
+      "get": {
+        "tags": [
+            "Enterprises"
+        ],
+        "security": [
+
+            {
+                "bearerAuth": []
+            }
+        ],
+        "summary": "Obtener empresa por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la empresa"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalles de la empresa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "uuid"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "1",
+                  "name": "Clínica Talca",
+                  "address": "Calle 123"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Empresa no encontrada"
+          }
+        }
+      }
+    },
+
+    "/enterprises": {
+
+      "get": {
+        "tags": [
+            "Enterprises"
+        ],
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "summary": "Obtener todas las empresas",
+        "responses": {
+          "200": {
+            "description": "Lista de empresas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "address": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "1",
+                    "name": "Empresa A",
+                    "address": "Calle 123"
+                  },
+                  {
+                    "id": "2",
+                    "name": "Empresa B",
+                    "address": "Avenida 456"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+            "Enterprises"
+        ],
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+
+        "summary": "Crear una nueva empresa",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "categoryId": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "categoryId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Empresa creada exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "categoryId": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "3",
+                  "name": "Empresa C",
+                  "address": "Boulevard 789"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Nombre de la empresa ocupado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "error": "El nombre de la empresa ya está en uso."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/enterprises/{id}/recepcionist": {
+
+      "get": {
+        "tags": [
+          "Receptionists"
+        ],
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "summary": "obtiene todos los recepcionistas de una empresa",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la empresa"
+          }
+        ],
+        "responses": {
+            "200": {
+                "description": "Lista de recepcionistas",
+                "content": {
+                "application/json": {
+                    "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/receptionist"
+                    }
+                    }
+                }
+                }
+            }
+        }
+      },
+      "post": {
+        "tags": [
+          "Receptionists"
+        ],
+        "security": [
+            {
+                "bearerAuth": []
+            }
+        ],
+        "summary": "Crear recepcionista para una empresa",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "ID de la empresa"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/receptionistCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recepcionista creada exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/receptionist"
+                }}
+            }}}
+      }
+
+    },
+    "/memberships": {
+      "get": {
+        "tags": [
+            "Memberships"
+        ],
+        "summary": "Obtener todos los tipos de membresías",
+        "responses": {
+          "200": {
+            "description": "Lista de membresías",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "price": {
+                        "type": "number"
+                      },
+                      "features": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": [
+                  {
+                    "id": "1",
+                    "name": "Básica",
+                    "price": 9.99,
+                    "features": ["Feature 1", "Feature 2"]
+                  },
+                  {
+                    "id": "2",
+                    "name": "Premium",
+                    "price": 19.99,
+                    "features": ["Feature A", "Feature B", "Feature C"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "profileCreate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string",
+            "format": "name"
+          }
+        ,
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "registerProfile": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "receptionistCreate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Atención primaria"
+          },
+          "numberPhone": {
+            "type": "string",
+            "format": "phoneNumber",
+            "example": "+56912345678"
+          }
+        }
+      },
+      "receptionist": {
+        "allOf": [{
+          "$ref": "#/components/schemas/receptionistCreate"
+
+        },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
