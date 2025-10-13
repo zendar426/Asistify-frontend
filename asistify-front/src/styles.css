@@ -1,0 +1,12 @@
+@import 'tailwindcss';
+
+/* import Flowbite Vue styles */
+@import 'flowbite/src/themes/default.css';
+
+/* import Flowbite plugin */
+@plugin "flowbite/plugin";
+
+/* add Flowbite Vue directory using @source directive */
+@source "../node_modules/flowbite";
+
+
