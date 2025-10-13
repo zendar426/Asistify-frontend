@@ -1,8 +1,12 @@
 <script setup lang="ts">
+
 </script>
 
 <template>
-  <RouterView></RouterView>
+  Base de conocimientos
+
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>
