@@ -2,7 +2,12 @@
 
 import NavbarPublic from "@/components/NavbarPublic.vue";
 import PriceComponent from "@/feature/membership/components/PriceComponent.vue";
+import {useMemberships} from "@/feature/membership/composables/useMemberships.ts";
+import {onMounted} from "vue";
 
+const { memberships, loading, error, fetchMemberships } = useMemberships()
+onMounted(fetchMemberships)
+/*
 const memberShips = [
   {
     namePlan : "Plan Básico",
@@ -43,6 +48,7 @@ const memberShips = [
     ]
   }
 ]
+*/
 </script>
 
 <template>
@@ -51,8 +57,10 @@ const memberShips = [
     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Elige el plan ideal para tu negocio</h2>
     <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Encuentra la solución que mejor se adapte a tus necesidades. Con Asistify pagas solo por lo que usas y escalas a medida que tu empresa crece.</p>
   </div>
-  <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0">
-  <PriceComponent v-for="(plan, index) in memberShips" :key="index" v-bind="plan"></PriceComponent>
+  <div v-if="loading" class="text-center">Cargando...</div>
+  <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
+  <div class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0" v-else>
+  <PriceComponent v-for="(plan, index) in memberships" :key="index" v-bind="plan"></PriceComponent>
   </div>
 </template>
 

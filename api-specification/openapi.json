@@ -608,6 +608,9 @@
                       "price": {
                         "type": "number"
                       },
+                      "description": {
+                        "type": "string"
+                      },
                       "features": {
                         "type": "array",
                         "items": {
@@ -620,14 +623,15 @@
                 "example": [
                   {
                     "id": "1",
-                    "name": "Básica",
-                    "price": 9.99,
+                    "name": "Plan Básico",
+                    "price": 19990,
+                    "description": "Membresía básica con funciones limitadas",
                     "features": ["Feature 1", "Feature 2"]
                   },
                   {
                     "id": "2",
                     "name": "Premium",
-                    "price": 19.99,
+                    "price": 39990,
                     "features": ["Feature A", "Feature B", "Feature C"]
                   }
                 ]
