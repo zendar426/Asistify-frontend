@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
     <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12 py-8">
         <!-- Image -->
         <div :class="['w-full md:w-1/2', imagePosition === 'right' ? 'md:order-2' : '']">
-            <div class="relative rounded-2xl overflow-hidden shadow-xl h-64 md:h-80">
+            <div class="relative rounded-2xl border-3 border-secondary overflow-hidden shadow-xl h-64 md:h-80">
                 <img :src="imageSrc" :alt="title" class="w-full h-full object-cover" />
             </div>
         </div>

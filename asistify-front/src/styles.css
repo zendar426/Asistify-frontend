@@ -10,3 +10,34 @@
 @source "../node_modules/flowbite";
 
 
+:root {
+    --color-background: #F1F2F7;
+    --color-background-dark: #37375C;
+    --color-primary: #5A6ACF;
+    --color-primary-light: #707FDD;
+    --color-primary-200: #bfdbfe;
+    --color-secondary: #8593ED;
+    --color-tertiary: #C7CEFF;
+    --color-positive: #149D52;
+    --color-negative: #FF4A4A;
+    --color-alert: #EC5252;
+    --color-paused: #FFD84A;
+    --color-dark: #1F1F38;
+    --color-light: #FFFFFF;
+}
+
+@theme {
+    --color-background: var(--color-background);
+    --color-background-dark: var(--color-background-dark);
+    --color-primary: var(--color-primary);
+    --color-primary-light: var(--color-primary-light);
+    --color-primary-200: var(--color-primary-200);
+    --color-secondary: var(--color-secondary);
+    --color-tertiary: var(--color-tertiary);
+    --color-positive: var(--color-positive);
+    --color-negative: var(--color-negative);
+    --color-alert: var(--color-alert);
+    --color-paused: var(--color-paused);
+    --color-dark: var(--color-dark);
+    --color-light: var(--color-light);
+}
