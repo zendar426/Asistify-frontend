@@ -5,9 +5,7 @@ import NavbarPublic from "@/components/NavbarPublic.vue";
 </script>
 
 <template>
-    
 
-  
   <LandingView/>
 
 </template>
