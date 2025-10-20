@@ -4,6 +4,7 @@ import LandingLayout from "@/feature/landing/views/LandingLayout.vue";
 import MembershipView from "@/feature/membership/views/MembershipView.vue";
 import ReceptionistView from "@/feature/receptionist/views/ReceptionistView.vue";
 import AppLayout from "@/views/AppLayout.vue";
+import ReceptionistLayout from '@/feature/receptionist/views/ReceptionistLayout.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,7 +46,7 @@ const router = createRouter({
         }, {
         name:"receptionist",
           path: "/recepcionistas",
-          component: ReceptionistView
+          component: ReceptionistLayout
         },
           {
             name: "account",
