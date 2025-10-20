@@ -27,7 +27,7 @@ import BaseButton from './BaseButton.vue'
 
         <!-- Right Image -->
         <div class="relative">
-          <div class="relative rounded-2xl overflow-hidden shadow-2xl [mask-image:linear-gradient(to_bottom,transparent_0%,black_15%,black_85%,transparent_100%)]">
+          <div class="relative overflow-hidden shadow-2xl [mask-image:linear-gradient(to_bottom,transparent_0%,black_15%,black_85%,transparent_100%)]">
             <img
               src="/assets/landingpage/metrics.png"
               alt="Dashboard de métricas de Asistify"
