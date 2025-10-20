@@ -1,16 +1,78 @@
 <script setup lang="ts">
+import { computed, onMounted } from 'vue'
+import BaseButton from '@/components/BaseButton.vue'
+import ReceptionistCard from '../components/ReceptionistCard.vue'
+import { useReceptionistStore } from '@/feature/receptionist/stores/ReceptionistStore'
+import { dummyReceptionists } from '../data/dummyData'
+import { useToastStore } from '@/stores/ToastStore'
 
+const toastStore = useToastStore()
+const receptionistStore = useReceptionistStore()
+
+/**
+ * Handle receptionists data source
+ */
+// const receptionists = computed(() => receptionistStore.receptionist)
+const receptionists = dummyReceptionists;
+
+const fetchReceptionists = async () => {
+  const result = await receptionistStore.getAllReceptionists()
+  if (!result.success) {
+    toastStore.addToast(
+      result.type,
+      result.message,
+    )
+  }
+}
+
+const handleAddReceptionist = () => {
+  // TODO: Implement add receptionist functionality
+  console.log('Add new receptionist')
+}
+
+/**
+ * Fetch receptionists on component mount
+ */
+onMounted(() => {
+  fetchReceptionists()
+})
 </script>
 
 <template>
-  <div class="p-4 sm:ml-64">
-    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
-      <h1 class="text-2xl font-bold mb-4">Recepcionistas</h1>
-      <p class="mb-4">Gestiona tus recepcionistas desde esta sección.</p>
-      <!-- Aquí puedes agregar más contenido relacionado con la gestión de receptionist -->
+  <div class="min-h-screen bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Title -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Recepcionistas</h1>
+        <p class="text-gray-600 mt-2">Gestiona tus recepcionistas virtuales</p>
+      </div>
+
+      <div>
+        <!-- TODO: ADD LOADER -->
+      </div>
+
+      <div>
+        <!-- Receptionists Grid -->
+        <div class="space-y-4 mb-8">
+          <ReceptionistCard
+            v-for="receptionist in receptionists"
+            :key="receptionist.id"
+            :name="receptionist.name"
+            :phone-number="receptionist.phoneNumber"
+            :profile-picture="receptionist.profilePicture"
+          />
+        </div>
+
+        <!-- Add New Receptionist Button -->
+        <div class="flex justify-center mt-8">
+          <BaseButton variant="primary" size="lg" @click="handleAddReceptionist">
+            Agregar Recepcionista
+          </BaseButton>
+        </div>
+      </div>
+      
     </div>
   </div>
-
 </template>
 
 <style scoped>
