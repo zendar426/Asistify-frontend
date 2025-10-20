@@ -13,7 +13,7 @@ const navLinks: NavLink[] = [
 </script>
 
 <template>
-  <nav class="fixed top-0 left-0 w-full bg-white shadow-sm z-50">
+  <nav class="top-0 left-0 w-full shadow-sm z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->

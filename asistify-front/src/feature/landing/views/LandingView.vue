@@ -40,7 +40,7 @@ const features = [
 </script>
 
 <template>
-  <div class="min-h-screen bg-white">
+  <div class="min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100">
     <!-- Navbar -->
     <LandingNavbar />
 
@@ -48,7 +48,7 @@ const features = [
     <HeroSection />
 
     <!-- Features Section -->
-    <section class="py-16">
+    <section class="">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="space-y-3">
           <FeatureCard
@@ -64,7 +64,7 @@ const features = [
     </section>
 
     <!-- Call to Action -->
-    <section class="py-20 bg-white">
+    <section class="py-20">
       <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
           Empieza hoy con Asistify y descubre cómo un recepcionista virtual puede transformar tu negocio.
