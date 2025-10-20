@@ -2,7 +2,7 @@
 import LandingNavbar from '../components/LandingNavbar.vue'
 import HeroSection from '../components/HeroSection.vue'
 import FeatureCard from '../components/FeatureCard.vue'
-import BaseButton from '../components/BaseButton.vue'
+import BaseButton from '../../../components/BaseButton.vue'
 import LandingFooter from '../components/LandingFooter.vue'
 
 const features = [
