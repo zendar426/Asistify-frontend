@@ -5,9 +5,12 @@ import ReceptionistCard from '../components/ReceptionistCard.vue'
 import { useReceptionistStore } from '@/feature/receptionist/stores/ReceptionistStore'
 import { dummyReceptionists } from '../data/dummyData'
 import { useToastStore } from '@/stores/ToastStore'
+import { Receptionist } from '../models/Receptionist'
+import { ReceptionistService } from '../service/ReceptionistService'
 
 const toastStore = useToastStore()
-const receptionistStore = useReceptionistStore()
+const receptionistService = ReceptionistService.getInstance();
+
 
 /**
  * Handle receptionists data source
@@ -16,7 +19,7 @@ const receptionistStore = useReceptionistStore()
 const receptionists = dummyReceptionists;
 
 const fetchReceptionists = async () => {
-  const result = await receptionistStore.getAllReceptionists()
+  const result = await receptionistService.findAll();
   if (!result.success) {
     toastStore.addToast(
       result.type,
