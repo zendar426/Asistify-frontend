@@ -2,70 +2,70 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from "@/feature/home/views/HomeView.vue";
 import LandingLayout from "@/feature/landing/views/LandingLayout.vue";
 import MembershipView from "@/feature/membership/views/MembershipView.vue";
-import ReceptionistView from "@/feature/receptionist/views/ReceptionistView.vue";
 import AppLayout from "@/views/AppLayout.vue";
 import ReceptionistLayout from '@/feature/receptionist/views/ReceptionistLayout.vue';
+import ReceptionistConfigLayout from '@/feature/receptionist/views/ReceptionistConfigLayout.vue';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      name: "landing",
-      path: "/",
-      component: LandingLayout,
-    },
-    {
-      name: "membership",
-      path:"/planes",
-      component: MembershipView
-    },{
-    path: "/auth",
-      children:[
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
         {
-          name: "login",
-          path: "login",
-          component: () => import("@/feature/auth/views/LoginView.vue")
+            name: 'landing',
+            path: '/',
+            component: LandingLayout,
         },
         {
-          name: "register",
-          path: "registro",
-          component: () => import("@/feature/auth/views/RegisterView.vue")
-        }
-
-      ]
-    },
-    {
-      path: "/app",
-      component: AppLayout,
-      children:
-        [{
-          name: "home",
-          path : "/home",
-          component: HomeView
-
-        }, {
-        name:"receptionist",
-          path: "/recepcionistas",
-          component: ReceptionistLayout,
-          children: [
-            {
-              name: "receptionist-config",
-              path: "configuracion",
-              component: () => import("@/feature/receptionist/views/ReceptionistConfigLayout.vue")
-            }
-          ]
+            name: 'membership',
+            path: '/planes',
+            component: MembershipView,
         },
-          {
-            name: "account",
-            path: "/cuenta",
-            component: () => import("@/feature/account/views/AccountView.vue")
-          },
-          {
-            name: "rag",
-            path: "/base-de-conocimiento",
-            component: () => import("@/feature/rag/views/RagView.vue")
-          }]
-    }],
+        {
+            path: '/auth',
+            children: [
+                {
+                    name: 'login',
+                    path: 'login',
+                    component: () => import('@/feature/auth/views/LoginView.vue'),
+                },
+                {
+                    name: 'register',
+                    path: 'registro',
+                    component: () => import('@/feature/auth/views/RegisterView.vue'),
+                },
+            ],
+        },
+        {
+            path: '/app',
+            component: AppLayout,
+            children: [
+                {
+                    name: 'home',
+                    path: '/home',
+                    component: HomeView,
+                },
+                {
+                    name: 'receptionist',
+                    path: '/recepcionistas',
+                    component: ReceptionistLayout,
+                },
+                {
+                    name: 'receptionistConfig',
+                    path: '/recepcionistas/configuracion',
+                    component: ReceptionistConfigLayout,
+                },
+                {
+                    name: 'account',
+                    path: '/cuenta',
+                    component: () => import('@/feature/account/views/AccountView.vue'),
+                },
+                {
+                    name: 'rag',
+                    path: '/base-de-conocimiento',
+                    component: () => import('@/feature/rag/views/RagView.vue'),
+                },
+            ],
+        },
+    ],
 })
 
 export default router

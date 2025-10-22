@@ -22,7 +22,7 @@ export class ReceptionistRepositoryApi implements ReceptionistRepository {
         return ReceptionistRepositoryApi.instance
     }
 
-    public async findAll(): Promise<Result> {
+    public async findAll(): Promise<Result<Receptionist[] | void>> {
         try {
             const response = await api.get(`${API_ROUTE}/receptionists`)
 
@@ -66,23 +66,23 @@ export class ReceptionistRepositoryApi implements ReceptionistRepository {
         }
     }
 
-    public async findById(id: string): Promise<Result | null> {
+    public async findById(id: string): Promise<Result<Receptionist | void>> {
         // Implementation for fetching a receptionist by ID from API
-        return null
+        return {} as Result<Receptionist>;
     }
 
-    public async create(receptionist: Receptionist): Promise<Result | null> {
+    public async create(receptionist: Receptionist): Promise<Result<Receptionist | void>> {
         // Implementation for creating a new receptionist via API
-        return null
+        return {} as Result<Receptionist>;
     }
 
-    public async update(id: string, receptionist: Receptionist): Promise<Result | null> {
+    public async update(id: string, receptionist: Receptionist): Promise<Result<Receptionist | void>> {
         // Implementation for updating a receptionist via API
-        return null
+        return {} as Result<Receptionist>;
     }
 
     public async delete(id: string): Promise<Result | null> {
         // Implementation for deleting a receptionist via API
-        return null
+        return {} as Result;
     }
 }

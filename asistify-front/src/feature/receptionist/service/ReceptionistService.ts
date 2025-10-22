@@ -1,11 +1,13 @@
+import type { ReceptionistRepository } from "../repository/ReceptionistRepository";
 import { ReceptionistRepositoryApi } from "../repository/ReceptionistRepositoryApi";
+import { ReceptionistRepositoryLocal } from "../repository/ReceptionistRepositoryLocal";
 
 export class ReceptionistService {
     private static instance: ReceptionistService;
-    private readonly receptionistRepositoryApi: ReceptionistRepositoryApi;
+    private readonly receptionistRepository: ReceptionistRepository;
 
     private constructor() {
-        this.receptionistRepositoryApi = ReceptionistRepositoryApi.getInstance();
+        this.receptionistRepository = ReceptionistRepositoryLocal.getInstance();
     }
 
     public static getInstance(): ReceptionistService {
@@ -16,23 +18,23 @@ export class ReceptionistService {
     }
 
     public findAll() {
-        return this.receptionistRepositoryApi.findAll();
+        return this.receptionistRepository.findAll();
     }
 
     public findById(id: string) {
-        return this.receptionistRepositoryApi.findById(id);
+        return this.receptionistRepository.findById(id);
     }
 
     public create(receptionistData: any) {
-        return this.receptionistRepositoryApi.create(receptionistData);
+        return this.receptionistRepository.create(receptionistData);
     }
 
     public update(id: string, receptionistData: any) {
-        return this.receptionistRepositoryApi.update(id, receptionistData);
+        return this.receptionistRepository.update(id, receptionistData);
     }
 
     public delete(id: string) {
-        return this.receptionistRepositoryApi.delete(id);
+        return this.receptionistRepository.delete(id);
     }
 
 }

@@ -7,7 +7,7 @@ import ReceptionistConfigView from '@/feature/receptionist/views/ReceptionistCon
     <div class="min-h-screen flex flex-col">
         <SideBar />
 
-        <div class="sm:ml-64">
+        <div>
             <ReceptionistConfigView />
         </div>
     </div>

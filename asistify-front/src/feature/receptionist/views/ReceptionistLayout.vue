@@ -7,7 +7,7 @@ import ReceptionistView from '@/feature/receptionist/views/ReceptionistView.vue'
     <div class="min-h-screen flex flex-col">
         <SideBar />
 
-        <div class="sm:ml-64">
+        <div >
             <ReceptionistView />
         </div>
     </div>
