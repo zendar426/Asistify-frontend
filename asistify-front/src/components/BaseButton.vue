@@ -6,6 +6,7 @@ interface Props {
   size?: 'sm' | 'md' | 'lg'
   as?: 'button' | 'a'
   href?: string
+  icon?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -15,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const buttonClasses = computed(() => {
-  const base = 'font-medium rounded-full transition-all duration-200 inline-flex items-center justify-center'
+  const base = 'font-medium rounded-full transition-all duration-200 inline-flex items-center justify-center gap-2'
   
   const variants = {
     primary: 'bg-primary text-white hover:bg-gray-900',
@@ -41,6 +42,7 @@ const buttonClasses = computed(() => {
     :href="as === 'a' ? href : undefined"
     :class="buttonClasses"
   >
+    <font-awesome-icon v-if="icon" :icon="icon" />
     <slot />
   </component>
 </template>
