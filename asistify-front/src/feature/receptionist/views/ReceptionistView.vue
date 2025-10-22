@@ -55,8 +55,23 @@ onMounted(() => {
           <p class="text-gray-600 mt-2">Gestiona tus recepcionistas virtuales</p>
         </div>
         <div class="flex items-center">
-          <BaseButton icon="fa-solid fa-plus" variant="primary" size="md" @click="handleAddReceptionist">
-              Agregar Recepcionista
+          <!-- Mobile: Icon only -->
+          <BaseButton 
+            icon="fa-solid fa-plus" 
+            variant="icon" 
+            size="md" 
+            @click="handleAddReceptionist"
+            class="md:hidden"
+          />
+          <!-- Desktop: Full text -->
+          <BaseButton 
+            icon="fa-solid fa-plus" 
+            variant="primary" 
+            size="md" 
+            @click="handleAddReceptionist"
+            class="hidden md:flex"
+          >
+            Agregar Recepcionista
           </BaseButton>
         </div>
         

@@ -22,7 +22,7 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
     }
 
     public async findAll(): Promise<Result<Receptionist[] | void>> {
-        // this.receptionistStore.setReceptionists(this.dummy)
+        this.receptionistStore.setReceptionists(this.dummy)
 
         return {
             success: true,
