@@ -46,7 +46,14 @@ const router = createRouter({
         }, {
         name:"receptionist",
           path: "/recepcionistas",
-          component: ReceptionistLayout
+          component: ReceptionistLayout,
+          children: [
+            {
+              name: "receptionist-config",
+              path: "configuracion",
+              component: () => import("@/feature/receptionist/views/ReceptionistConfigLayout.vue")
+            }
+          ]
         },
           {
             name: "account",
