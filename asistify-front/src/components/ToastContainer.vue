@@ -23,7 +23,7 @@ const iconMap = {
 
 <template>
     <div
-        class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-3 w-full max-w-sm"
+        class="fixed top-4 left-1/2 sm:left-[calc(50%+8rem)] transform -translate-x-1/2 z-50 flex flex-col gap-3 w-full max-w-sm"
     >
         <div
             v-for="toast in toasts"
