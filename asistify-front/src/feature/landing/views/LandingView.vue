@@ -69,9 +69,11 @@ const features = [
         <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
           Empieza hoy con Asistify y descubre cómo un recepcionista virtual puede transformar tu negocio.
         </h2>
+        <RouterLink to="/planes">
         <BaseButton variant="outline" size="lg">
           COMENZAR
         </BaseButton>
+        </RouterLink>
       </div>
     </section>
 

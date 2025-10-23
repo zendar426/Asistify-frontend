@@ -23,12 +23,12 @@ const router = createRouter({
       children:[
         {
           name: "login",
-          path: "login",
+          path: "/login",
           component: () => import("@/feature/auth/views/LoginView.vue")
         },
         {
           name: "register",
-          path: "registro",
+          path: "/registro",
           component: () => import("@/feature/auth/views/RegisterView.vue")
         }
 
