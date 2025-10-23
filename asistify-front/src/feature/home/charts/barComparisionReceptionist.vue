@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type {ApexOptions} from "apexcharts";
 
 const series = ref([
   {
@@ -16,12 +17,23 @@ const series = ref([
   }
 ])
 
-const chartOptions = ref({
+const chartOptions :ApexOptions= {
   chart: {
     type: 'bar',
-    height: 380,
+    height: 280,
     toolbar: {
       show: true
+    }
+  },
+  title:{
+    text: 'Comparación de llamadas atendidas por recepcionistas',
+    align: 'left',
+    margin: 10,
+    offsetY: 0,
+    style: {
+      fontSize:  '16px',
+      fontWeight:  'bold',
+      color:  '#263238'
     }
   },
   plotOptions: {
@@ -34,6 +46,7 @@ const chartOptions = ref({
       },
     }
   },
+
   dataLabels: {
     enabled: true,
     formatter: (val: number) => val.toString(),
@@ -69,18 +82,17 @@ const chartOptions = ref({
     position: 'top',
     horizontalAlign: 'center'
   },
-  colors: ['#3B82F6', '#10B981', '#F59E0B'], // azul, verde, amarillo
+  colors: ['#5a69cd', '#939cd7', '#c6cbe5'],
   tooltip: {
     y: {
       formatter: (val: number) => `${val} llamadas`
     }
   }
-})
+}
 </script>
 
 <template>
-  <div class="bg-white p-6 rounded-2xl shadow-md" >
-    <h2 class="text-xl font-semibold mb-4">Llamadas atendidas por recepcionista</h2>
+  <div class="bg-white p-3 rounded-xl shadow-md" >
     <apexchart
 
       type="bar"

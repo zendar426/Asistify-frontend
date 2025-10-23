@@ -1,32 +1,49 @@
 <script setup lang="ts">
 import VueApexCharts from "vue3-apexcharts"
 import { ref } from 'vue'
+import type { ApexOptions } from 'apexcharts';
 import BarComparisionReceptionist from "@/feature/home/charts/barComparisionReceptionist.vue";
 import AgendaState from "@/feature/home/charts/agendaState.vue";
+import CardBigNumber from "@/feature/home/components/CardBigNumber.vue";
+import RecentCallsTable from "@/feature/home/components/RecentCallsTable.vue";
 
 const series2 = ref([
+
   {
     name: 'Llamadas atendidas',
     data: [30, 45, 32, 70, 52, 49, 62]
+
   },
   {
-    name: 'Llamadas no atendidas',
+    name: 'Llamadas inconclusas',
     data: [5, 8, 6, 10, 9, 7, 11]
   }
 ])
 
 
-const options = {
+const options: ApexOptions = {
   series: [{
     name: 'series1',
     data: [{x:31,y:22}, {x:2,y:3}]
   }],
+  colors:['#5a69cd', '#939cd7'],
   chart: {
-    height: 350,
-    type: 'area'
+    height:100,
+    type: 'area',
   },
   dataLabels: {
     enabled: false
+  },
+  title: {
+    text: 'Llamadas en el tiempo',
+    align: 'left',
+    margin: 10,
+    offsetY: 0,
+    style: {
+      fontSize:  '16px',
+      fontWeight:  'bold',
+      color:  '#263238'
+    }
   },
   stroke: {
     curve: 'smooth'
@@ -44,16 +61,42 @@ const options = {
 </script>
 
 <template>
-  <div class="p-6 sm:ml-64">
-    <h2 class="text-xl font-semibold mb-2">Dashboard</h2>
-    <p class="text-gray-600 mb-6">
-      Resumen general del rendimiento de Asistify.
-    </p>
+  <div class="p-3">
+    <div class="border-l-4 border-primary pl-3 mb-3">
+      <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+      <p class="text-gray-600 mt-1">Principales métricas de tu negocio</p>
+    </div>
 
-    <!-- Asegúrate de usar :series y :options -->
+    <!-- Two column layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+      <!-- Left Column -->
+      <div class="space-y-3">
+        <!-- 3 Number Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <CardBigNumber :number=47 description="Llamadas totales"/>
+          <CardBigNumber :number=6 description="documentos" />
+          <CardBigNumber :number=3 description="recepcionistas" />
+        </div>
 
-    <VueApexCharts width="500" type="area" :options="options" :series="series2"></VueApexCharts>
-    <agenda-state/>
-    <bar-comparision-receptionist  />
+        <!-- Agenda State -->
+        <div class="bg-white p-3 rounded-xl shadow-md">
+          <agenda-state/>
+        </div>
+
+        <!-- Recent Calls Table -->
+        <recent-calls-table/>
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-3">
+        <!-- Temporal Area Chart -->
+        <div class="bg-white p-3 rounded-xl shadow-md">
+          <VueApexCharts width="100%" type="area" :options="options" :series="series2"></VueApexCharts>
+        </div>
+
+        <!-- Bar Chart by Receptionist -->
+        <bar-comparision-receptionist/>
+      </div>
+    </div>
   </div>
 </template>
