@@ -7,7 +7,6 @@ import { ToastType, useToastStore } from '@/stores/ToastStore'
 import { ReceptionistService } from '../service/ReceptionistService'
 import BaseSpinner from '@/components/BaseSpinner.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
-import { sleep } from '@/utils/sleep'
 import { useRouter } from 'vue-router'
 
 
@@ -31,10 +30,7 @@ const receptionistToDelete = ref<string | null>(null)
 
 const fetchReceptionists = async () => {
   const result = await receptionistService.findAll();
-  // result.success ? loading.value = false : toastStore.addToast(result.type, result.message)
-
-  await sleep(500)
-  loading.value = false; // TODO: remove on integration
+  result.success ? loading.value = false : toastStore.addToast(result.type, result.message)
 }
 
 const handleAddReceptionist = () => {
@@ -52,7 +48,6 @@ const confirmDelete = async () => {
   // TODO: Call delete API
   console.log('Delete receptionist:', receptionistToDelete.value)
   // await receptionistService.delete(receptionistToDelete.value)
-  // await fetchReceptionists()
   
   toastStore.addToast(ToastType.success, 'Recepcionista eliminado exitosamente')
   receptionistToDelete.value = null
@@ -100,6 +95,33 @@ onMounted(() => {
           </BaseButton>
         </div>
         
+      </div>
+
+      <!-- Stats above the cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Total Recepcionistas</p>
+              <p class="text-3xl font-bold text-gray-900">{{ receptionists.length }}</p>
+            </div>
+            <div class="bg-primary/10 p-3 rounded-full">
+              <font-awesome-icon icon="fa-solid fa-users" class="text-primary text-xl" />
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-gray-600 mb-1">Último agregado</p>
+              <p class="text-sm font-semibold text-gray-900">Hace 2 días</p> <!-- Todo: considerate deleting or updating model to include timestamp -->
+            </div>
+            <div class="bg-primary/10 p-3 rounded-full">
+              <font-awesome-icon icon="fa-solid fa-clock" class="text-primary text-xl" />
+            </div>
+          </div>
+        </div>
       </div>
 
       <div v-if="loading" class="flex flex-1 justify-center items-center">
