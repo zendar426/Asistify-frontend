@@ -24,7 +24,9 @@ const handleSubmit = async (data: ReceptionistData) => {
 }
 
 const handleCancel = () => {
-    console.log('Form submission canceled')
+    logger.debug('Form submission canceled')
+
+    router.push({ name: 'receptionist' })
 }
 
 </script>
