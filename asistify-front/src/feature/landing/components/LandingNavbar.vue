@@ -7,8 +7,8 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { label: 'VER PLANES', href: '#' },
-  { label: 'CARACTERÍSTICAS', href: '#' },
+  { label: 'CARACTERÍSTICAS', href: '/' },
+  { label: 'VER PLANES', href: '/planes' },
 ]
 </script>
 
@@ -44,8 +44,8 @@ const navLinks: NavLink[] = [
 
         <!-- Action Buttons -->
         <div class="flex items-center space-x-3">
-          <BaseButton variant="text" size="sm"> Iniciar sesión </BaseButton>
-          <BaseButton variant="background" size="sm"> Regístrate </BaseButton>
+          <BaseButton variant="text" size="sm" as="a" href="/login"> Iniciar sesión </BaseButton>
+          <BaseButton variant="background" size="sm" as="a" href="/registro"> Regístrate </BaseButton>
         </div>
       </div>
     </div>
