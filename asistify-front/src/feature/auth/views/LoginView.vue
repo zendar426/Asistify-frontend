@@ -5,7 +5,7 @@ import PasswordModal from '../components/PasswordModal.vue';
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100">
+  <div class="min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100 ">
     <!-- Navbar -->
     <LandingNavbar />
 
@@ -16,22 +16,25 @@ import PasswordModal from '../components/PasswordModal.vue';
           Iniciar sesión
         </h1>
 
-        
+
         <LoginFormComponent></LoginFormComponent>
 
         <div id="additionalActions" class="mt-5 mx-auto">
-          <label>¿Olvidó su contraseña? </label> <PasswordModal></PasswordModal>
-          
+          <label>¿Olvidó su contraseña? </label>
+          <PasswordModal></PasswordModal>
+
           <div class="mt-2 mb-2"></div>
 
-          <label>¿No tiene una cuenta? </label> <label><RouterLink to="/auth/registro" class="btn btn-outline underline">Regístrese</RouterLink></label>
+          <label>¿No tiene una cuenta? </label> <label>
+            <RouterLink to="/auth/registro" class="btn btn-outline underline">Regístrese</RouterLink>
+          </label>
         </div>
       </div>
     </section>
 
     <!-- Footer -->
     <!-- <LandingFooter /> -->
-</div>
+  </div>
 </template>
 
 <style scoped>
