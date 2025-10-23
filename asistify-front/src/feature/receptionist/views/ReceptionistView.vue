@@ -7,6 +7,7 @@ import { ToastType, useToastStore } from '@/stores/ToastStore'
 import { ReceptionistService } from '../service/ReceptionistService'
 import BaseSpinner from '@/components/BaseSpinner.vue'
 import { sleep } from '@/utils/sleep'
+import router from '@/router'
 
 /**
  * Stores and Services
@@ -33,8 +34,8 @@ const fetchReceptionists = async () => {
 }
 
 const handleAddReceptionist = () => {
-  // TODO: Implement add receptionist functionality
-  console.log('Add new receptionist')
+  router.push({ name: 'receptionistConfig' })
+  
 }
 
 /**
