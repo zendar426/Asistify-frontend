@@ -70,6 +70,7 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
 
     public async delete(id: string): Promise<Result<Receptionist | void>> {
         await sleep(500)
+        this.receptionistStore.removeReceptionist(id)
         return {
             success: true,
             message: 'Recepcionista eliminado con éxito',
