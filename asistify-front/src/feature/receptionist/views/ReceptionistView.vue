@@ -8,6 +8,8 @@ import { ReceptionistService } from '../service/ReceptionistService'
 import BaseSpinner from '@/components/BaseSpinner.vue'
 import ConfirmModal from '@/components/ConfirmModal.vue'
 import { useRouter } from 'vue-router'
+import type { Result } from '@/utils/types'
+import type { Receptionist } from '../models/Receptionist'
 
 
 /**
@@ -45,11 +47,8 @@ const handleDeleteReceptionist = (id: string) => {
 const confirmDelete = async () => {
   if (!receptionistToDelete.value) return
   
-  // TODO: Call delete API
-  console.log('Delete receptionist:', receptionistToDelete.value)
-  // await receptionistService.delete(receptionistToDelete.value)
-  
-  toastStore.addToast(ToastType.success, 'Recepcionista eliminado exitosamente')
+  const response: Result<Receptionist | void> = await receptionistService.delete(receptionistToDelete.value)
+  toastStore.addToast(response.type, response.message)
   receptionistToDelete.value = null
 }
 
