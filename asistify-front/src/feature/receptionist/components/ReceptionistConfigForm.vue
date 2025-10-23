@@ -1,9 +1,25 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useReceptionistFormValidation } from '../composables/useReceptionistFormValidation'
 import FormInput from './FormInput.vue'
 import FormTextarea from './FormTextarea.vue'
 import FormSlider from './FormSlider.vue'
 import BaseButton from '@/components/BaseButton.vue'
+import type { Receptionist } from '../models/Receptionist'
+
+interface Props {
+    receptionist?: Receptionist
+    isEditMode?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+    isEditMode: false
+})
+
+const emit = defineEmits<{
+    submit: [data: any]
+    cancel: []
+}>()
 
 const {
     name,
@@ -20,11 +36,28 @@ const {
     reset
 } = useReceptionistFormValidation()
 
+// Populate form if in edit mode
+onMounted(() => {
+    if (props.isEditMode && props.receptionist) {
+        name.value = props.receptionist.name
+        phoneNumber.value = props.receptionist.phoneNumber || ''
+        avatar.value = props.receptionist.avatar || ''
+        clientInfo.value = props.receptionist.clientInfo || ''
+        restrictions.value = props.receptionist.restrictions || ''
+        formalityLevel.value = props.receptionist.formalityLevel || 0.5
+        dynamismLevel.value = props.receptionist.dynamismLevel || 0.5
+        appointmentMaxDays.value = props.receptionist.appointmentMaxDays || 30
+        appointmentMinDays.value = props.receptionist.appointmentMinDays || 1
+    }
+})
+
 const handleSubmit = async () => {
     if (!validate()) return
     
-    // TODO: Implement form submission logic
-    console.log('Form submitted:', {
+    console.log('Form is valid, submitting...')
+
+    const formData = {
+        id: props.isEditMode ? props.receptionist?.id : undefined,
         name: name.value,
         phoneNumber: phoneNumber.value,
         avatar: avatar.value,
@@ -34,20 +67,22 @@ const handleSubmit = async () => {
         dynamismLevel: dynamismLevel.value,
         appointmentMaxDays: appointmentMaxDays.value,
         appointmentMinDays: appointmentMinDays.value
-    })
+    }
+    
+    emit('submit', formData)
 }
-
-
 
 const handleCancel = () => {
     reset()
-    // TODO: Navigate back or close form
+    emit('cancel')
 }
 </script>
 
 <template>
     <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Configurar Recepcionista</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            {{ isEditMode ? 'Editar Recepcionista' : 'Crear Recepcionista' }}
+        </h2>
         
         <form class="p-4 md:p-5" @submit.prevent="handleSubmit" novalidate>
             <div class="grid gap-4 mb-10 grid-cols-2">
@@ -154,12 +189,22 @@ const handleCancel = () => {
                     Cancelar
                 </BaseButton>
                 <BaseButton
+                    v-if="!isEditMode"
                     variant="primary"
                     size="md"
                     type="submit"
-                    icon="fa-solid fa-check"
+                    icon="fa-solid fa-plus"
                 >
-                    Guardar Recepcionista
+                    Crear Recepcionista
+                </BaseButton>
+                <BaseButton
+                    v-else
+                    variant="primary"
+                    size="md"
+                    type="submit"
+                    icon="fa-solid fa-pen-to-square"
+                >
+                    Actualizar Recepcionista
                 </BaseButton>
             </div>
         </form>

@@ -1,3 +1,5 @@
+import type { ReceptionistData } from "../dto/ReceptionistData";
+import type { Receptionist } from "../models/Receptionist";
 import type { ReceptionistRepository } from "../repository/ReceptionistRepository";
 import { ReceptionistRepositoryApi } from "../repository/ReceptionistRepositoryApi";
 import { ReceptionistRepositoryLocal } from "../repository/ReceptionistRepositoryLocal";
@@ -25,12 +27,12 @@ export class ReceptionistService {
         return this.receptionistRepository.findById(id);
     }
 
-    public create(receptionistData: any) {
+    public create(receptionistData: ReceptionistData) {
         return this.receptionistRepository.create(receptionistData);
     }
 
-    public update(id: string, receptionistData: any) {
-        return this.receptionistRepository.update(id, receptionistData);
+    public update(receptionist: Receptionist) {
+        return this.receptionistRepository.update(receptionist);
     }
 
     public delete(id: string) {

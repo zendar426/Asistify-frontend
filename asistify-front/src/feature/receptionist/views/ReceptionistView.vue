@@ -7,12 +7,14 @@ import { ToastType, useToastStore } from '@/stores/ToastStore'
 import { ReceptionistService } from '../service/ReceptionistService'
 import BaseSpinner from '@/components/BaseSpinner.vue'
 import { sleep } from '@/utils/sleep'
-import router from '@/router'
+import { useRouter } from 'vue-router'
+
 
 /**
  * Stores and Services
  */
 const toastStore = useToastStore()
+const router = useRouter()
 const receptionistStore = useReceptionistStore()
 const receptionistService = ReceptionistService.getInstance();
 
@@ -88,9 +90,10 @@ onMounted(() => {
           <ReceptionistCard
             v-for="receptionist in receptionists"
             :key="receptionist.id"
+            :id="receptionist.id"
             :name="receptionist.name"
             :phone-number="receptionist.phoneNumber"
-            :profile-picture="receptionist.profilePicture"
+            :avatar="receptionist.avatar"
           />
         </div>
 

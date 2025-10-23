@@ -68,21 +68,21 @@ export class ReceptionistRepositoryApi implements ReceptionistRepository {
 
     public async findById(id: string): Promise<Result<Receptionist | void>> {
         // Implementation for fetching a receptionist by ID from API
-        return {} as Result<Receptionist>;
+        return {} as Result<Receptionist>
     }
 
     public async create(receptionist: Receptionist): Promise<Result<Receptionist | void>> {
         // Implementation for creating a new receptionist via API
-        return {} as Result<Receptionist>;
+        return {} as Result<Receptionist>
     }
 
-    public async update(id: string, receptionist: Receptionist): Promise<Result<Receptionist | void>> {
+    public async update(receptionist: Receptionist): Promise<Result<Receptionist | void>> {
         // Implementation for updating a receptionist via API
-        return {} as Result<Receptionist>;
+        return {} as Result<Receptionist>
     }
 
-    public async delete(id: string): Promise<Result | null> {
+    public async delete(id: string): Promise<Result<Receptionist | void>> {
         // Implementation for deleting a receptionist via API
-        return {} as Result;
+        return {} as Result<Receptionist | void>
     }
 }

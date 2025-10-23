@@ -4,6 +4,8 @@ import { dummyReceptionists } from '../data/dummyData'
 import type { Receptionist } from '../models/Receptionist'
 import { ToastType } from '@/stores/ToastStore'
 import { useReceptionistStore } from '../stores/ReceptionistStore'
+import { sleep } from '@/utils/sleep'
+import type { ReceptionistData } from '../dto/ReceptionistData'
 
 export class ReceptionistRepositoryLocal implements ReceptionistRepository {
     private static instance: ReceptionistRepositoryLocal
@@ -23,7 +25,7 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
 
     public async findAll(): Promise<Result<Receptionist[] | void>> {
         this.receptionistStore.setReceptionists(this.dummy)
-
+        await sleep(500)
         return {
             success: true,
             message: 'Dummy receptionists fetched successfully',
@@ -43,19 +45,34 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
         }
         return {
             success: false,
-            message: 'Receptionist not found',
+            message: 'Recepcionista no encontrado',
             type: ToastType.error,
         } as Result<Receptionist>
     }
-    public async create(receptionistData: any): Promise<Result<Receptionist | void>> {
-        throw new Error('Method not implemented.')
+    public async create(receptionistData: ReceptionistData): Promise<Result<Receptionist | void>> {
+        await sleep(500)
+        return {
+            success: true,
+            message: 'Recepcionista creado con éxito',
+            type: ToastType.success,
+        } as Result<Receptionist>
     }
 
-    public async update(id: string, receptionistData: any): Promise<Result> {
-        throw new Error('Method not implemented.')
+    public async update(receptionist: Receptionist): Promise<Result<Receptionist | void>> {
+        await sleep(500)
+        return {
+            success: true,
+            message: 'Recepcionista actualizado con éxito',
+            type: ToastType.success,
+        } as Result<Receptionist>
     }
 
-    public async delete(id: string): Promise<Result> {
-        throw new Error('Method not implemented.')
+    public async delete(id: string): Promise<Result<Receptionist | void>> {
+        await sleep(500)
+        return {
+            success: true,
+            message: 'Recepcionista eliminado con éxito',
+            type: ToastType.success,
+        } as Result<Receptionist>
     }
 }

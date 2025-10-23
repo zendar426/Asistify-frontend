@@ -2,6 +2,29 @@
 import SideBar from '@/components/SideBar.vue'
 import ReceptionistConfigView from '@/feature/receptionist/views/ReceptionistConfigView.vue'
 import ReceptionistConfigForm from '@/feature/receptionist/components/ReceptionistConfigForm.vue'
+import { ReceptionistService } from '../service/ReceptionistService'
+import type { Receptionist } from '../models/Receptionist'
+import type { Result } from '@/utils/types'
+import { useToastStore } from '@/stores/ToastStore'
+import router from '@/router'
+import type { ReceptionistData } from '../dto/ReceptionistData'
+
+const receptionistService = ReceptionistService.getInstance()
+const toastStore = useToastStore()
+
+const handleSubmit = async (data: ReceptionistData) => {
+    console.log('Form submitted with data:', data)
+    const result: Result<Receptionist | void> = await receptionistService.create(data);
+    
+    toastStore.addToast(result.type, result.message);
+    
+    router.push({ name: 'receptionist' })
+}
+
+const handleCancel = () => {
+    console.log('Form submission canceled')
+}
+
 </script>
 
 <template>
@@ -11,7 +34,7 @@ import ReceptionistConfigForm from '@/feature/receptionist/components/Receptioni
                 <h1 class="text-3xl font-bold text-gray-900">Configuración de Recepcionista</h1>
                 <p class="text-gray-600 mt-2">Configura los detalles de tu recepcionista virtual</p>
             </div>
-            <ReceptionistConfigForm />  
+            <ReceptionistConfigForm @submit="handleSubmit" @cancel="handleCancel" />  
         </div>
     </div>
 </template>

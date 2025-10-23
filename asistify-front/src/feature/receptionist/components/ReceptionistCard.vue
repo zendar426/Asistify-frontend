@@ -1,16 +1,20 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
 import BaseButton from '@/components/BaseButton.vue'
 
 interface Props {
+    id: string
     name: string
     phoneNumber?: string
-    profilePicture?: string
+    avatar?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
     phoneNumber: '',
-    profilePicture: '',
+    avatar: '',
 })
+
+const router = useRouter()
 
 const getInitials = (name: string) => {
     return name
@@ -22,8 +26,10 @@ const getInitials = (name: string) => {
 }
 
 const handleEdit = () => {
-    // TODO: Implement edit functionality
-    console.log('Edit receptionist:', props.name)
+    router.push({ 
+        name: 'receptionistConfigEdit', 
+        params: { id: props.id } 
+    })
 }
 </script>
 
@@ -35,8 +41,8 @@ const handleEdit = () => {
         <div class="flex items-center gap-4 flex-1 min-w-0">
             <!-- Profile Picture -->
             <div class="flex-shrink-0">
-                <div v-if="profilePicture" class="w-16 h-16 rounded-full overflow-hidden">
-                    <img :src="profilePicture" :alt="name" class="w-full h-full object-cover" />
+                <div v-if="avatar" class="w-16 h-16 rounded-full overflow-hidden">
+                    <img :src="avatar" :alt="name" class="w-full h-full object-cover" />
                 </div>
                 <div
                     v-else

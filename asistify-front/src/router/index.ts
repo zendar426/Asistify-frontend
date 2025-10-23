@@ -54,6 +54,11 @@ const router = createRouter({
                     component: ReceptionistConfigLayout,
                 },
                 {
+                    name: 'receptionistConfigEdit',
+                    path: '/recepcionistas/configuracion/:id',
+                    component: () => import('@/feature/receptionist/views/ReceptionistConfigEditView.vue'),
+                },
+                {
                     name: 'account',
                     path: '/cuenta',
                     component: () => import('@/feature/account/views/AccountView.vue'),
