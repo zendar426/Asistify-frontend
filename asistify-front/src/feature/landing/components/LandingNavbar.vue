@@ -44,7 +44,7 @@ const navLinks: NavLink[] = [
 
         <!-- Action Buttons -->
         <div class="flex items-center space-x-3">
-          <BaseButton variant="text" size="sm"> Iniciar sesión </BaseButton>
+          <router-link to="/auth/login"><BaseButton variant="text" size="sm"> Iniciar sesión </BaseButton></router-link>
           <BaseButton variant="background" size="sm"> Regístrate </BaseButton>
         </div>
       </div>
