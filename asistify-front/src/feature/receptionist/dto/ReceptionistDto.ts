@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const ReceptionistDtoSchema = z.object({
     id: z.string(),
     name: z.string().min(1, 'Name is required'),
-    phoneNumber: z.string().min(1, 'Phone number is required'),
+    phoneNumber: z.string().optional(),
     avatar: z.url().optional().or(z.literal('')),
     companyInfo: z.string().optional(),
     clientInfo: z.string().optional(),

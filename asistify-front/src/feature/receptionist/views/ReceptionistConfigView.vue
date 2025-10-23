@@ -6,14 +6,16 @@ import { ReceptionistService } from '../service/ReceptionistService'
 import type { Receptionist } from '../models/Receptionist'
 import type { Result } from '@/utils/types'
 import { useToastStore } from '@/stores/ToastStore'
-import router from '@/router'
 import type { ReceptionistData } from '../dto/ReceptionistData'
+import { logger } from '@/utils/logger'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const receptionistService = ReceptionistService.getInstance()
 const toastStore = useToastStore()
 
 const handleSubmit = async (data: ReceptionistData) => {
-    console.log('Form submitted with data:', data)
+    logger.debug('Submitting form with data:', data);
     const result: Result<Receptionist | void> = await receptionistService.create(data);
     
     toastStore.addToast(result.type, result.message);

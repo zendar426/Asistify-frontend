@@ -1,7 +1,7 @@
 import type { Result } from '@/utils/types'
 import type { ReceptionistRepository } from './ReceptionistRepository'
 import { dummyReceptionists } from '../data/dummyData'
-import type { Receptionist } from '../models/Receptionist'
+import { Receptionist } from '../models/Receptionist'
 import { ToastType } from '@/stores/ToastStore'
 import { useReceptionistStore } from '../stores/ReceptionistStore'
 import { sleep } from '@/utils/sleep'
@@ -51,6 +51,7 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
     }
     public async create(receptionistData: ReceptionistData): Promise<Result<Receptionist | void>> {
         await sleep(500)
+        this.receptionistStore.addReceptionist(Receptionist.fromReceptionistData(receptionistData))
         return {
             success: true,
             message: 'Recepcionista creado con éxito',

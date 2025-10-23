@@ -6,6 +6,7 @@ import { useReceptionistStore } from '@/feature/receptionist/stores/Receptionist
 import { ToastType, useToastStore } from '@/stores/ToastStore'
 import { ReceptionistService } from '../service/ReceptionistService'
 import BaseSpinner from '@/components/BaseSpinner.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 import { sleep } from '@/utils/sleep'
 import { useRouter } from 'vue-router'
 
@@ -24,8 +25,9 @@ const receptionistService = ReceptionistService.getInstance();
 const receptionists = computed(() => receptionistStore.receptionist)
 
 /** Refs */
-const loading = ref(true);
-
+const loading = ref(true)
+const showDeleteModal = ref(false)
+const receptionistToDelete = ref<string | null>(null)
 
 const fetchReceptionists = async () => {
   const result = await receptionistService.findAll();
@@ -37,7 +39,27 @@ const fetchReceptionists = async () => {
 
 const handleAddReceptionist = () => {
   router.push({ name: 'receptionistConfig' })
+}
+
+const handleDeleteReceptionist = (id: string) => {
+  receptionistToDelete.value = id
+  showDeleteModal.value = true
+}
+
+const confirmDelete = async () => {
+  if (!receptionistToDelete.value) return
   
+  // TODO: Call delete API
+  console.log('Delete receptionist:', receptionistToDelete.value)
+  // await receptionistService.delete(receptionistToDelete.value)
+  // await fetchReceptionists()
+  
+  toastStore.addToast(ToastType.success, 'Recepcionista eliminado exitosamente')
+  receptionistToDelete.value = null
+}
+
+const cancelDelete = () => {
+  receptionistToDelete.value = null
 }
 
 /**
@@ -94,6 +116,11 @@ onMounted(() => {
             :name="receptionist.name"
             :phone-number="receptionist.phoneNumber"
             :avatar="receptionist.avatar"
+            :formality-level="receptionist.formalityLevel"
+            :dynamism-level="receptionist.dynamismLevel"
+            :appointment-max-days="receptionist.appointmentMaxDays"
+            :appointment-min-days="receptionist.appointmentMinDays"
+            @delete="handleDeleteReceptionist"
           />
         </div>
 
@@ -111,6 +138,19 @@ onMounted(() => {
       </div>
       
     </div>
+
+    <!-- Delete Confirmation Modal -->
+    <ConfirmModal
+      :is-open="showDeleteModal"
+      title="Eliminar Recepcionista"
+      message="¿Estás seguro de que deseas eliminar este recepcionista? Esta acción no se puede deshacer."
+      confirm-text="Eliminar"
+      cancel-text="Cancelar"
+      confirm-variant="danger"
+      @confirm="confirmDelete"
+      @cancel="cancelDelete"
+      @close="showDeleteModal = false"
+    />
   </div>
 </template>
 

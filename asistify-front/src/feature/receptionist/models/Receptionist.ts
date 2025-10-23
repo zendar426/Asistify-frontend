@@ -1,3 +1,4 @@
+import type { ReceptionistData } from "../dto/ReceptionistData"
 import type { ReceptionistDto } from "../dto/ReceptionistDto"
 
 export class Receptionist {
@@ -34,4 +35,20 @@ export class Receptionist {
     static fromReceptionistDtoArray(dtos: ReceptionistDto[]): Receptionist[] {
         return dtos.map((dto) => this.fromReceptionistDto(dto))
     }
+
+    static fromReceptionistData(data: Omit<ReceptionistData, 'id'>): Receptionist {
+        return new Receptionist(
+            crypto.randomUUID(),
+            data.name,
+            data.phoneNumber,
+            data.avatar,
+            data.companyInfo,
+            data.clientInfo,
+            data.restrictions,
+            data.formalityLevel,
+            data.dynamismLevel,
+            data.appointmentMaxDays,
+            data.appointmentMinDays
+        )
+    }   
 }
