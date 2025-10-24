@@ -10,6 +10,7 @@ interface Props {
     min?: number
     max?: number
     step?: number
+    required?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -36,6 +37,7 @@ const handleInput = (event: Event) => {
     <div class="col-span-2">
         <label :for="label" class="block mb-2 text-sm font-medium text-dark/90">
             {{ label }}
+            <span v-if="required" class="text-alert ml-1">*</span>
         </label>
         <input
             :id="label"

@@ -61,7 +61,6 @@ const cancelDelete = () => {
  * Fetch receptionists on component mount
  */
 onMounted(() => {
-  console.log('Fetching receptionists on mount')
   fetchReceptionists()
 })
 </script>

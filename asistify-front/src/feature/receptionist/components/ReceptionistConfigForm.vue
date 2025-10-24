@@ -81,9 +81,12 @@ const handleCancel = () => {
 
 <template>
     <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-2xl font-bold text-dark/90 mb-6">
+        <h2 class="text-2xl font-bold text-dark/90 mb-2">
             {{ isEditMode ? 'Editar Recepcionista' : 'Crear Recepcionista' }}
         </h2>
+        <p class="text-sm text-dark/60 mb-6">
+            Los campos marcados con <span class="text-alert">*</span> son obligatorios.
+        </p>
         
         <form class="p-4 md:p-5" @submit.prevent="handleSubmit" novalidate>
             <div class="grid gap-4 mb-10 grid-cols-2">
@@ -94,6 +97,7 @@ const handleCancel = () => {
                     placeholder="Ingrese nombre del recepcionista"
                     :error="errors.name"
                     :maxlength="50"
+                    :required="true"
                 />
 
                 <!-- Phone Number -->
@@ -104,6 +108,7 @@ const handleCancel = () => {
                     placeholder="+56 9 1234 5678"
                     :error="errors.phoneNumber"
                     :maxlength="20"
+                    :required="true"
                 />
 
                 <!-- Avatar URL -->
