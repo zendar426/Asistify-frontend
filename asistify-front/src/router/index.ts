@@ -68,6 +68,11 @@ const router = createRouter({
                     path: '/base-de-conocimiento',
                     component: () => import('@/feature/base-knowledge/views/KnowledgeBaseView.vue'),
                 },
+                {
+                    name: 'enterprise',
+                    path: '/empresa',
+                    component: () => import('@/feature/enterprise/views/EnterpriseView.vue')
+                }
             ],
         },
     ],
