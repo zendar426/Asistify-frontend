@@ -33,9 +33,9 @@ const emit = defineEmits<{
             :disabled="disabled"
             :maxlength="maxlength"
             :rows="rows"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed resize-none"
+            class="block p-2.5 w-full text-sm text-dark/90 bg-dark/10 rounded-lg border border-dark/30 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed resize-none"
         />
-        <p v-if="error" class="text-red-500 text-sm mt-1">
+        <p v-if="error" class="text-alert text-sm mt-1">
             {{ error }}
         </p>
     </div>

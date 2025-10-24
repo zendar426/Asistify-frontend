@@ -61,7 +61,6 @@ const cancelDelete = () => {
  * Fetch receptionists on component mount
  */
 onMounted(() => {
-  console.log('Fetching receptionists on mount')
   fetchReceptionists()
 })
 </script>
@@ -72,8 +71,8 @@ onMounted(() => {
       <!-- Title and Add Button -->
       <div class="mb-8 flex justify-between gap-4">
         <div class="border-l-4 border-primary pl-4">
-          <h1 class="text-3xl font-bold text-gray-900">Recepcionistas</h1>
-          <p class="text-gray-600 mt-2">Gestiona tus recepcionistas virtuales</p>
+          <h1 class="text-3xl font-bold text-dark/90">Recepcionistas</h1>
+          <p class="text-dark/80 mt-2">Gestiona tus recepcionistas virtuales</p>
         </div>
         <div class="flex items-center">
           <!-- Mobile: Icon only -->
@@ -103,8 +102,8 @@ onMounted(() => {
         <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-gray-600 mb-1">Total Recepcionistas</p>
-              <p class="text-3xl font-bold text-gray-900">{{ receptionists.length }}</p>
+              <p class="text-sm text-dark/80 mb-1">Total Recepcionistas</p>
+              <p class="text-3xl font-bold text-dark/90">{{ receptionists.length }}</p>
             </div>
             <div class="bg-primary/10 p-3 rounded-full">
               <font-awesome-icon icon="fa-solid fa-users" class="text-primary text-xl" />
@@ -115,8 +114,8 @@ onMounted(() => {
         <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-gray-600 mb-1">Último agregado</p>
-              <p class="text-sm font-semibold text-gray-900">Hace 2 días</p> <!-- Todo: considerate deleting or updating model to include timestamp -->
+              <p class="text-sm text-dark/80 mb-1">Último agregado</p>
+              <p class="text-sm font-semibold text-dark/90">Hace 2 días</p> <!-- Todo: considerate deleting or updating model to include timestamp -->
             </div>
             <div class="bg-primary/10 p-3 rounded-full">
               <font-awesome-icon icon="fa-solid fa-clock" class="text-primary text-xl" />
@@ -149,11 +148,11 @@ onMounted(() => {
 
         <!-- Empty State -->
         <div v-else class="flex flex-1 flex-col items-center justify-center text-center py-12">
-          <div class="text-gray-400 mb-4">
+          <div class="text-dark/40 mb-4">
             <font-awesome-icon icon="fa-solid fa-users" size="2xl" />
           </div>
-          <h3 class="text-xl font-semibold text-gray-700 mb-2">No hay recepcionistas</h3>
-          <p class="text-gray-500 mb-6">Comienza agregando tu primer recepcionista virtual</p>
+          <h3 class="text-xl font-semibold text-dark/80 mb-2">No hay recepcionistas</h3>
+          <p class="text-dark/80 mb-6">Comienza agregando tu primer recepcionista virtual</p>
           <BaseButton icon="fa-solid fa-plus" variant="primary" size="lg" @click="handleAddReceptionist">
             Agregar Recepcionista
           </BaseButton>
