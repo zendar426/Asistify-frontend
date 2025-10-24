@@ -60,8 +60,13 @@ const router = createRouter({
                 },
                 {
                     name: 'account',
-                    path: '/cuenta',
+                    path: 'cuenta',
                     component: () => import('@/feature/account/views/AccountView.vue'),
+                },
+                {
+                    name: 'editaccount',
+                    path: 'editProfile',
+                    component: () => import('@/feature/account/views/EditAccountView.vue'),
                 },
                 {
                     name: 'rag',
