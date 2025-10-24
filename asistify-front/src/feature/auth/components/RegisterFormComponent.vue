@@ -19,11 +19,11 @@ let passwordVerify=ref("")
 let showRegisterIncorrect=ref(false)
 let showRutInvalid=ref(false)
 let showPasswordMismatch=ref(false)
-function validaRut(rutCompleto: string) {
-    let rutSinPuntos=rutCompleto.replace(/\./g, "");
-    if (!/^[0-9]+-[0-9kK]{1}$/.test(rutSinPuntos))
+function validateRut(fullRut: string) {
+    let rutNoDot=fullRut.replace(/\./g, "");
+    if (!/^[0-9]+-[0-9kK]{1}$/.test(rutNoDot))
         return false;
-    var tmp = rutSinPuntos.split('-');
+    var tmp = rutNoDot.split('-');
     var digv = tmp[1];
     var rut = tmp[0]!;
     if (digv == 'K') digv = 'k';
@@ -38,7 +38,7 @@ function dv(T: number) {
 }
 
 function checkData():boolean{
-    const rutValid=validaRut(rut.value)
+    const rutValid=validateRut(rut.value)
     const emailUsed=mockUsers.filter((user)=> user.email==email.value).length>0
     if (emailUsed){
         return false
@@ -71,7 +71,7 @@ function register(){
         <label class="text-red-500" v-show="showRegisterIncorrect">Los datos ingresados no son correctos o no están completos.</label>
         <div class="mb-5">
             <label for="rut" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">RUT empresa</label>
-            <input type="text" id="rut" v-model="rut"
+            <input type="text" id="rut" v-model="rut" placeholder="11.111.111-1"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                  required />
 
@@ -87,14 +87,14 @@ function register(){
         <div class="columns-2">
             <div class="mb-5">
             <label for="nombre" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
-            <input type="text" id="nombre" v-model="name"
+            <input type="text" id="nombre" v-model="name" placeholder="Juan"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 required />
             </div>
 
              <div class="mb-5">
             <label for="password" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
-            <input type="text" id="apellido" v-model="surname"
+            <input type="text" id="apellido" v-model="surname" placeholder="Lagos"
                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 required />
 
