@@ -31,7 +31,7 @@ const navLinks: NavLink[] = [
                 />
               </div>
             
-              <span class="text-xl font-bold text-gray-900">ASISTIFY</span>
+              <span class="text-xl font-bold text-dark/90">ASISTIFY</span>
             </RouterLink>
           </div>
         </div>
@@ -42,7 +42,7 @@ const navLinks: NavLink[] = [
             v-for="link in navLinks"
             :key="link.to"
             :to="{ name: link.to }"
-            class="text-gray-600 hover:text-gray-900 transition duration-150 font-medium text-sm"
+            class="text-dark/70 hover:text-dark/90 transition duration-150 font-medium text-sm"
           >
             {{ link.label }}
           </RouterLink>

@@ -81,7 +81,7 @@ const handleCancel = () => {
 
 <template>
     <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+        <h2 class="text-2xl font-bold text-dark/90 mb-6">
             {{ isEditMode ? 'Editar Recepcionista' : 'Crear Recepcionista' }}
         </h2>
         

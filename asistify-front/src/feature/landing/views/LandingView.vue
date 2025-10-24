@@ -69,7 +69,7 @@ const features = [
     <!-- Call to Action -->
     <section class="py-20">
       <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
+        <h2 class="text-xl md:text-2xl font-bold text-dark/90 mb-6">
           Empieza hoy con Asistify y descubre cómo un recepcionista virtual puede transformar tu negocio.
         </h2>
         <BaseButton variant="outline" size="lg" :onClick="() => router.push({ name: 'membership' })">

@@ -34,7 +34,7 @@ const handleInput = (event: Event) => {
 
 <template>
     <div class="col-span-2">
-        <label :for="label" class="block mb-2 text-sm font-medium text-gray-900">
+        <label :for="label" class="block mb-2 text-sm font-medium text-dark/90">
             {{ label }}
         </label>
         <input
@@ -48,10 +48,10 @@ const handleInput = (event: Event) => {
             :min="min"
             :max="max"
             :step="step"
-            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            class="block p-2.5 w-full text-sm text-dark/90 bg-dark/10 rounded-lg border border-dark/30 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
             autocomplete="off"
         />
-        <p v-if="error" class="text-red-500 text-sm mt-1">
+        <p v-if="error" class="text-alert text-sm mt-1">
             {{ error }}
         </p>
     </div>
