@@ -59,7 +59,7 @@ const handleClose = () => {
 
 <template>
     <div class="min-h-screen bg-background flex flex-col">
-        <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8 w-full">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 w-full">
             <div v-if="loading" class="flex justify-center items-center py-12">
                 <BaseSpinner size="lg" />
             </div>
