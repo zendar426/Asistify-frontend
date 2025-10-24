@@ -13,7 +13,7 @@ import PaymentMethods from '../components/PaymentMethods.vue';
 
     <!-- Call to Action -->
     <section class="py-20">
-      <div class="max-w-5xl mx-auto text-center border-solid border-3 rounded-lg border-blue-300 p-5">
+      <div class="max-w-5xl mx-auto bg-background text-center border-solid border-1 rounded-lg border-blue-300 p-5">
         <p class="text-3xl md:text-3xl font-bold text-gray-900 mb-6">
           Perfil de usuario
         </p>

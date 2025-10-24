@@ -11,7 +11,7 @@ import EditProfileInfoComponent from '../components/EditProfileInfoComponent.vue
 
     <!-- Call to Action -->
     <section class="py-20">
-      <div class="max-w-3xl mx-auto text-center border-solid border-3 rounded-lg border-blue-300 p-5">
+      <div class="max-w-3xl mx-auto text-center bg-background text-center border-solid border-1 rounded-lg border-blue-300 p-5">
         <h1 class="text-3xl md:text-3xl font-bold text-gray-900 mb-6">
           Editar perfil
         </h1>

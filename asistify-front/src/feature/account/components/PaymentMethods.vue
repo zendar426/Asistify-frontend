@@ -97,7 +97,7 @@ function clearValueInputs(){
                     </td>
                 </tr>
 
-                <tr class="bg-white dark:bg-gray-800">
+                <tr class="odd:bg-blue-50 bg-white dark:bg-gray-800">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <FormInput v-model="newMethodName" label="" placeholder="" :maxlength="50"
                             :formIsrequired="true" />
