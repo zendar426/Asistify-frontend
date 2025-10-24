@@ -88,14 +88,14 @@ function register(){
             <div class="mb-5">
             <label for="nombre" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
             <input type="text" id="nombre" v-model="name"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 required />
             </div>
 
              <div class="mb-5">
             <label for="password" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
             <input type="text" id="apellido" v-model="surname"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 required />
 
             
@@ -110,7 +110,7 @@ function register(){
         <div class="mb-5">
             <label for="password" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
             <input type="password" id="password" v-model="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 required />
 
             
@@ -120,7 +120,7 @@ function register(){
          <div class="mb-5">
             <label for="password" class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar contraseña</label>
             <input type="password" id="passwordVerify" v-model="passwordVerify"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
                 required />
 
             
