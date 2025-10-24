@@ -1,2 +1,2 @@
-// Toggle this to switch between dummy data and real API
 export const IS_PROD = false
+export const API_ROUTE = 'http://localhost:32000'

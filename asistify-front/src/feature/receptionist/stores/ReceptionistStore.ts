@@ -1,12 +1,5 @@
 import { defineStore } from 'pinia'
 import { Receptionist } from '../models/Receptionist'
-import api from '@/utils/axios'
-import { ReceptionistDtoSchema, type ReceptionistDto } from '../dto/ReceptionistDto'
-import { API_ROUTE } from '@/utils/const'
-import { logger } from '@/utils/logger'
-import { ToastType } from '@/stores/ToastStore'
-import type { Result } from '@/utils/types'
-import { z } from 'zod'
 
 export const useReceptionistStore = defineStore('receptionist', {
     state: () => ({
@@ -17,49 +10,18 @@ export const useReceptionistStore = defineStore('receptionist', {
             this.receptionist = receptionists
         },
 
-        async getAllReceptionists(): Promise<Result> {
-            try {
-                const response = await api.get(`${API_ROUTE}/receptionists`)
+        addReceptionist(receptionist: Receptionist) {
+            this.receptionist.push(receptionist)
+        },
 
-                logger.info('[GET_RECEPTIONISTS]', 'response: ', response)
+        removeReceptionist(receptionistId: string) {
+            this.receptionist = this.receptionist.filter((r) => r.id !== receptionistId)
+        },
 
-                const validationResult = z.array(ReceptionistDtoSchema).safeParse(response.data)
-
-                if (!validationResult.success) {
-                    logger.error('[GET_RECEPTIONISTS] Validation failed:', validationResult.error)
-                    return {
-                        success: false,
-                        message: `Ha ocurrido un error, vuelve a intentarlo más tarde.`,
-                        type: ToastType.error,
-                    } as Result
-                }
-
-                if (response.status == 200) {
-                    const receptionists = Receptionist.fromReceptionistDtoArray(
-                        validationResult.data,
-                    )
-
-                    this.setReceptionists(receptionists)
-
-                    return {
-                        success: true,
-                        message: 'Recepcionistas obtenidos con éxito',
-                        type: ToastType.success,
-                    } as Result
-                }
-
-                return {
-                    success: false,
-                    message: response.statusText,
-                    type: ToastType.warning,
-                } as Result
-            } catch (error: any) {
-                logger.error('[GET_RECEPTIONISTS]', error)
-                return {
-                    success: false,
-                    message: error.message,
-                    type: ToastType.error,
-                } as Result
+        updateReceptionist(receptionist: Receptionist) {
+            const index = this.receptionist.findIndex((r) => r.id === receptionist.id)
+            if (index !== -1) {
+                this.receptionist[index] = receptionist
             }
         },
     },
