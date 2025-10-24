@@ -9,7 +9,8 @@ interface Props {
     maxlength?: number
     min?: number
     max?: number
-    step?: number
+    step?: number,
+    isrequired?:boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -50,6 +51,7 @@ const handleInput = (event: Event) => {
             :step="step"
             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-200 rounded-lg border border-gray-300 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
             autocomplete="off"
+            :required="isrequired"
         />
         <p v-if="error" class="text-red-500 text-sm mt-1">
             {{ error }}
