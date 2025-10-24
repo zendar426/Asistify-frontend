@@ -66,7 +66,7 @@ const router = createRouter({
                 {
                     name: 'rag',
                     path: '/base-de-conocimiento',
-                    component: () => import('@/feature/rag/views/RagView.vue'),
+                    component: () => import('@/feature/base-knowledge/views/KnowledgeBaseView.vue'),
                 },
             ],
         },

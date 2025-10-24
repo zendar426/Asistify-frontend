@@ -22,17 +22,27 @@ export const useToastStore = defineStore('toast', () => {
 
     function addToast(type: ToastType, message: string, duration = 3000) {
         const id = counter++
-        toasts.value.push({ id, type, message })
-        setTimeout(() => removeToast(id), duration)
+        toasts.value.push({ id, type, message, duration })
+
+        if (duration > 0) {
+            setTimeout(() => removeToast(id), duration)
+        }
+
+        return id
     }
 
     function removeToast(id: number) {
         toasts.value = toasts.value.filter((t) => t.id !== id)
     }
 
+    function clearAllToasts() {
+        toasts.value = []
+    }
+
     return {
         toasts,
         addToast,
         removeToast,
+        clearAllToasts,
     }
 })
