@@ -45,7 +45,7 @@ function checkData():boolean{
 
 function login(){
     if (checkData()){
-        router.push("/app/cuenta")
+        router.push("/app/account")
     }
 }
 </script>

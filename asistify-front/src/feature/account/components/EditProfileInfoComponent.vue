@@ -30,7 +30,7 @@ function goBack(){
 }
 
 function saveUpdatedData(){
-    router.push("/app/cuenta")
+    router.push("/app/account")
 }
 </script>
 <template>

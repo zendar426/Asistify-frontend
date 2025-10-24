@@ -26,7 +26,7 @@ import PasswordModal from '../components/PasswordModal.vue';
           <div class="mt-2 mb-2"></div>
 
           <label>¿No tiene una cuenta? </label> <label>
-            <RouterLink to="/auth/registro" class="btn btn-outline underline">Regístrese</RouterLink>
+            <RouterLink to="/auth/register" class="btn btn-outline underline">Regístrese</RouterLink>
           </label>
         </div>
       </div>

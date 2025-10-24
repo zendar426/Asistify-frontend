@@ -29,7 +29,7 @@ const router = createRouter({
                 },
                 {
                     name: 'register',
-                    path: 'registro',
+                    path: 'register',
                     component: () => import('@/feature/auth/views/RegisterView.vue'),
                 },
             ],
@@ -60,7 +60,7 @@ const router = createRouter({
                 },
                 {
                     name: 'account',
-                    path: 'cuenta',
+                    path: 'account',
                     component: () => import('@/feature/account/views/AccountView.vue'),
                 },
                 {
