@@ -81,7 +81,7 @@ onMounted(() => {
             icon="fa-solid fa-plus" 
             variant="icon" 
             size="md" 
-            @click="handleAddReceptionist"
+            :onClick="handleAddReceptionist"
             class="md:hidden"
           />
           <!-- Desktop: Full text -->
@@ -89,7 +89,7 @@ onMounted(() => {
             icon="fa-solid fa-plus" 
             variant="primary" 
             size="md" 
-            @click="handleAddReceptionist"
+            :onClick="handleAddReceptionist"
             class="hidden md:flex"
           >
             Agregar Recepcionista

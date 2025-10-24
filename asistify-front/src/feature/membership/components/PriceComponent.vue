@@ -50,7 +50,7 @@ const props = defineProps({
 
     </ul>
     <div class=" text-center">
-      <RouterLink :to="{path: '/registro', query: { plan: namePlan }}">
+      <RouterLink :to="{name: 'register', query: { plan: namePlan }}">
     <BaseButton size="md">Elegir Plan</BaseButton>
       </RouterLink>
     </div>

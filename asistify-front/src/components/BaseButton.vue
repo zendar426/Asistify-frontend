@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import BaseSpinner from './BaseSpinner.vue'
 
 interface Props {
   variant?: 'primary' | 'secondary' | 'background' | 'outline' | 'text' | 'icon'
   size?: 'sm' | 'md' | 'lg'
-  as?: 'button' | 'a'
-  href?: string
+  onClick?: () => void
   icon?: string
+  loading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
 const isIconVariant = computed(() => props.variant === 'icon')
 
 const buttonClasses = computed(() => {
-  const base = 'font-medium rounded-full transition-all duration-200 items-center justify-center'
+  const base = 'font-medium rounded-full transition-all duration-200 items-center justify-center cursor-pointer'
   
   const variants = {
     primary: 'bg-primary text-white hover:bg-gray-900',
@@ -37,15 +38,20 @@ const buttonClasses = computed(() => {
   
   return `${base} ${variants[props.variant]} ${sizes[props.size]}`
 })
+
 </script>
 
 <template>
-  <component
-    :is="as"
-    :href="as === 'a' ? href : undefined"
+  <button
     :class="buttonClasses"
+    @click="onClick"
   >
-    <font-awesome-icon v-if="icon" :icon="icon" />
-    <slot v-if="!isIconVariant" />
-  </component>
+    <span v-if="loading" class="flex items-center">
+      <BaseSpinner />
+    </span>
+    <div v-else>
+      <font-awesome-icon v-if="icon" :icon="icon" />
+      <slot v-if="!isIconVariant" />
+    </div>
+  </button>
 </template>

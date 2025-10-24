@@ -4,6 +4,9 @@ import HeroSection from '../components/HeroSection.vue'
 import FeatureCard from '../components/FeatureCard.vue'
 import BaseButton from '../../../components/BaseButton.vue'
 import LandingFooter from '../components/LandingFooter.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const features = [
   {
@@ -69,11 +72,9 @@ const features = [
         <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
           Empieza hoy con Asistify y descubre cómo un recepcionista virtual puede transformar tu negocio.
         </h2>
-        <RouterLink to="/planes">
-        <BaseButton variant="outline" size="lg">
+        <BaseButton variant="outline" size="lg" :onClick="() => router.push({ name: 'membership' })">
           COMENZAR
         </BaseButton>
-        </RouterLink>
       </div>
     </section>
 

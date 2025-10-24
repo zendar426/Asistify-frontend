@@ -96,7 +96,7 @@ const closeDropdown = () => {
             <div class="flex-shrink-0 relative">
                 <button
                     @click.stop="toggleDropdown"
-                    class="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                    class="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
                 >
                     <font-awesome-icon icon="fa-solid fa-ellipsis-vertical" class="text-gray-600" />
                 </button>

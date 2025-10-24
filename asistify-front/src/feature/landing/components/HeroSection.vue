@@ -21,9 +21,7 @@ import BaseButton from '../../../components/BaseButton.vue'
           </p>
 
           <div class="flex pt-4 justify-center md:justify-start">
-            <RouterLink to="/planes">
-              <BaseButton variant="outline" size="lg"> COMENZAR </BaseButton>
-            </RouterLink>
+            <BaseButton variant="outline" size="lg" :onClick="() => $router.push({ name: 'membership' })"> COMENZAR </BaseButton>
           </div>
         </div>
 
