@@ -6,6 +6,7 @@ import { ToastType } from '@/stores/ToastStore'
 import { useReceptionistStore } from '../stores/ReceptionistStore'
 import { sleep } from '@/utils/sleep'
 import type { ReceptionistData } from '../dto/ReceptionistData'
+import { logger } from '@/utils/logger'
 
 export class ReceptionistRepositoryLocal implements ReceptionistRepository {
     private static instance: ReceptionistRepositoryLocal
@@ -25,6 +26,7 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
 
     public async findAll(): Promise<Result<Receptionist[] | void>> {
         this.receptionistStore.setReceptionists(this.dummy)
+        logger.info('Fetched all dummy receptionists')
         await sleep(500)
         return {
             success: true,
@@ -60,6 +62,7 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
     }
 
     public async update(receptionist: Receptionist): Promise<Result<Receptionist | void>> {
+        this.receptionistStore.updateReceptionist(receptionist)
         await sleep(500)
         return {
             success: true,
@@ -70,6 +73,7 @@ export class ReceptionistRepositoryLocal implements ReceptionistRepository {
 
     public async delete(id: string): Promise<Result<Receptionist | void>> {
         await sleep(500)
+        this.receptionistStore.removeReceptionist(id)
         return {
             success: true,
             message: 'Recepcionista eliminado con éxito',

@@ -8,7 +8,7 @@ import BaseButton from '../../../components/BaseButton.vue'
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <!-- Left Content -->
         <div class="space-y-6 order-1 md:order-0">
-          <h1 class="text-2xl md:text-6xl font-bold text-gray-900 text-center md:text-left leading-tight">
+          <h1 class="text-2xl md:text-6xl font-bold text-dark/90 text-center md:text-left leading-tight">
             ASISTIFY<br />
             Tu recepcionista<br />
             virtual inteligente
@@ -21,9 +21,7 @@ import BaseButton from '../../../components/BaseButton.vue'
           </p>
 
           <div class="flex pt-4 justify-center md:justify-start">
-            <RouterLink to="/planes">
-              <BaseButton variant="outline" size="lg"> COMENZAR </BaseButton>
-            </RouterLink>
+            <BaseButton variant="outline" size="lg" :onClick="() => $router.push({ name: 'membership' })"> COMENZAR </BaseButton>
           </div>
         </div>
 

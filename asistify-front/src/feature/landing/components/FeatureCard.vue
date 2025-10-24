@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
         <!-- Content -->
         <div :class="['w-full md:w-1/2', imagePosition === 'right' ? 'md:order-1' : '']">
             <div class="space-y-4">
-                <p :class="['text-gray-700 text-base leading-relaxed text-center', imagePosition === 'right' ? 'md:text-right' : 'md:text-left']">
+                <p :class="['text-dark/80 text-base leading-relaxed text-center', imagePosition === 'right' ? 'md:text-right' : 'md:text-left']">
                     {{ description }}
                 </p>
             </div>

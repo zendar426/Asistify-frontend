@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import BaseButton from '../../../components/BaseButton.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 interface NavLink {
   label: string
-  href: string
+  to: string
 }
 
 const navLinks: NavLink[] = [
-  { label: 'CARACTERÍSTICAS', href: '/' },
-  { label: 'VER PLANES', href: '/planes' },
+  { label: 'CARACTERÍSTICAS', to: 'landing' },
+  { label: 'VER PLANES', to: 'membership' },
 ]
 </script>
 
@@ -19,33 +22,36 @@ const navLinks: NavLink[] = [
         <!-- Logo -->
         <div class="flex-shrink-0 flex items-center">
           <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center">
-              <img
-                src="/assets/asistify.png"
-                alt="Dashboard de métricas de Asistify"
-                class="w-full h-auto object-cover"
-              />
-            </div>
-            <span class="text-xl font-bold text-gray-900">ASISTIFY</span>
+            <RouterLink :to="{ name: 'landing' }" class="flex items-center space-x-2">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center">
+                <img
+                  src="/assets/asistify.png"
+                  alt="Dashboard de métricas de Asistify"
+                  class="w-full h-auto object-cover"
+                />
+              </div>
+            
+              <span class="text-xl font-bold text-dark/90">ASISTIFY</span>
+            </RouterLink>
           </div>
         </div>
 
         <!-- Navigation Links -->
         <div class="hidden md:flex space-x-8">
-          <a
+          <RouterLink
             v-for="link in navLinks"
-            :key="link.href"
-            :href="link.href"
-            class="text-gray-600 hover:text-gray-900 transition duration-150 font-medium text-sm"
+            :key="link.to"
+            :to="{ name: link.to }"
+            class="text-dark/70 hover:text-dark/90 transition duration-150 font-medium text-sm"
           >
             {{ link.label }}
-          </a>
+          </RouterLink>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex items-center space-x-3">
-          <router-link to="/auth/login"><BaseButton variant="text" size="sm"> Iniciar sesión </BaseButton></router-link>
-          <router-link to="/auth/registro"><BaseButton variant="background" size="sm"> Regístrate </BaseButton></router-link>
+          <BaseButton variant="text" size="sm" :onClick="() => router.push({name: 'login'})"> Iniciar sesión </BaseButton>
+          <BaseButton variant="background" size="sm" :onClick="() => router.push({name: 'register'})"> Regístrate </BaseButton>
         </div>
       </div>
     </div>

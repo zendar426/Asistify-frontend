@@ -12,14 +12,14 @@
   </button>
 
   <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-      <RouterLink to="/" class="flex items-center ps-2.5 mb-5">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 ">
+      <RouterLink :to="{ name: 'landing' }" class="flex items-center ps-2.5 mb-5">
         <img src="/assets/asistify.png" class="h-6 me-3 sm:h-7" alt="Asistify Logo" />
-        <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Asistify</span>
+        <span class="self-center text-xl font-semibold whitespace-nowrap">Asistify</span>
       </RouterLink>
       <ul class="space-y-2 font-medium">
         <li>
-          <RouterLink to="/home" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
+          <RouterLink :to="{ name: 'home' }" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
                       active-class="bg-indigo-200 text-blue-700 border-r-4 border-blue-600">
             <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 group-[.router-link-active]:text-blue-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
               <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
@@ -38,7 +38,7 @@
           </a>
         </li>
         <li>
-          <RouterLink to="recepcionistas" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
+          <RouterLink :to="{ name: 'receptionist' }" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
                       active-class="bg-indigo-200 text-blue-700 border-r-4 border-blue-600">
             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 group-[.router-link-active]:bg-indigo-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
               <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
@@ -47,7 +47,7 @@
           </RouterLink>
         </li>
         <li>
-          <RouterLink to="cuenta" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
+          <RouterLink :to="{ name: 'account' }" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
                       active-class="bg-indigo-200 text-blue-700 border-r-4 border-blue-600">
             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 group-[.router-link-active]:text-blue-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
               <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"/>
@@ -56,7 +56,7 @@
           </RouterLink>
         </li>
         <li>
-          <RouterLink to="base-de-conocimiento" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
+          <RouterLink :to="{ name: 'rag' }" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
                       active-class="bg-indigo-200 text-blue-700 border-r-4 border-blue-600">
             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 group-[.router-link-active]:text-blue-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
             <path d="M12.25 2.25001L12.25 5.05201C12.25 5.95048 12.2499 6.69971 12.3299 7.29449C12.4143 7.92228 12.6 8.48908 13.0555 8.94455C13.5109 9.40002 14.0777 9.58569 14.7055 9.6701C15.3003 9.75006 16.0495 9.75004 16.948 9.75001L19.75 9.75001L19.75 17.052C19.75 17.9505 19.7501 18.6997 19.6701 19.2945C19.5857 19.9223 19.4 20.4891 18.9445 20.9446C18.4891 21.4 17.9223 21.5857 17.2945 21.6701C16.6997 21.7501 15.9505 21.75 15.052 21.75H8.94801C8.04953 21.75 7.30031 21.7501 6.70552 21.6701C6.07773 21.5857 5.51093 21.4 5.05546 20.9446C4.59999 20.4891 4.41432 19.9223 4.32992 19.2945C4.24995 18.6997 4.24997 17.9505 4.25 17.0521V6.94801C4.24997 6.04956 4.24995 5.30029 4.32992 4.70553C4.41432 4.07773 4.59999 3.51093 5.05546 3.05546C5.51093 2.59999 6.07773 2.41432 6.70552 2.32992C7.30031 2.24995 8.04953 2.24998 8.948 2.25001L12.25 2.25001Z"/>
