@@ -17,7 +17,26 @@ function deleteMethod(idx:any){
     paymentMethods.value.splice(idx,1)
 }
 
+
+function verifyAddedData(){
+    let splitNumber=newMethodNumber.value.split(" ")
+    if (splitNumber.length!=4) return false;
+    for (let index = 0; index < splitNumber.length; index++) {
+
+        const element = splitNumber[index];
+        if (element?.length!=4) return false;
+        
+    }
+
+    let dateSplit=newMethodExpiry.value.split("/")
+    if (dateSplit.length!=2) return false;
+    return true;
+}
+
 function addMethod(){
+    if (!verifyAddedData()){
+        return;
+    }
     paymentMethods.value.push({
         name:newMethodName.value,
         number:newMethodNumber.value,
@@ -35,7 +54,8 @@ function clearValueInputs(){
 <template>
     <div class="max-w-5xl text-center justify-center mt-10">
         <h1 class="font-bold text-3xl text-center">Métodos de pago asociados</h1>
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-5">
+        <form @submit.prevent="addMethod">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-5">
             <thead class="text-center text-xs text-gray-700 uppercase bg-blue-300 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">
@@ -91,7 +111,7 @@ function clearValueInputs(){
                             :formIsrequired="true" />
                     </td>
                     <td class="px-6 py-4">
-                        <BaseButton variant="outline" size="lg" @click="addMethod" class="m-5">
+                        <BaseButton variant="outline" size="lg" type="submit" class="m-5">
                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
@@ -104,5 +124,6 @@ function clearValueInputs(){
                 </tr>
             </tbody>
         </table>
+        </form>
     </div>
 </template>
