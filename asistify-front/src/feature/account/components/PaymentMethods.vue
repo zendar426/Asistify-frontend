@@ -73,7 +73,7 @@ function clearValueInputs(){
                 </tr>
             </thead>
             <tbody class="text-center">
-                <tr class="odd:bg-blue-50 bg-white dark:bg-gray-800" v-for="(method, index) in paymentMethods" :key="method.name">
+                <tr class="odd:bg-blue-50 bg-gray-100 dark:bg-gray-800" v-for="(method, index) in paymentMethods" :key="method.name">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ method.name }}
                     </th>
