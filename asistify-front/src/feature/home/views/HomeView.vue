@@ -73,9 +73,9 @@ const options: ApexOptions = {
       <div class="space-y-3">
         <!-- 3 Number Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <CardBigNumber :number=47 description="Llamadas totales"/>
-          <CardBigNumber :number=6 description="documentos" />
-          <CardBigNumber :number=3 description="recepcionistas" />
+          <CardBigNumber :number=341 description="Llamadas totales"/>
+          <CardBigNumber :number=7 description="documentos" />
+          <CardBigNumber :number=5 description="recepcionistas" />
         </div>
 
         <!-- Agenda State -->
@@ -83,8 +83,8 @@ const options: ApexOptions = {
           <agenda-state/>
         </div>
 
-        <!-- Recent Calls Table -->
-        <recent-calls-table/>
+        <!-- Bar Chart by Receptionist -->
+        <bar-comparision-receptionist/>
       </div>
 
       <!-- Right Column -->
@@ -94,8 +94,9 @@ const options: ApexOptions = {
           <VueApexCharts width="100%" type="area" :options="options" :series="series2"></VueApexCharts>
         </div>
 
-        <!-- Bar Chart by Receptionist -->
-        <bar-comparision-receptionist/>
+
+        <!-- Recent Calls Table -->
+        <recent-calls-table/>
       </div>
     </div>
   </div>
