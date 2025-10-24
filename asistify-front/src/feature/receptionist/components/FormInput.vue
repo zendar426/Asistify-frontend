@@ -10,7 +10,7 @@ interface Props {
     min?: number
     max?: number
     step?: number,
-    isrequired?:boolean
+    formIsrequired?:boolean
     required?: boolean
 }
 
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
     type: 'text',
     placeholder: '',
     disabled: false,
-    isrequired:false,
+    formIsrequired:false,
 })
 
 const emit = defineEmits<{
@@ -54,7 +54,7 @@ const handleInput = (event: Event) => {
             :step="step"
             class="block p-2.5 w-full text-sm text-dark/90 bg-dark/10 rounded-lg border border-dark/30 focus:ring-primary focus:border-primary disabled:opacity-50 disabled:cursor-not-allowed"
             autocomplete="off"
-            :required="isrequired"
+            :required="formIsrequired"
         />
         <p v-if="error" class="text-alert text-sm mt-1">
             {{ error }}

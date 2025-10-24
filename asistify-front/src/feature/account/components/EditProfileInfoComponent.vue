@@ -38,22 +38,22 @@ function saveUpdatedData(){
 
         <div class="columns-2 mb-5">
             <div>
-                <FormInput v-model="userName" label="Nombre" placeholder="Juan" :maxlength="50" :isrequired="true" />
+                <FormInput v-model="userName" label="Nombre" placeholder="Juan" :maxlength="50" :formIsrequired="true" />
             </div>
             <div>
 
                 <FormInput v-model="userSurname" label="Apellido" placeholder="Juan" :maxlength="50"
-                    :isrequired="true" />
+                    :formIsrequired="true" />
             </div>
         </div>
 
         <div class="mb-5">
-            <FormInput v-model="email" label="Correo" placeholder="Juan" :maxlength="50" :isrequired="true" />
+            <FormInput v-model="email" label="Correo" placeholder="Juan" :maxlength="50" :formIsrequired="true" />
         </div>
 
         <div class="mb-5">
             <FormInput v-model="orgName" label="Nombre de organización" placeholder="Juan" :maxlength="50"
-                :isrequired="true" />
+                :formIsrequired="true" />
         </div>
 
         <div class="flex justify-center m-5 columns-2">

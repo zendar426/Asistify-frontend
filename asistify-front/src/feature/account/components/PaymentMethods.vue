@@ -76,15 +76,15 @@ function clearValueInputs(){
             <tr class="bg-white dark:bg-gray-800">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     <FormInput v-model="newMethodName" label="" placeholder="" :maxlength="50"
-                :isrequired="true" />
+                :formIsrequired="true" />
                 </th>
                 <td class="px-6 py-4">
                     <FormInput v-model="newMethodNumber" label="" placeholder="" :maxlength="50"
-                :isrequired="true" />
+                :formIsrequired="true" />
                 </td>
                 <td class="px-6 py-4">
                     <FormInput v-model="newMethodExpiry" label="" placeholder="" :maxlength="50"
-                :isrequired="true" />
+                :formIsrequired="true" />
                 </td>
                 <td class="px-6 py-4">
                     <button type="button" @click="addMethod">
