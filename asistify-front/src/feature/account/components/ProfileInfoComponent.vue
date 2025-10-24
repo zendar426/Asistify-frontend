@@ -40,24 +40,24 @@ function toEdit(){
     </div>
     <div class="columns-2 mb-5">
         <div>
-            <p>Nombre</p>
-            <p>{{userName}}</p>
+            <label class="text-2xl font-bold">Nombre</label>
+            <p class="text-2xl">{{userName}}</p>
         </div>
         <div>
             
-            <p>Apellido</p>
-            <p>{{userSurname}}</p>
+            <p class="text-2xl font-bold">Apellido</p>
+            <p class="text-2xl">{{userSurname}}</p>
         </div>
     </div>
 
     <div class="mb-5">
-        <p>Correo</p>
-        <p>{{ email }}</p>
+        <p class="text-2xl font-bold">Correo</p>
+        <p class="text-2xl">{{ email }}</p>
     </div>
 
     <div>
-        <p>Nombre de organización</p>
-        <p>{{ orgName }}</p>
+        <p class="text-2xl font-bold">Nombre de organización</p>
+        <p class="text-2xl">{{ orgName }}</p>
     </div>
 </template>
 

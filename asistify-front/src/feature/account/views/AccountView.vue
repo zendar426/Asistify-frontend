@@ -7,16 +7,16 @@ import PaymentMethods from '../components/PaymentMethods.vue';
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100 ">
+  <div class=" min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100 ">
     <!-- Navbar -->
     <SideBar />
 
     <!-- Call to Action -->
     <section class="py-20">
-      <div class="max-w-xl mx-auto text-center border-solid border-3 rounded-lg border-blue-300 p-5">
-        <h1 class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
+      <div class="max-w-5xl mx-auto text-center border-solid border-3 rounded-lg border-blue-300 p-5">
+        <p class="text-3xl md:text-3xl font-bold text-gray-900 mb-6">
           Perfil de usuario
-        </h1>
+        </p>
 
         <ProfileInfoComponent></ProfileInfoComponent>
         
