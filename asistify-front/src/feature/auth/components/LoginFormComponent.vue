@@ -6,7 +6,8 @@ import { ref } from 'vue';
 let mockUsers=[
     {"email":"ironmouse@gob.cl","password":"1234"},
     {"email":"test@gmail.com","password":"1234"},
-    {"email":"test@test.com","password":"1234"}
+    {"email":"test@test.com","password":"1234"},
+    {"email":"jdoe@mann.co","password":"1234"}
 ]
 
 let email=ref("")
@@ -16,6 +17,7 @@ let showLoginIncorrect=ref(false)
 
 
 function checkData():boolean{
+    console.log("called checkdata")
     if (email.value.trim()=="" || password.value.trim()==""){
         showLoginIncorrect.value=true
         return false
@@ -24,16 +26,17 @@ function checkData():boolean{
         const element = mockUsers[index];
         let emailGood=element?.email==email.value
         let passwordGood=element?.password==password.value
+        console.log(element?.email,emailGood,email.value,passwordGood)
         if (!emailGood){
             showLoginIncorrect.value=true
-            return false
+            //return false
         }
         if ( emailGood && passwordGood){
             return true
         }
         if (emailGood && !passwordGood){
             showLoginIncorrect.value=true
-            return false;
+            //return false;
         }
 
     }
@@ -42,7 +45,7 @@ function checkData():boolean{
 
 function login(){
     if (checkData()){
-        router.push("/lol")
+        router.push("/app/cuenta")
     }
 }
 </script>
