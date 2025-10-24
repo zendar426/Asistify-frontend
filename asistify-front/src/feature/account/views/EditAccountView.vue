@@ -1,13 +1,11 @@
 <script setup lang="ts">
-  import SideBar from '@/components/SideBar.vue';
-  import ProfileInfoComponent from '../components/ProfileInfoComponent.vue';
-import PaymentMethods from '../components/PaymentMethods.vue';
-
+import SideBar from '@/components/SideBar.vue';
+import EditProfileInfoComponent from '../components/EditProfileInfoComponent.vue';
 
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100 ">
+      <div class="min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100 ">
     <!-- Navbar -->
     <SideBar />
 
@@ -15,15 +13,15 @@ import PaymentMethods from '../components/PaymentMethods.vue';
     <section class="py-20">
       <div class="max-w-xl mx-auto text-center border-solid border-3 rounded-lg border-blue-300 p-5">
         <h1 class="text-xl md:text-2xl font-bold text-gray-900 mb-6">
-          Perfil de usuario
+          Editar perfil
         </h1>
 
-        <ProfileInfoComponent></ProfileInfoComponent>
+        <EditProfileInfoComponent></EditProfileInfoComponent>
         
         
 
         <div id="" class="mt-5 mx-auto">
-          <PaymentMethods></PaymentMethods>
+          
         </div>
       </div>
     </section>
@@ -32,7 +30,3 @@ import PaymentMethods from '../components/PaymentMethods.vue';
     <!-- <LandingFooter /> -->
 </div>
 </template>
-
-<style scoped>
-
-</style>
