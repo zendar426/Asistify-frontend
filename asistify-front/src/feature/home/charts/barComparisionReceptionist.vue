@@ -4,15 +4,15 @@ import type {ApexOptions} from "apexcharts";
 
 const series = ref([
   {
-    name: 'Jane Doe',
+    name: 'María González',
     data: [32, 45, 28, 40, 38, 50, 47]
   },
   {
-    name: 'John Smith',
+    name: 'Juan Pérez',
     data: [25, 35, 30, 42, 33, 39, 41]
   },
   {
-    name: 'Emily Davis',
+    name: 'Ana Martínez',
     data: [18, 28, 25, 35, 27, 32, 36]
   }
 ])

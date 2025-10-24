@@ -7,7 +7,7 @@ const recentCalls = ref([
     id: 1,
     time: '10:30',
     caller: 'María González',
-    receptionist: 'Jane Doe',
+    receptionist: 'Juan Pérez',
     status: 'Atendida',
     duration: '5m 23s'
   },
@@ -15,7 +15,7 @@ const recentCalls = ref([
     id: 2,
     time: '10:15',
     caller: 'Carlos Rodríguez',
-    receptionist: 'John Smith',
+    receptionist: 'Ana Martinez',
     status: 'Atendida',
     duration: '3m 45s'
   },
@@ -23,7 +23,7 @@ const recentCalls = ref([
     id: 3,
     time: '09:58',
     caller: 'Ana Martín',
-    receptionist: 'Emily Davis',
+    receptionist: 'María González',
     status: 'Atendida',
     duration: '7m 12s'
   },
@@ -31,7 +31,7 @@ const recentCalls = ref([
     id: 4,
     time: '09:42',
     caller: 'Pedro Sánchez',
-    receptionist: 'Jane Doe',
+    receptionist: 'Ana Martinez',
     status: 'No atendida',
     duration: '-'
   },
@@ -39,7 +39,7 @@ const recentCalls = ref([
     id: 5,
     time: '09:25',
     caller: 'Laura López',
-    receptionist: 'John Smith',
+    receptionist: 'Maria González',
     status: 'Atendida',
     duration: '4m 18s'
   }
@@ -60,8 +60,7 @@ const getStatusClass = (status: string) => {
 
 <template>
   <div class="bg-white p-3 rounded-xl shadow-md">
-    <h2 class="text-lg font-semibold mb-2">Últimas llamadas a recepcionistas</h2>
-
+    <h2 class="text-base font-bold mb-2 text-[#263238]">Últimas llamadas a recepcionistas</h2>
     <div class="overflow-x-auto">
       <table class="min-w-full table-auto">
         <thead>
