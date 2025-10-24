@@ -7,6 +7,7 @@ import type { Receptionist } from '@/feature/receptionist/models/Receptionist'
 import { ReceptionistService } from '../service/ReceptionistService'
 import type { Result } from '@/utils/types'
 import { useToastStore } from '@/stores/ToastStore'
+import BaseSpinner from '@/components/BaseSpinner.vue'
 
 const route = useRoute()
 const router = useRouter()

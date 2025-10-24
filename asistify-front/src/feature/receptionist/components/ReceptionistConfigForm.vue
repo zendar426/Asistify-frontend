@@ -6,6 +6,7 @@ import FormTextarea from './FormTextarea.vue'
 import FormSlider from './FormSlider.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import type { Receptionist } from '../models/Receptionist'
+import { logger } from '@/utils/logger'
 
 interface Props {
     receptionist?: Receptionist
@@ -54,7 +55,7 @@ onMounted(() => {
 const handleSubmit = async () => {
     if (!validate()) return
     
-    console.log('Form is valid, submitting...')
+    logger.debug('Form is valid, submitting...')
 
     const formData = {
         id: props.isEditMode ? props.receptionist?.id : undefined,

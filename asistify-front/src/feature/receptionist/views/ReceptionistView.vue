@@ -10,6 +10,7 @@ import ConfirmModal from '@/components/ConfirmModal.vue'
 import { useRouter } from 'vue-router'
 import type { Result } from '@/utils/types'
 import type { Receptionist } from '../models/Receptionist'
+import { logger } from '@/utils/logger'
 
 
 /**
@@ -60,6 +61,7 @@ const cancelDelete = () => {
  * Fetch receptionists on component mount
  */
 onMounted(() => {
+  console.log('Fetching receptionists on mount')
   fetchReceptionists()
 })
 </script>
