@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { useReceptionistFormValidation } from '@/feature/receptionist/composables/useReceptionistFormValidation'
+import { useReceptionistFormValidation } from '../../../feature/receptionist/composables/useReceptionistFormValidation'
 
 describe('useReceptionistFormValidation', () => {
     let validation: ReturnType<typeof useReceptionistFormValidation>
