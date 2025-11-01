@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseButton from '@/components/BaseButton.vue'
+import VoipCallModal from './VoipCallModal.vue'
+import { Receptionist } from '../models/Receptionist'
+import { useReceptionistStore } from '../stores/ReceptionistStore'
 
 interface Props {
     id: string
@@ -28,7 +31,30 @@ const emit = defineEmits<{
 }>()
 
 const router = useRouter()
+const receptionistStore = useReceptionistStore()
 const showDropdown = ref(false)
+const showVoipModal = ref(false)
+
+// Get the full receptionist object from store
+const receptionist = computed(() => {
+    const found = receptionistStore.receptionist.find(r => r.id === props.id)
+    if (found) return found
+    
+    // Fallback: create a Receptionist object from props
+    return new Receptionist(
+        props.id,
+        props.name,
+        props.phoneNumber,
+        props.avatar,
+        '', // companyInfo
+        '', // clientInfo
+        '', // restrictions
+        props.formalityLevel,
+        props.dynamismLevel,
+        props.appointmentMaxDays,
+        props.appointmentMinDays
+    )
+})
 
 const getInitials = (name: string) => {
     return name
@@ -50,6 +76,15 @@ const handleEdit = () => {
 const handleDelete = () => {
     emit('delete', props.id)
     showDropdown.value = false
+}
+
+const handleCall = () => {
+    showVoipModal.value = true
+    showDropdown.value = false
+}
+
+const closeVoipModal = () => {
+    showVoipModal.value = false
 }
 
 const toggleDropdown = () => {
@@ -108,8 +143,15 @@ const closeDropdown = () => {
                     @click.stop
                 >
                     <button
+                        @click="handleCall"
+                        class="w-full px-4 py-2 text-left text-sm text-dark/80 hover:bg-primary/10 flex items-center gap-2 rounded-t-lg"
+                    >
+                        <font-awesome-icon icon="fa-solid fa-phone" class="text-primary" />
+                        Llamar
+                    </button>
+                    <button
                         @click="handleEdit"
-                        class="w-full px-4 py-2 text-left text-sm text-dark/80 hover:bg-dark/10 flex items-center gap-2 rounded-t-lg"
+                        class="w-full px-4 py-2 text-left text-sm text-dark/80 hover:bg-dark/10 flex items-center gap-2"
                     >
                         <font-awesome-icon icon="fa-solid fa-pen-to-square" class="text-primary" />
                         Editar
@@ -173,5 +215,12 @@ const closeDropdown = () => {
                 </p>
             </div>
         </div>
+
+        <!-- VoIP Call Modal -->
+        <VoipCallModal
+            :receptionist="receptionist"
+            :is-open="showVoipModal"
+            @close="closeVoipModal"
+        />
     </div>
 </template>
