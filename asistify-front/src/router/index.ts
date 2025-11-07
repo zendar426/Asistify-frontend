@@ -5,6 +5,7 @@ import MembershipView from "@/feature/membership/views/MembershipView.vue";
 import AppLayout from "@/views/AppLayout.vue";
 import ReceptionistLayout from '@/feature/receptionist/views/ReceptionistLayout.vue';
 import ReceptionistConfigLayout from '@/feature/receptionist/views/ReceptionistConfigLayout.vue';
+import ReceptionistDetailView from '@/feature/receptionist/views/ReceptionistDetailView.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,11 @@ const router = createRouter({
                     name: 'receptionistConfigEdit',
                     path: '/recepcionistas/configuracion/:id',
                     component: () => import('@/feature/receptionist/views/ReceptionistConfigEditView.vue'),
+                },
+                {
+                    name: 'receptionistDetailt',
+                    path: '/recepcionistas/:id',
+                    component: () => import('@/feature/receptionist/views/ReceptionistDetailView.vue'),
                 },
                 {
                     name: 'account',
