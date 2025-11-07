@@ -3,6 +3,7 @@ import { ref, onBeforeUnmount, computed, watch } from 'vue'
 import { Device, Call } from '@twilio/voice-sdk'
 import type { Receptionist } from '../models/Receptionist'
 import { logger } from '@/utils/logger'
+import api from '@/utils/axios'
 
 interface Props {
     receptionist: Receptionist
@@ -55,10 +56,10 @@ async function setupDevice() {
         updateStatus('Requesting access token...', 'connecting')
 
         // Get token from backend
-        const response = await fetch(
+        const response = await api.get(
             `${SERVER_URL}/twilio/token?identity=${identity.value}&receptionistId=${props.receptionist.id}`,
         )
-        const data = await response.json()
+        const data = await response.data
 
         if (data.error) {
             updateStatus('❌ Error: ' + data.message, 'disconnected')

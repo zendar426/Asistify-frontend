@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { API_ROUTE } from './config'
-
+import { API_ROUTE, IS_PROD, MOCK_BEARER_TOKEN } from './config'
 
 const api = axios.create({
     baseURL: API_ROUTE,
@@ -13,6 +12,8 @@ api.interceptors.request.use(
         const token = raw ? (JSON.parse(raw) as { token?: string }).token : null
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
+        } else if (!IS_PROD) {
+            config.headers.Authorization = `Bearer ${MOCK_BEARER_TOKEN}`
         }
         return config
     },
