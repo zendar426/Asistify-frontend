@@ -50,6 +50,86 @@ function updateStatus(message: string, status: typeof callStatus.value) {
     logger.debug(`VoIP status updated: ${status} - ${message}`)
 }
 
+// --- Microphone processing (Web Audio) ---
+let audioContext: AudioContext | null = null
+let rawStream: MediaStream | null = null
+let processedStream: MediaStream | null = null
+let sourceNode: MediaStreamAudioSourceNode | null = null
+let gainNode: GainNode | null = null
+const micGain = ref<number>(1)
+const isTalking = ref(false)
+
+async function startMicProcessing() {
+    try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            logger.warn('getUserMedia not available in this browser')
+            return
+        }
+
+        rawStream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+
+        sourceNode = audioContext.createMediaStreamSource(rawStream)
+        gainNode = audioContext.createGain()
+        gainNode.gain.value = micGain.value
+
+        const dest = audioContext.createMediaStreamDestination()
+
+        sourceNode.connect(gainNode)
+        gainNode.connect(dest)
+
+        processedStream = dest.stream
+        logger.debug('Mic processing started, gain =', micGain.value)
+    } catch (err: any) {
+        logger.error('Failed to start mic processing', err)
+    }
+}
+
+function stopMicProcessing() {
+    try {
+        if (rawStream) {
+            rawStream.getTracks().forEach((t) => t.stop())
+            rawStream = null
+        }
+
+        if (audioContext) {
+            try { audioContext.close() } catch (_) { /* ignore */ }
+            audioContext = null
+        }
+
+        sourceNode = null
+        gainNode = null
+        processedStream = null
+        logger.debug('Mic processing stopped')
+    } catch (err: any) {
+        logger.error('Error stopping mic processing', err)
+    }
+}
+
+function setMicGain(value: number) {
+    micGain.value = value
+    if (gainNode) gainNode.gain.value = value
+}
+
+function startTalking() {
+    isTalking.value = true
+    if (connection) {
+        connection.mute(false)
+        logger.debug('Push to talk: started talking (unmuted) and sent message')
+    }
+}
+
+function stopTalking() {
+    isTalking.value = false
+    if (connection) {
+        connection.mute(true)
+        logger.debug('Push to talk: stopped talking (muted) and sent message')
+    }
+}
+
+// keep gain node in sync if user changes slider
+watch(micGain, (v) => { if (gainNode) gainNode.gain.value = v })
+
 async function setupDevice() {
     try {
         logger.info('Setting up Twilio Device for receptionist:', props.receptionist.name)
@@ -125,6 +205,13 @@ function setupCallHandlers(call: Call) {
         connection = null
         logger.info('Call cancelled')
     })
+
+    // Mute event
+    call.on('mute', (isMuted: boolean, call: Call) => {
+        logger.info('Device mute event, isMuted =', isMuted)
+        call.mute(isMuted)
+        isMuted ? call.sendDigits("1") : call.sendDigits("0")
+    })
 }
 
 async function handleCall() {
@@ -133,12 +220,21 @@ async function handleCall() {
         logger.info('Initiating call to receptionist:', props.receptionist.name)
 
         try {
-            const call = await device.connect({
+            const options: any = {
                 params: {
                     receptionistId: props.receptionist.id,
                     receptionistName: props.receptionist.name,
                 },
-            })
+            }
+
+            // If we have a processed mic stream, try passing it to Twilio connect.
+            // The SDK may accept a `localStream` option; cast to any to avoid TS mismatches.
+            if (processedStream) {
+                options.localStream = processedStream
+                logger.debug('Passing processed localStream to Twilio connect')
+            }
+
+            const call = await (device as any).connect(options)
             connection = call
             setupCallHandlers(call)
         } catch (error: any) {
@@ -178,6 +274,9 @@ function cleanupVoIP() {
         device = null
     }
 
+    // Stop and release mic processing resources
+    try { stopMicProcessing() } catch (e) { logger.debug('stopMicProcessing error', e) }
+
     // Reset state
     updateStatus('Disconnected', 'disconnected')
     isCallInProgress.value = false
@@ -188,9 +287,11 @@ watch(
     () => props.isOpen,
     async (isOpen) => {
         if (isOpen) {
-            try {
-                await setupDevice()
-            } catch (error) {
+                try {
+                    // start mic capture/processing early so user can adjust gain before calling
+                    await startMicProcessing()
+                    await setupDevice()
+                } catch (error) {
                 logger.error('Failed to initialize VoIP:', error)
                 updateStatus('❌ Falló al cargar el cliente VoIP', 'disconnected')
             }
@@ -247,11 +348,11 @@ onBeforeUnmount(() => {
                     </div>
 
                     <!-- Call Controls -->
-                    <div class="flex gap-4 mb-6">
+                    <div class="grid grid-cols-3 gap-4 mb-6">
                         <button
                             @click="handleCall"
                             :disabled="!canCall"
-                            class="flex-1 py-4 px-6 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-lg"
+                            class="py-4 px-6 bg-primary text-white rounded-lg font-semibold text-lg hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-lg"
                         >
                             <font-awesome-icon icon="fa-solid fa-phone" class="mr-2" />
                             Iniciar llamada
@@ -259,11 +360,42 @@ onBeforeUnmount(() => {
                         <button
                             @click="handleHangup"
                             :disabled="!canHangup"
-                            class="flex-1 py-4 px-6 bg-alert text-white rounded-lg font-semibold text-lg hover:bg-alert/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-lg"
+                            class="py-4 px-6 bg-alert text-white rounded-lg font-semibold text-lg hover:bg-alert/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-lg"
                         >
                             <font-awesome-icon icon="fa-solid fa-phone-slash" class="mr-2" />
                             Colgar
                         </button>
+                        <button
+                            @mousedown="startTalking"
+                            @mouseup="stopTalking"
+                            @mouseleave="stopTalking"
+                            :disabled="!isCallInProgress"
+                            :class="[
+                                'py-4 px-6 rounded-lg font-semibold text-lg transition-all hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed',
+                                isTalking ? 'bg-green-600 text-white hover:bg-green-700' : 'bg-secondary text-white hover:bg-secondary/90'
+                            ]"
+                        >
+                            <font-awesome-icon icon="fa-solid fa-microphone" class="mr-2" />
+                            Push to Talk
+                        </button>
+                    </div>
+
+                    <!-- Mic Gain Control -->
+                    <div class="mb-6">
+                        <label class="block text-sm text-dark/80 mb-2 font-medium">Volumen del micrófono</label>
+                        <div class="flex items-center gap-3">
+                            <input
+                                type="range"
+                                min="0.2"
+                                max="3"
+                                step="0.1"
+                                v-model.number="micGain"
+                                @input="setMicGain(micGain)"
+                                class="w-full"
+                            />
+                            <div class="w-16 text-right text-sm text-dark/80">{{ (micGain * 100).toFixed(0) }}%</div>
+                        </div>
+                        <p class="text-xs text-dark/60 mt-2">Aumenta el volumen de entrada del micrófono. Ten cuidado con la distorsión al subir mucho.</p>
                     </div>
 
                     <!-- Info -->
