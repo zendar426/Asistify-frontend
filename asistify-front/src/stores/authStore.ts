@@ -27,13 +27,23 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         setToken(token: string) {
             this.accessToken = token
+            try {
+                localStorage.setItem('access_token', token)
+            } catch {}
         },
         clearToken() {
             this.accessToken = null
             this.refreshToken = null
+            try {
+                localStorage.removeItem('access_token')
+                localStorage.removeItem('refresh_token')
+            } catch {}
         },
         setRefreshToken(token: string) {
             this.refreshToken = token
+            try {
+                localStorage.setItem('refresh_token', token)
+            } catch {}
         },
         async registerUser(userData: RegisterUserDto) {
             const response = await api.post('/auth/register', userData, {})
@@ -66,6 +76,14 @@ export const useAuthStore = defineStore('auth', {
             console.log('Login response:', response)
             return response
         },
+        async refreshToken(){
+            const refresh = this.refreshToken || localStorage.getItem('refresh_token')
+            const response = await api.post('/auth/refresh', { refreshToken: refresh }, {})
+            if (response.data.accessToken) {
+                this.setToken(response.data.accessToken)
+            }
+            return response
+        }
     },
     getters: {
         isAuthenticated: (state) => !!state.accessToken,
