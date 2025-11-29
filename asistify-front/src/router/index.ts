@@ -5,6 +5,7 @@ import MembershipView from "@/feature/membership/views/MembershipView.vue";
 import AppLayout from "@/views/AppLayout.vue";
 import ReceptionistLayout from '@/feature/receptionist/views/ReceptionistLayout.vue';
 import ReceptionistConfigLayout from '@/feature/receptionist/views/ReceptionistConfigLayout.vue';
+import ReceptionistDetailView from '@/feature/receptionist/views/ReceptionistDetailView.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +60,11 @@ const router = createRouter({
                     component: () => import('@/feature/receptionist/views/ReceptionistConfigEditView.vue'),
                 },
                 {
+                    name: 'receptionistDetailt',
+                    path: '/recepcionistas/:id',
+                    component: () => import('@/feature/receptionist/views/ReceptionistDetailView.vue'),
+                },
+                {
                     name: 'account',
                     path: 'account',
                     component: () => import('@/feature/account/views/AccountView.vue'),
@@ -73,6 +79,11 @@ const router = createRouter({
                     path: '/base-de-conocimiento',
                     component: () => import('@/feature/base-knowledge/views/KnowledgeBaseView.vue'),
                 },
+                {
+                    name: 'enterprise',
+                    path: '/empresa',
+                    component: () => import('@/feature/enterprise/views/EnterpriseView.vue')
+                }
             ],
         },
     ],
