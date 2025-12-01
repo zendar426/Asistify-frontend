@@ -101,7 +101,9 @@ const options: ApexOptions = {
 
                 <!-- Agenda State -->
                 <div class="bg-white p-3 rounded-xl shadow-md">
-                    <agenda-state />
+                    <agenda-state
+                        :calendar-metrics="dashboardStore.dashboardData.calendarMetrics"
+                    />
                 </div>
 
                 <!-- Bar Chart by Receptionist -->

@@ -1,6 +1,6 @@
-import {defineStore} from 'pinia'
-import type {IDashboard} from '@/api/dashboard.ts'
-import {api} from '@/api/axios.ts'
+import { defineStore } from 'pinia'
+import type { IDashboard } from '@/api/dashboard.ts'
+import { api } from '@/api/axios.ts'
 
 export const useDashboardStore = defineStore('dashboard', {
     state: (): { dashboardData: IDashboard; isLoading: boolean } => ({
