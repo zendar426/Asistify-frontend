@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
-import type { IDashboard } from '@/api/dashboard.ts'
-import { api } from '@/api/axios.ts'
+import {defineStore} from 'pinia'
+import type {IDashboard} from '@/api/dashboard.ts'
+import {api} from '@/api/axios.ts'
 
 export const useDashboardStore = defineStore('dashboard', {
-    state: (): { dashboardData: IDashboard | null; isLoading: boolean } => ({
+    state: (): { dashboardData: IDashboard; isLoading: boolean } => ({
         dashboardData: {
             overview: {
                 countDocuments: 0,
@@ -17,7 +17,7 @@ export const useDashboardStore = defineStore('dashboard', {
                 toConfirmCount: 0,
             },
             callHistory: [],
-        } as IDashboard | null,
+        } as IDashboard,
         isLoading: false,
     }),
     getters: {
@@ -29,7 +29,7 @@ export const useDashboardStore = defineStore('dashboard', {
             countCalls: number
             countReceptionist: number
         } {
-            return state.dashboardData?.overview || { countCalls: 0 }
+            return state.dashboardData.overview
         },
     },
     actions: {
