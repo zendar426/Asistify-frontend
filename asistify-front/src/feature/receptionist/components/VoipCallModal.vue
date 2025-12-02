@@ -3,7 +3,7 @@ import { ref, onBeforeUnmount, computed, watch } from 'vue'
 import { Device, Call } from '@twilio/voice-sdk'
 import type { Receptionist } from '../models/Receptionist'
 import { logger } from '@/utils/logger'
-import api from '@/utils/axios'
+import { api } from '@/api/axios'
 
 interface Props {
     receptionist: Receptionist
@@ -420,13 +420,13 @@ onBeforeUnmount(() => {
                             <div>
                                 <span class="text-dark/80">Formalidad:</span>
                                 <span class="font-semibold ml-1"
-                                    >{{ (receptionist.formalityLevel || 0.5) * 100 }}%</span
+                                    >{{ (receptionist.levelFormality || 0.5) * 100 }}%</span
                                 >
                             </div>
                             <div>
                                 <span class="text-dark/80">Dinamismo:</span>
                                 <span class="font-semibold ml-1"
-                                    >{{ (receptionist.dynamismLevel || 0.5) * 100 }}%</span
+                                    >{{ (receptionist.levelDynamism || 0.5) * 100 }}%</span
                                 >
                             </div>
                         </div>

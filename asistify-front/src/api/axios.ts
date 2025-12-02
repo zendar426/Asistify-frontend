@@ -1,7 +1,8 @@
+import { API_ROUTE } from '@/utils/config'
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_API_URL,
+    baseURL: API_ROUTE,
     // NO pongas el header Authorization aquí de forma estática
 })
 

@@ -136,12 +136,12 @@ onMounted(() => {
             :key="receptionist.id"
             :id="receptionist.id"
             :name="receptionist.name"
-            :phone-number="receptionist.phoneNumber"
+            :cellphone="receptionist.cellphone"
             :avatar="receptionist.avatar"
-            :formality-level="receptionist.formalityLevel"
-            :dynamism-level="receptionist.dynamismLevel"
-            :appointment-max-days="receptionist.appointmentMaxDays"
-            :appointment-min-days="receptionist.appointmentMinDays"
+            :level-formality="receptionist.levelFormality"
+            :level-dynamism="receptionist.levelDynamism"
+            :anticipation-max-days="receptionist.anticipationMaxDays"
+            :anticipation-min-days="receptionist.anticipationMinDays"
             @delete="handleDeleteReceptionist"
           />
         </div>

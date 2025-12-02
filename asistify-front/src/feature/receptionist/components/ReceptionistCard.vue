@@ -9,21 +9,20 @@ import { useReceptionistStore } from '../stores/ReceptionistStore'
 interface Props {
     id: string
     name: string
-    phoneNumber?: string
-    avatar?: string
-    formalityLevel?: number
-    dynamismLevel?: number
-    appointmentMaxDays?: number
-    appointmentMinDays?: number
+    cellphone?: string
+    avatar?: { id: string; url: string }
+    levelFormality?: number
+    levelDynamism?: number
+    anticipationMaxDays?: number
+    anticipationMinDays?: number
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    phoneNumber: '',
-    avatar: '',
-    formalityLevel: 0.5,
-    dynamismLevel: 0.5,
-    appointmentMaxDays: 30,
-    appointmentMinDays: 1
+    cellphone: '',
+    levelFormality: 0.5,
+    levelDynamism: 0.5,
+    anticipationMaxDays: 30,
+    anticipationMinDays: 1
 })
 
 const emit = defineEmits<{
@@ -44,15 +43,16 @@ const receptionist = computed(() => {
     return new Receptionist(
         props.id,
         props.name,
-        props.phoneNumber,
+        props.cellphone,
+        props.avatar?.id,
         props.avatar,
-        '', // companyInfo
-        '', // clientInfo
-        '', // restrictions
-        props.formalityLevel,
-        props.dynamismLevel,
-        props.appointmentMaxDays,
-        props.appointmentMinDays
+        '', // enterpriseInformation
+        '', // clientInformation
+        '', // businessRestrictions
+        props.levelFormality,
+        props.levelDynamism,
+        props.anticipationMaxDays,
+        props.anticipationMinDays
     )
 })
 
@@ -106,8 +106,8 @@ const closeDropdown = () => {
             <div class="flex items-center gap-4 flex-1 min-w-0">
                 <!-- Profile Picture -->
                 <div class="flex-shrink-0">
-                    <div v-if="avatar" class="w-16 h-16 rounded-full overflow-hidden">
-                        <img :src="avatar" :alt="name" class="w-full h-full object-cover" />
+                    <div v-if="avatar?.url" class="w-16 h-16 rounded-full overflow-hidden">
+                        <img :src="avatar.url" :alt="name" class="w-full h-full object-cover" />
                     </div>
                     <div
                         v-else
@@ -120,9 +120,9 @@ const closeDropdown = () => {
                 <!-- Info -->
                 <div class="flex-1 min-w-0">
                     <h3 class="text-lg font-semibold text-dark/90 truncate">{{ name }}</h3>
-                    <p v-if="phoneNumber" class="text-dark/80 text-sm mt-1">
+                    <p v-if="cellphone" class="text-dark/80 text-sm mt-1">
                         <font-awesome-icon icon="fa-solid fa-phone" class="mr-2" />
-                        {{ phoneNumber }}
+                        {{ cellphone }}
                     </p>
                 </div>
             </div>
@@ -176,10 +176,10 @@ const closeDropdown = () => {
                     <div class="flex-1 bg-dark/10 rounded-full h-2">
                         <div 
                             class="bg-primary h-2 rounded-full"
-                            :style="{ width: `${formalityLevel * 100}%` }"
+                            :style="{ width: `${levelFormality * 100}%` }"
                         />
                     </div>
-                    <span class="text-xs font-medium text-dark/80">{{ (formalityLevel * 100).toFixed(0) }}%</span>
+                    <span class="text-xs font-medium text-dark/80">{{ (levelFormality * 100).toFixed(0) }}%</span>
                 </div>
             </div>
 
@@ -190,28 +190,28 @@ const closeDropdown = () => {
                     <div class="flex-1 bg-dark/10 rounded-full h-2">
                         <div 
                             class="bg-green-600 h-2 rounded-full"
-                            :style="{ width: `${dynamismLevel * 100}%` }"
+                            :style="{ width: `${levelDynamism * 100}%` }"
                         />
                     </div>
-                    <span class="text-xs font-medium text-dark/80">{{ (dynamismLevel * 100).toFixed(0) }}%</span>
+                    <span class="text-xs font-medium text-dark/80">{{ (levelDynamism * 100).toFixed(0) }}%</span>
                 </div>
             </div>
 
-            <!-- Appointment Min Days -->
+            <!-- Anticipation Min Days -->
             <div>
                 <p class="text-xs text-dark/80 mb-1">Días mínimos</p>
                 <p class="text-sm font-semibold text-dark/90">
-                    {{ appointmentMinDays }} 
-                    <span class="text-xs font-normal text-dark/80">{{ appointmentMinDays === 1 ? 'día' : 'días' }}</span>
+                    {{ anticipationMinDays }} 
+                    <span class="text-xs font-normal text-dark/80">{{ anticipationMinDays === 1 ? 'día' : 'días' }}</span>
                 </p>
             </div>
 
-            <!-- Appointment Max Days -->
+            <!-- Anticipation Max Days -->
             <div>
                 <p class="text-xs text-dark/80 mb-1">Días máximos</p>
                 <p class="text-sm font-semibold text-dark/90">
-                    {{ appointmentMaxDays }} 
-                    <span class="text-xs font-normal text-dark/80">{{ appointmentMaxDays === 1 ? 'día' : 'días' }}</span>
+                    {{ anticipationMaxDays }} 
+                    <span class="text-xs font-normal text-dark/80">{{ anticipationMaxDays === 1 ? 'día' : 'días' }}</span>
                 </p>
             </div>
         </div>
