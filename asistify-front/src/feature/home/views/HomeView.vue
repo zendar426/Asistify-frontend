@@ -123,7 +123,7 @@ const options: ApexOptions = {
                 </div>
 
                 <!-- Recent Calls Table -->
-                <recent-calls-table />
+                <recent-calls-table :history="dashboardStore.dashboardData.callHistory" />
             </div>
         </div>
     </div>
