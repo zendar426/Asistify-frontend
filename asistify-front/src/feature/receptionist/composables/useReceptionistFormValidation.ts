@@ -6,8 +6,8 @@ export function useReceptionistFormValidation() {
     const avatarId = ref('')
     const enterpriseInformation = ref('')
     const businessRestrictions = ref('')
-    const levelFormality = ref(0.5)
-    const levelDynamism = ref(0.5)
+    const levelFormality = ref(5)
+    const levelDynamism = ref(5)
     const anticipationMaxDays = ref(30)
     const anticipationMinDays = ref(1)
 
@@ -99,14 +99,14 @@ export function useReceptionistFormValidation() {
         }
 
         // levelFormality
-        if (levelFormality.value < 0 || levelFormality.value > 1) {
-            errors.value.levelFormality = 'Debe estar entre 0 y 1'
+        if (levelFormality.value < 0 || levelFormality.value > 10) {
+            errors.value.levelFormality = 'Debe estar entre 0 y 10'
             ok = false
         }
 
         // levelDynamism
-        if (levelDynamism.value < 0 || levelDynamism.value > 1) {
-            errors.value.levelDynamism = 'Debe estar entre 0 y 1'
+        if (levelDynamism.value < 0 || levelDynamism.value > 10) {
+            errors.value.levelDynamism = 'Debe estar entre 0 y 10'
             ok = false
         }
 
@@ -143,8 +143,8 @@ export function useReceptionistFormValidation() {
         avatarId.value = ''
         enterpriseInformation.value = ''
         businessRestrictions.value = ''
-        levelFormality.value = 0.5
-        levelDynamism.value = 0.5
+        levelFormality.value = 5
+        levelDynamism.value = 5
         anticipationMaxDays.value = 30
         anticipationMinDays.value = 1
         errors.value = {

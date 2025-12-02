@@ -19,8 +19,8 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     cellphone: '',
-    levelFormality: 0.5,
-    levelDynamism: 0.5,
+    levelFormality: 5,
+    levelDynamism: 5,
     anticipationMaxDays: 30,
     anticipationMinDays: 1
 })
@@ -176,10 +176,10 @@ const closeDropdown = () => {
                     <div class="flex-1 bg-dark/10 rounded-full h-2">
                         <div 
                             class="bg-primary h-2 rounded-full"
-                            :style="{ width: `${levelFormality * 100}%` }"
+                            :style="{ width: `${levelFormality * 10}%` }"
                         />
                     </div>
-                    <span class="text-xs font-medium text-dark/80">{{ (levelFormality * 100).toFixed(0) }}%</span>
+                    <span class="text-xs font-medium text-dark/80">{{ (levelFormality * 10).toFixed(0) }}%</span>
                 </div>
             </div>
 
@@ -190,10 +190,10 @@ const closeDropdown = () => {
                     <div class="flex-1 bg-dark/10 rounded-full h-2">
                         <div 
                             class="bg-green-600 h-2 rounded-full"
-                            :style="{ width: `${levelDynamism * 100}%` }"
+                            :style="{ width: `${levelDynamism * 10}%` }"
                         />
                     </div>
-                    <span class="text-xs font-medium text-dark/80">{{ (levelDynamism * 100).toFixed(0) }}%</span>
+                    <span class="text-xs font-medium text-dark/80">{{ (levelDynamism * 10).toFixed(0) }}%</span>
                 </div>
             </div>
 

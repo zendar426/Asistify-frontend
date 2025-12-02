@@ -45,8 +45,8 @@ onMounted(() => {
         avatarId.value = props.receptionist.avatarId || ''
         enterpriseInformation.value = props.receptionist.enterpriseInformation || ''
         businessRestrictions.value = props.receptionist.businessRestrictions || ''
-        levelFormality.value = props.receptionist.levelFormality || 0.5
-        levelDynamism.value = props.receptionist.levelDynamism || 0.5
+        levelFormality.value = props.receptionist.levelFormality || 5
+        levelDynamism.value = props.receptionist.levelDynamism || 5
         anticipationMaxDays.value = props.receptionist.anticipationMaxDays || 30
         anticipationMinDays.value = props.receptionist.anticipationMinDays || 1
     }
@@ -147,8 +147,8 @@ const handleCancel = () => {
                     v-model="levelFormality"
                     label="Nivel de formalidad"
                     :min="0"
-                    :max="1"
-                    :step="0.1"
+                    :max="10"
+                    :step="1"
                     :error="errors.levelFormality"
                 />
 
@@ -157,8 +157,8 @@ const handleCancel = () => {
                     v-model="levelDynamism"
                     label="Nivel de dinamismo"
                     :min="0"
-                    :max="1"
-                    :step="0.1"
+                    :max="10"
+                    :step="1"
                     :error="errors.levelDynamism"
                 />
 
