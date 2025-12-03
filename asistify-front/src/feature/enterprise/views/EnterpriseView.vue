@@ -23,10 +23,10 @@ function handleEditCancel() {
 
 <template>
     <div>
-        <div class="flex gap-4">
+        <!-- <div class="flex gap-4">
             <button @click="showCreateModal = true">Crear Empresa</button>
             <button @click="showEditModal = true">Editar Empresa</button>
-        </div>
+        </div> -->
         
         <ModalCreateEnterprise v-if="showCreateModal" @close="showCreateModal = false" />
         <ModalEditEnterprise 
