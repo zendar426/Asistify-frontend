@@ -5,46 +5,49 @@ import { DocumentRepositoryApi } from '../repository/DocumentRepositoryApi'
 import { DocumentRepositoryLocal } from '../repository/DocumentRepositoryLocal'
 
 export class DocumentService {
-  private static instance: DocumentService
-  private readonly repository: DocumentRepository
+    private static instance: DocumentService
+    private readonly repository: DocumentRepository
 
-  private constructor() {
-    this.repository = IS_PROD
-      ? DocumentRepositoryApi.getInstance()
-      : DocumentRepositoryLocal.getInstance()
-  }
-
-  public static getInstance(): DocumentService {
-    if (!DocumentService.instance) {
-      DocumentService.instance = new DocumentService()
+    private constructor() {
+        this.repository = IS_PROD
+            ? DocumentRepositoryApi.getInstance()
+            : DocumentRepositoryLocal.getInstance()
     }
-    return DocumentService.instance
-  }
 
-  async createDocument(enterpriseId: string, file: File): Promise<Document> {
-    return this.repository.create({ enterpriseId, file })
-  }
+    public static getInstance(): DocumentService {
+        if (!DocumentService.instance) {
+            DocumentService.instance = new DocumentService()
+        }
+        return DocumentService.instance
+    }
 
-  async getAllDocuments(params: {
-    enterpriseId: string
-    pageNumber?: number
-    limit?: number
-    name?: string
-    documentTypeId?: string
-    size?: number
-  }): Promise<Document[]> {
-    return this.repository.findAll(params)
-  }
+    async createDocument(file: File): Promise<Document> {
+        return this.repository.create({ file })
+    }
 
-  async getDocumentById(enterpriseId: string, documentId: string): Promise<Document> {
-    return this.repository.findOne({ enterpriseId, documentId })
-  }
+    async getAllDocuments(params: {
+        enterpriseId: string
+        pageNumber?: number
+        limit?: number
+        name?: string
+        documentTypeId?: string
+        size?: number
+    }): Promise<{
+        data: Document[]
+        metadata: { limit: number; actualPage: number; nextPage: number | null; totalPages: number }
+    }> {
+        return this.repository.findAll(params)
+    }
 
-  async deleteDocument(enterpriseId: string, documentId: string): Promise<Document> {
-    return this.repository.delete({ enterpriseId, documentId })
-  }
+    async getDocumentById(documentId: string): Promise<Document> {
+        return this.repository.findOne({ documentId })
+    }
 
-  async downloadDocument(enterpriseId: string, documentId: string): Promise<Blob> {
-    return this.repository.download({ enterpriseId, documentId })
-  }
+    async deleteDocument(documentId: string): Promise<Document> {
+        return this.repository.delete({ documentId })
+    }
+
+    async downloadDocument(documentId: string): Promise<Blob> {
+        return this.repository.download({ documentId })
+    }
 }

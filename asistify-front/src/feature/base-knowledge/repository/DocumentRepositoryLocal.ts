@@ -106,7 +106,7 @@ export class DocumentRepositoryLocal implements DocumentRepository {
     name?: string
     documentTypeId?: string
     size?: number
-  }): Promise<Document[]> {
+  }): Promise<{ data: Document[]; metadata: { limit: number; actualPage: number; nextPage: number | null; totalPages: number } }> {
     logger.info('[LOCAL_GET_DOCUMENTS]', params)
 
     let filtered = this.documents.filter((doc) => doc.enterprise_id === params.enterpriseId)
@@ -125,7 +125,22 @@ export class DocumentRepositoryLocal implements DocumentRepository {
       filtered = filtered.filter((doc) => parseFloat(doc.size) <= params.size!)
     }
 
-    return filtered
+    // Simulación de paginación y metadata
+    const limit = params.limit ?? filtered.length
+    const actualPage = params.pageNumber ?? 1
+    const totalPages = Math.ceil(filtered.length / limit)
+    const nextPage = actualPage < totalPages ? actualPage + 1 : null
+    const paginated = filtered.slice((actualPage - 1) * limit, actualPage * limit)
+
+    return {
+      data: paginated,
+      metadata: {
+        limit,
+        actualPage,
+        nextPage,
+        totalPages
+      }
+    }
   }
 
   async findOne(params: { enterpriseId: string; documentId: string }): Promise<Document> {

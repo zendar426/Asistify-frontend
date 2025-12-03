@@ -2,7 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import { useDocuments } from '../composables/useDocuments'
 import MetricCard from '../components/MetricCard.vue'
-import SearchBar from '../components/SearchBar.vue'
+import SearchBar from '../components/SearchBarFixed.vue'
 import DocumentCard from '../components/DocumentCard.vue'
 import UploadDocumentModal from '../components/UploadDocumentModal.vue'
 import ViewDocumentModal from '../components/ViewDocumentModal.vue'
@@ -18,7 +18,6 @@ const {
   totalDocuments,
   totalChunks,
   totalSize,
-  chunksTrend,
   loadDocuments,
   uploadDocument,
   deleteDocument,
@@ -45,9 +44,9 @@ const currentDocumentId = ref<string | null>(null)
 
 const filterOptions = {
   documentTypes: [
-    { value: 'type-1', label: 'Manual' },
-    { value: 'type-2', label: 'Política' },
-    { value: 'type-3', label: 'Guía' },
+    { value: '4fc9ff43-cfb7-4b3f-a1b2-01eeab4c7a29', label: 'General' },
+    { value: 'd01d9195-875a-496e-a427-b97e28b66317', label: 'Especifico' },
+    { value: '57d132bc-6c4a-48f2-9938-00c2d627af6a', label: 'Normativo' },
   ],
   sizeOptions: [
     { value: 1, label: 'Hasta 1 MB' },
@@ -62,7 +61,7 @@ onMounted(() => {
 })
 
 const handleUpload = async (file: File) => {
-  await uploadDocument(ENTERPRISE_ID, file)
+  await uploadDocument(file)
   showUploadModal.value = false
 }
 
@@ -73,7 +72,7 @@ const handleDeleteClick = (documentId: string) => {
 
 const confirmDelete = async () => {
   if (!documentToDelete.value) return;
-  await deleteDocument(ENTERPRISE_ID, documentToDelete.value)
+  await deleteDocument(documentToDelete.value)
   showDeleteModal.value = false
   documentToDelete.value = null
 }
@@ -94,8 +93,9 @@ const closeViewModals = () => {
   currentDocumentId.value = null
 }
 
-const handleDownload = async (documentId: string, fileName: string) => {
-  await downloadDocument(ENTERPRISE_ID, documentId, fileName)
+const handleDownload = async (fileName: string) => {
+  if (!currentDocumentId.value) return
+  await downloadDocument(currentDocumentId.value, fileName)
 }
 </script>
 
@@ -120,7 +120,6 @@ const handleDownload = async (documentId: string, fileName: string) => {
             title="Total de Chunks"
             :value="totalChunks"
             icon="📄"
-            :trend="chunksTrend ?? undefined"
           />
           <MetricCard
             title="Tamaño Total"
