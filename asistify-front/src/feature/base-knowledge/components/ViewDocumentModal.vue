@@ -16,7 +16,10 @@ const emit = defineEmits<{
 }>()
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleString('es-ES', {
+  if (!dateString) return 'Sin fecha'
+  const date = new Date(dateString)
+  if (isNaN(date.getTime())) return 'Sin fecha'
+  return date.toLocaleString('es-ES', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -42,8 +45,19 @@ const fileIcon = computed(() => {
     doc: '📃',
     docx: '📃',
   }
-  return icons[props.document.extension_content.toLowerCase()] || '📄'
+  const ext = typeof props.document.extension_content === 'string' ? props.document.extension_content.toLowerCase() : ''
+  return icons[ext] || '📄'
 })
+
+const documentTypeMap: Record<string, string> = {
+  '4fc9ff43-cfb7-4b3f-a1b2-01eeab4c7a29': 'General',
+  'd01d9195-875a-496e-a427-b97e28b66317': 'Especifico',
+  '57d132bc-6c4a-48f2-9938-00c2d627af6a': 'Normativo',
+}
+
+const mapDocumentType = (id: string) => {
+  return documentTypeMap[id] || 'Desconocido'
+}
 
 const downloadDocument = () => {
   if (props.document) {
@@ -82,12 +96,17 @@ const downloadDocument = () => {
               <div class="flex items-center justify-between p-6 border-b bg-gray-50">
                 <div class="flex items-center gap-4 flex-1 min-w-0">
                   <div class="text-4xl">{{ fileIcon }}</div>
+                  <div class="bg-gray-50 p-4 rounded-lg">
+                    <p class="text-sm text-gray-600 mb-1">Tipo de Documento</p>
+                    <p class="font-medium text-gray-900">{{ mapDocumentType(document.documentTypeId) }}</p>
+                  </div>
+
                   <div class="flex-1 min-w-0">
                     <h3 class="text-xl font-semibold text-gray-900 truncate">
                       {{ document.original_name }}
                     </h3>
                     <p class="text-sm text-gray-600 mt-1">
-                      {{ formatSize(document.size) }} • {{ document.extension_content.toUpperCase() }}
+                      {{ formatSize(document.size) }} • {{ typeof document.extension_content === 'string' ? document.extension_content.toUpperCase() : 'SIN EXT' }}
                     </p>
                   </div>
                 </div>
@@ -108,28 +127,18 @@ const downloadDocument = () => {
 
               <div class="flex-1 overflow-y-auto p-6">
                 <div class="space-y-4">
-                  <div class="grid grid-cols-2 gap-4">
+                  <div class="grid grid-cols-1 gap-4">
                     <div class="bg-gray-50 p-4 rounded-lg">
                       <p class="text-sm text-gray-600 mb-1">ID del Documento</p>
                       <p class="font-mono text-sm text-gray-900 break-all">{{ document.id }}</p>
                     </div>
-                    <div class="bg-gray-50 p-4 rounded-lg">
-                      <p class="text-sm text-gray-600 mb-1">Tipo de Documento</p>
-                      <p class="font-medium text-gray-900">{{ document.document_type_id }}</p>
-                    </div>
-                  </div>
+                 </div>
 
                   <div class="bg-gray-50 p-4 rounded-lg">
                     <p class="text-sm text-gray-600 mb-1">Nombre Interno</p>
                     <p class="font-medium text-gray-900">{{ document.name }}</p>
                   </div>
 
-                  <div class="bg-gray-50 p-4 rounded-lg">
-                    <p class="text-sm text-gray-600 mb-1">Ruta del Archivo</p>
-                    <p class="font-mono text-sm text-gray-900 break-all">
-                      {{ document.file_path }}
-                    </p>
-                  </div>
 
                   <div class="grid grid-cols-2 gap-4">
                     <div class="bg-gray-50 p-4 rounded-lg">

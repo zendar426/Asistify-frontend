@@ -45,16 +45,9 @@ const clearFilters = () => {
 <template>
   <div class="bg-white rounded-lg shadow p-4 space-y-4">
     <div class="flex gap-3">
-      <div class="flex-1 relative">
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Buscar documentos por nombre..."
-          class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-          @keyup.enter="handleSearch"
-        />
+      <div class="flex-1 relative flex items-center">
         <svg
-          class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+          class="absolute left-3 w-5 h-5 text-gray-400 pointer-events-none"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -66,8 +59,14 @@ const clearFilters = () => {
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>
+        <input
+          v-model="searchQuery"
+          type="text"
+          placeholder="Buscar documentos por nombre..."
+          class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+          @input="handleSearch"
+        />
       </div>
-
       <BaseButton
         variant="outline"
         size="md"
@@ -83,7 +82,6 @@ const clearFilters = () => {
         </svg>
         Filtros
       </BaseButton>
-
       <BaseButton
         variant="primary"
         size="md"
@@ -157,3 +155,4 @@ const clearFilters = () => {
     </Transition>
   </div>
 </template>
+

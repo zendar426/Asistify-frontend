@@ -52,7 +52,8 @@ const fileIcon = computed(() => {
     doc: '📃',
     docx: '📃',
   }
-  return icons[props.document.extension_content.toLowerCase()] || '📄'
+  const ext = typeof props.document.extension_content === 'string' ? props.document.extension_content.toLowerCase() : ''
+  return icons[ext] || '📄'
 })
 </script>
 
