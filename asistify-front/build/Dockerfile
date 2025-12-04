@@ -8,6 +8,14 @@ RUN npm ci
 # Copiar el código fuente
 COPY . .
 
+# Argumentos de construcción
+ARG VITE_BACKEND_API_URL
+ARG VITE_PORT
+
+# Hacerlos disponibles como variables de entorno durante el build
+ENV VITE_BACKEND_API_URL=$VITE_BACKEND_API_URL
+ENV VITE_PORT=$VITE_PORT
+
 RUN npm run build-only
 
 FROM nginx:alpine
