@@ -35,7 +35,7 @@ jobs:
                   push: true
                   tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
                   build-args: |
-                    VITE_BACKEND_API_URL=${{ secrets.BACKEND_API_URL }}
+                    VITE_BACKEND_API_URL=${{ secrets.VITE_BACKEND_API_URL }}
                     VITE_PORT=${{ secrets.PORT }}
 
     deploy:
