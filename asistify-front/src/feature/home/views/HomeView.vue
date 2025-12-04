@@ -7,6 +7,7 @@ import AgendaState from '@/feature/home/charts/AgendaState.vue'
 import CardBigNumber from '@/feature/home/components/CardBigNumber.vue'
 import RecentCallsTable from '@/feature/home/components/RecentCallsTable.vue'
 import { useDashboardStore } from '@/stores/dashboardStore.ts'
+import CallsOverTimeChart from '@/feature/home/charts/CallsOverTimeChart.vue'
 
 const series2 = ref([
     {
@@ -107,7 +108,8 @@ const options: ApexOptions = {
                 </div>
 
                 <!-- Bar Chart by Receptionist -->
-                <bar-comparision-receptionist />
+
+                <bar-comparision-receptionist :history="dashboardStore.getCalendarHistory" />
             </div>
 
             <!-- Right Column -->
@@ -121,6 +123,7 @@ const options: ApexOptions = {
                         :series="series2"
                     ></VueApexCharts>
                 </div>
+                <CallsOverTimeChart></CallsOverTimeChart>
 
                 <!-- Recent Calls Table -->
                 <recent-calls-table :history="dashboardStore.dashboardData.callHistory" />

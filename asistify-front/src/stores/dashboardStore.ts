@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia'
-import type { IDashboard } from '@/api/dashboard.ts'
-import { api } from '@/api/axios.ts'
+import {defineStore} from 'pinia'
+import type {ICallHistory, IDashboard} from '@/api/dashboard.ts'
+import {api} from '@/api/axios.ts'
 
 export const useDashboardStore = defineStore('dashboard', {
     state: (): { dashboardData: IDashboard; isLoading: boolean } => ({
@@ -30,6 +30,9 @@ export const useDashboardStore = defineStore('dashboard', {
             countReceptionist: number
         } {
             return state.dashboardData.overview
+        },
+        getCalendarHistory(state): ICallHistory[] {
+            return state.dashboardData.callHistory
         },
     },
     actions: {
@@ -85,6 +88,34 @@ function mockDashboardData(): IDashboard {
                 clientName: 'Client C',
                 durationInMinutes: 5,
                 receptionistId: 'receptionist3',
+                state: 'completed',
+            },
+            {
+                date: '2025-12-02T15:51:21.647Z',
+                clientName: 'Client A',
+                durationInMinutes: 4,
+                receptionistId: 'receptionist3',
+                state: 'completed',
+            },
+            {
+                date: '2025-12-03T15:51:31.647Z',
+                clientName: 'Client A',
+                durationInMinutes: 4,
+                receptionistId: 'receptionist3',
+                state: 'completed',
+            },
+            {
+                date: '2025-12-02T13:51:27.647Z',
+                clientName: 'Client A',
+                durationInMinutes: 4,
+                receptionistId: 'receptionist3',
+                state: 'completed',
+            },
+            {
+                date: '2025-12-02T13:51:27.647Z',
+                clientName: 'Client B',
+                durationInMinutes: 4,
+                receptionistId: 'receptionist2',
                 state: 'completed',
             },
         ],
