@@ -30,8 +30,8 @@ const formatTime = (dateString: string) => {
 }
 
 // Helper para duración
-const formatDuration = (mins: number) => {
-    return `${mins} min`
+const formatDuration = (seconds: number) => {
+    return `${seconds} s`
 }
 </script>
 
@@ -96,9 +96,7 @@ const formatDuration = (mins: number) => {
                                 {{ call.state }}
                             </span>
                         </td>
-                        <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-600">
-                            {{ formatDuration(call.durationInMinutes) }}
-                        </td>
+                        {{ formatDuration(call.durationInSeconds) }}
                     </tr>
                 </tbody>
             </table>
