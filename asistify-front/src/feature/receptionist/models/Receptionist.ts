@@ -15,6 +15,7 @@ export class Receptionist {
         public levelDynamism?: number,
         public anticipationMaxDays?: number,
         public anticipationMinDays?: number,
+        public createdAt?: Date,
     ) {}
 
     static fromReceptionistDto(dto: ReceptionistDto): Receptionist {
@@ -30,7 +31,8 @@ export class Receptionist {
             dto.levelFormality,
             dto.levelDynamism,
             dto.anticipationMaxDays,
-            dto.anticipationMinDays
+            dto.anticipationMinDays,
+            dto.createdAt ? new Date(dto.createdAt) : undefined
         )
     }
 
@@ -51,7 +53,8 @@ export class Receptionist {
             data.levelFormality,
             data.levelDynamism,
             data.anticipationMaxDays,
-            data.anticipationMinDays
+            data.anticipationMinDays,
+            new Date() // Default for new data
         )
     }   
 }

@@ -26,6 +26,31 @@ const receptionistService = ReceptionistService.getInstance();
  */
 const receptionists = computed(() => receptionistStore.receptionist)
 
+const lastCreatedText = computed(() => {
+  if (receptionists.value.length === 0) return 'N/A'
+  
+  const sorted = [...receptionists.value].sort((a, b) => {
+    const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0
+    const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0
+    return dateB - dateA
+  })
+
+  const last = sorted[0]
+  if (!last || !last.createdAt) return 'N/A'
+
+  const date = new Date(last.createdAt)
+  const now = new Date()
+  const diffTime = now.getTime() - date.getTime()
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+  const diffHours = Math.floor(diffTime / (1000 * 60 * 60))
+  const diffMinutes = Math.floor(diffTime / (1000 * 60))
+
+  if (diffMinutes < 60) return `Hace ${diffMinutes} minutos`
+  if (diffHours < 24) return `Hace ${diffHours} horas`
+  if (diffDays === 1) return 'Ayer'
+  return `Hace ${diffDays} días`
+})
+
 /** Refs */
 const loading = ref(true)
 const showDeleteModal = ref(false)
@@ -115,7 +140,7 @@ onMounted(() => {
           <div class="flex items-center justify-between">
             <div>
               <p class="text-sm text-dark/80 mb-1">Último agregado</p>
-              <p class="text-sm font-semibold text-dark/90">Hace 2 días</p> <!-- Todo: considerate deleting or updating model to include timestamp -->
+              <p class="text-sm font-semibold text-dark/90">{{ lastCreatedText }}</p>
             </div>
             <div class="bg-primary/10 p-3 rounded-full">
               <font-awesome-icon icon="fa-solid fa-clock" class="text-primary text-xl" />

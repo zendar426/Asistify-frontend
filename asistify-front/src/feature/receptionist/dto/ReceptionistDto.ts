@@ -18,6 +18,7 @@ export const ReceptionistDtoSchema = z.object({
     levelDynamism: z.number().min(0).max(10).optional(),
     anticipationMaxDays: z.number().min(1).optional(),
     anticipationMinDays: z.number().min(1).optional(),
+    createdAt: z.string().or(z.date()).optional(),
 })
 
 export type ReceptionistDto = z.infer<typeof ReceptionistDtoSchema>
