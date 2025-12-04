@@ -3,8 +3,8 @@ import { ref, onBeforeUnmount, computed, watch } from 'vue'
 import { Device, Call } from '@twilio/voice-sdk'
 import type { Receptionist } from '../models/Receptionist'
 import { logger } from '@/utils/logger'
-import api from '@/utils/axios'
-
+import { api } from '@/api/axios'
+import { API_ROUTE } from '@/utils/config'
 interface Props {
     receptionist: Receptionist
     isOpen: boolean
@@ -24,7 +24,7 @@ const identity = ref('user_' + Math.random().toString(36).substr(2, 9))
 const isCallInProgress = ref(false)
 
 // Server configuration
-const SERVER_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+const SERVER_URL = API_ROUTE || 'http://localhost:3000'
 
 const canCall = computed(() => callStatus.value === 'ready' && !isCallInProgress.value)
 const canHangup = computed(() => isCallInProgress.value)
@@ -420,13 +420,13 @@ onBeforeUnmount(() => {
                             <div>
                                 <span class="text-dark/80">Formalidad:</span>
                                 <span class="font-semibold ml-1"
-                                    >{{ (receptionist.formalityLevel || 0.5) * 100 }}%</span
+                                    >{{ (receptionist.levelFormality || 5) * 10 }}%</span
                                 >
                             </div>
                             <div>
                                 <span class="text-dark/80">Dinamismo:</span>
                                 <span class="font-semibold ml-1"
-                                    >{{ (receptionist.dynamismLevel || 0.5) * 100 }}%</span
+                                    >{{ (receptionist.levelDynamism || 5) * 10 }}%</span
                                 >
                             </div>
                         </div>

@@ -1,9 +1,23 @@
-import type { Document } from "../models/document.model";
+import type { Document } from '../models/document.model'
 
 export interface DocumentRepository {
-  create(params: {enterpriseId: string, file: File}): Promise<Document>;
-  findAll(params: {enterpriseId: string, pageNumber?: number, limit?: number, name?: string, documentTypeId?: string, size?: number}): Promise<Document[]>
-  findOne(params: {enterpriseId: string, documentId: string}): Promise<Document>;
-  delete(params: {enterpriseId: string, documentId: string}): Promise<Document>;
-  download(params: {enterpriseId: string, documentId: string}): Promise<Blob>;
+    create(params: { file: File }): Promise<Document>
+    findAll(params: {
+        pageNumber?: number
+        limit?: number
+        name?: string
+        documentTypeId?: string
+        size?: number
+    }): Promise<{
+        data: Document[]
+        metadata: {
+            limit: number
+            actualPage: number
+            nextPage: number | null
+            totalPages: number
+        }
+    }>
+    findOne(params: { documentId: string }): Promise<Document>
+    delete(params: { documentId: string }): Promise<Document | null>
+    download(params: { documentId: string }): Promise<Blob>
 }

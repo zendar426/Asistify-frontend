@@ -15,7 +15,7 @@ const emit = defineEmits<{
   delete: [documentId: string]
 }>()
 
-const getFileIcon = (extension: string) => {
+const getFileIcon = (extension?: string) => {
   const icons: Record<string, string> = {
     pdf: '📄',
     txt: '📝',
@@ -23,6 +23,8 @@ const getFileIcon = (extension: string) => {
     doc: '📃',
     docx: '📃',
   }
+  if (!extension) return '📄'
+  if (typeof extension !== 'string') extension = String(extension)
   return icons[extension.toLowerCase()] || '📄'
 }
 
@@ -35,7 +37,10 @@ const formatSize = (size: string) => {
 }
 
 const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('es-ES', {
+  if (!dateString) return 'Sin fecha'
+  const date = new Date(dateString)
+  if (isNaN(date.getTime())) return 'Sin fecha'
+  return date.toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -56,7 +61,7 @@ const formatDate = (dateString: string) => {
 
       <div class="flex-1 min-w-0">
         <h3 class="text-lg font-semibold text-gray-900 truncate">
-          {{ document.original_name }}
+          {{ document.original_name || document.name }}
         </h3>
         <div class="mt-1 flex items-center gap-4 text-sm text-gray-600">
           <span class="flex items-center gap-1">

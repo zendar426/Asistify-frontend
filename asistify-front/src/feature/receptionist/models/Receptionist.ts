@@ -5,30 +5,34 @@ export class Receptionist {
     constructor(
         public id: string,
         public name: string,
-        public phoneNumber?: string,
-        public avatar?: string,
-        public companyInfo?: string,
-        public clientInfo?: string,
-        public restrictions?: string,
-        public formalityLevel?: number,
-        public dynamismLevel?: number,
-        public appointmentMaxDays?: number,
-        public appointmentMinDays?: number,
+        public cellphone?: string,
+        public avatarId?: string,
+        public avatar?: { id: string; url: string },
+        public enterpriseInformation?: string,
+        public clientInformation?: string,
+        public businessRestrictions?: string,
+        public levelFormality?: number,
+        public levelDynamism?: number,
+        public anticipationMaxDays?: number,
+        public anticipationMinDays?: number,
+        public createdAt?: Date,
     ) {}
 
     static fromReceptionistDto(dto: ReceptionistDto): Receptionist {
         return new Receptionist(
             dto.id,
             dto.name,
-            dto.phoneNumber,
+            dto.cellphone,
+            dto.avatarId,
             dto.avatar,
-            dto.companyInfo,
-            dto.clientInfo,
-            dto.restrictions,
-            dto.formalityLevel,
-            dto.dynamismLevel,
-            dto.appointmentMaxDays,
-            dto.appointmentMinDays
+            dto.enterpriseInformation ?? undefined,
+            dto.clientInformation ?? undefined,
+            dto.businessRestrictions ?? undefined,
+            dto.levelFormality,
+            dto.levelDynamism,
+            dto.anticipationMaxDays,
+            dto.anticipationMinDays,
+            dto.createdAt ? new Date(dto.createdAt) : undefined
         )
     }
 
@@ -40,15 +44,17 @@ export class Receptionist {
         return new Receptionist(
             crypto.randomUUID(),
             data.name,
-            data.phoneNumber,
-            data.avatar,
-            data.companyInfo,
-            data.clientInfo,
-            data.restrictions,
-            data.formalityLevel,
-            data.dynamismLevel,
-            data.appointmentMaxDays,
-            data.appointmentMinDays
+            data.cellphone,
+            data.avatarId,
+            undefined, // avatar
+            data.enterpriseInformation,
+            data.clientInformation,
+            data.businessRestrictions,
+            data.levelFormality,
+            data.levelDynamism,
+            data.anticipationMaxDays,
+            data.anticipationMinDays,
+            new Date() // Default for new data
         )
     }   
 }

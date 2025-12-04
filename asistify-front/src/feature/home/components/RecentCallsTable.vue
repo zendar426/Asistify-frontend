@@ -1,102 +1,107 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { ICallHistory } from '@/api/dashboard.ts'
 
-// Mock data for recent calls
-const recentCalls = ref([
-  {
-    id: 1,
-    time: '10:30',
-    caller: 'María González',
-    receptionist: 'Juan Pérez',
-    status: 'Atendida',
-    duration: '5m 23s'
-  },
-  {
-    id: 2,
-    time: '10:15',
-    caller: 'Carlos Rodríguez',
-    receptionist: 'Ana Martinez',
-    status: 'Atendida',
-    duration: '3m 45s'
-  },
-  {
-    id: 3,
-    time: '09:58',
-    caller: 'Ana Martín',
-    receptionist: 'María González',
-    status: 'Atendida',
-    duration: '7m 12s'
-  },
-  {
-    id: 4,
-    time: '09:42',
-    caller: 'Pedro Sánchez',
-    receptionist: 'Ana Martinez',
-    status: 'No atendida',
-    duration: '-'
-  },
-  {
-    id: 5,
-    time: '09:25',
-    caller: 'Laura López',
-    receptionist: 'Maria González',
-    status: 'Atendida',
-    duration: '4m 18s'
-  }
-])
+// No es necesario asignar a una variable si solo usas las props en el template,
+// pero defineProps es suficiente.
+defineProps<{
+    history: ICallHistory[]
+}>()
 
 const getStatusClass = (status: string) => {
-  // El tono más claro de la paleta anterior: #c6cbe5
-  const atendidaClass = 'bg-[#c6cbe5] text-[#5a69cd] px-2 py-1 rounded-full text-xs';
+    const atendidaClass = 'bg-[#c6cbe5] text-[#5a69cd]'
+    const noAtendidaClass = 'bg-[#5a69cd] text-white'
 
-  // Tu color base (el más oscuro): #5a69cd
-  const noAtendidaClass = 'bg-[#5a69cd] text-white px-2 py-1 rounded-full text-xs';
+    // Clases base comunes
+    const baseClass = 'px-2 py-1 rounded-full text-xs font-semibold'
 
-  return status === 'Atendida'
-    ? atendidaClass
-    : noAtendidaClass;
+    return status === 'Atendida'
+        ? `${baseClass} ${atendidaClass}`
+        : `${baseClass} ${noAtendidaClass}`
+}
+
+// Helper para formatear la hora (asumiendo que viene fecha completa ISO)
+const formatTime = (dateString: string) => {
+    if (!dateString) return '-'
+    const date = new Date(dateString)
+    return new Intl.DateTimeFormat('es-CL', {
+        hour: '2-digit',
+        minute: '2-digit',
+    }).format(date)
+}
+
+// Helper para duración
+const formatDuration = (mins: number) => {
+    return `${mins} min`
 }
 </script>
 
 <template>
-  <div class="bg-white p-3 rounded-xl shadow-md">
-    <h2 class="text-base font-bold mb-2 text-[#263238]">Últimas llamadas a recepcionistas</h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full table-auto">
-        <thead>
-          <tr class="bg-gray-50">
-            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora</th>
-            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
-            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recepcionista</th>
-            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-            <th class="px-2 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duración</th>
-          </tr>
-        </thead>
-        <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="call in recentCalls" :key="call.id" class="hover:bg-gray-50">
-            <td class="px-2 py-2 whitespace-nowrap text-sm font-medium text-gray-900">
-              {{ call.time }}
-            </td>
-            <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-900">
-              {{ call.caller }}
-            </td>
-            <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-900">
-              {{ call.receptionist }}
-            </td>
-            <td class="px-2 py-2 whitespace-nowrap">
-              <span :class="getStatusClass(call.status)">
-                {{ call.status }}
-              </span>
-            </td>
-            <td class="px-2 py-2 whitespace-nowrap text-sm text-gray-900">
-              {{ call.duration }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</template>
+    <div class="bg-white p-3 rounded-xl shadow-md h-full flex flex-col">
+        <h2 class="text-base font-bold mb-4 text-[#263238]">Últimas llamadas a recepcionistas</h2>
 
-<style scoped>
-</style>
+        <div class="overflow-x-auto flex-grow">
+            <table class="min-w-full table-auto">
+                <thead>
+                    <tr class="bg-gray-50 border-b border-gray-100">
+                        <th
+                            class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                        >
+                            Hora
+                        </th>
+                        <th
+                            class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                        >
+                            Cliente
+                        </th>
+                        <th
+                            class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                        >
+                            Recepcionista
+                        </th>
+                        <th
+                            class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                        >
+                            Estado
+                        </th>
+                        <th
+                            class="px-3 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider"
+                        >
+                            Duración
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                    <tr v-if="history.length === 0">
+                        <td colspan="5" class="px-4 py-8 text-center text-sm text-gray-400">
+                            No hay llamadas registradas hoy.
+                        </td>
+                    </tr>
+
+                    <tr
+                        v-for="(call, index) in history"
+                        :key="index"
+                        class="hover:bg-gray-50 transition-colors"
+                    >
+                        <td class="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-700">
+                            {{ formatTime(call.date) }}
+                        </td>
+                        <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-600">
+                            {{ call.clientName }}
+                        </td>
+                        <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-600">
+                            #{{ call.receptionistId }}
+                        </td>
+                        <td class="px-3 py-3 whitespace-nowrap">
+                            <span :class="getStatusClass(call.state)">
+                                {{ call.state }}
+                            </span>
+                        </td>
+                        <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-600">
+                            {{ formatDuration(call.durationInMinutes) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>
