@@ -1,0 +1,83 @@
+name: Build and Push Frontend Image
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build-and-push:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Create .env file
+              env:
+                  PORT: ${{ secrets.PORT }}
+                  BACKEND_API_URL: ${{ secrets.BACKEND_API_URL }}
+              run: |
+                  echo "VITE_BACKEND_API_URL=$VITE_BACKEND_API_URL" > asistify-front/.env
+
+            - name: Set image name to lowercase
+              id: set_image_name
+              run: |
+                  echo "IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+            - name: Log in to GitHub Container Registry
+              uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push Docker image
+              uses: docker/build-push-action@v5
+              with:
+                  context: asistify-front/
+                  file: asistify-front/build/Dockerfile
+                  push: true
+                  tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
+
+    deploy:
+        needs: build-and-push
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/ci-cd')
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set image name to lowercase
+              run: |
+                  echo "IMAGE_NAME_LOWER=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+            - name: Copy deploy script to VM
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  source: 'scripts/deploy.sh'
+                  target: '~/deploy-scripts'
+
+            - name: Deploy to VM via SSH
+              uses: appleboy/ssh-action@v1.0.3
+              env:
+                  PORT: ${{ secrets.PORT }}
+                  GITHUB_USERNAME: ${{ github.actor }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  IMAGE_TAG: ghcr.io/${{ env.IMAGE_NAME_LOWER }}:latest
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  envs: PORT,GITHUB_USERNAME,GITHUB_TOKEN,IMAGE_TAG
+                  script: |
+                      chmod +x ~/deploy-scripts/scripts/deploy.sh
+                      ~/deploy-scripts/scripts/deploy.sh
