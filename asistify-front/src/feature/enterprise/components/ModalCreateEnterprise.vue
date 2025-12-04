@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { api } from '@/api/axios'
 import BaseButton from '@/components/BaseButton.vue'
 import { useUserStore } from '@/feature/auth/stores/userStore'
 import router from '@/router'
 import { useMembershipStore } from '@/stores/membershipStore'
-import api from '@/utils/axios'
+
 import { reactive, ref } from 'vue'
 
 
@@ -65,7 +66,7 @@ async function goSelectMembershipLol(){
 </script>
 
 <template>
-    <BaseButton variant="outline" size="lg" @click="openModalOrGo"> Crear empresa </BaseButton>
+    <BaseButton variant="primary" size="lg" @click="openModalOrGo"> Crear empresa </BaseButton>
     <!-- <button @click="showModal = true">Crear Empresa</button> -->
     <div v-if="showModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">

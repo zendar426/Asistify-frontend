@@ -47,7 +47,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
-        if (error.config.url=="/auth/login"){
+        if (error.config?.url=="/auth/login"){
             return error
         }
         const status = error.response?.status

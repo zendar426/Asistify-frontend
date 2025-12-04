@@ -1,6 +1,6 @@
 <template>
-    <BaseButton variant="outline" size="lg" @click="showModal=true"> Editar empresa </BaseButton>
-    <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+    <BaseButton variant="secondary" size="lg" @click="showModal=true"> Editar empresa </BaseButton>
+    <div v-if="showModal" class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
             <!-- Header Icon -->
             <div class="flex items-start gap-4 mb-6">
@@ -28,7 +28,7 @@
                     <label for="nombre" class="block text-sm font-medium text-gray-900 mb-2">
                         Nombre
                     </label>
-                    <input id="nombre" v-model="formData.nombre" type="text"
+                    <input id="nombre" v-model="formData.name" type="text"
                         class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all" />
                 </div>
 
@@ -38,12 +38,13 @@
                         Categoría
                     </label>
                     <div class="relative">
-                        <select id="categoria" v-model="formData.categoria"
+                        <select id="categoria" v-model="formData.categoryId"
                             class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all cursor-pointer">
-                            <option value="Clínica">Clínica</option>
+                            <option v-for="category in storedCategories" :value="category.id">{{ category.name }}</option>
+                            <!-- <option value="Clínica">Clínica</option>
                             <option value="Hospital">Hospital</option>
                             <option value="Consultorio">Consultorio</option>
-                            <option value="Farmacia">Farmacia</option>
+                            <option value="Farmacia">Farmacia</option> -->
                         </select>
                         <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none">
                         </div>
@@ -52,7 +53,7 @@
 
                 <!-- Action Buttons -->
                 <div class="flex items-center justify-end gap-3 pt-2">
-                    <button type="button" @click="handleCancel"
+                    <button type="button" @click="showModal=false"
                         class="px-6 py-2.5 bg-gray-700 hover:bg-gray-800 text-white text-sm font-medium rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                         Cancelar
                     </button>
@@ -67,12 +68,19 @@
 </template>
 
 <script setup lang="ts">
+import { api } from '@/api/axios'
+import BaseButton from '@/components/BaseButton.vue'
+import { useUserStore } from '@/feature/auth/stores/userStore'
 import { ref } from 'vue'
 
+let storedCategoriesReq=await api.get("/enterprise-categories")
+let storedCategories=storedCategoriesReq.data
+
+let userStore=useUserStore()
 let showModal=ref(false)
 interface CompanyFormData {
-    nombre: string
-    categoria: string
+    name: string
+    categoryId: string
 }
 
 interface Props {
@@ -81,8 +89,8 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
     initialData: () => ({
-        nombre: 'Clínica Toltén',
-        categoria: 'Clínica'
+        name: 'Clínica Toltén',
+        categoryId: 'Clínica',
     })
 })
 
@@ -91,13 +99,23 @@ const emit = defineEmits<{
     cancel: []
 }>()
 
-const formData = ref<CompanyFormData>({
-    nombre: props.initialData.nombre,
-    categoria: props.initialData.categoria
-})
+const formData = {
+    name: props.initialData.name,
+    categoryId: props.initialData.categoryId
+}
 
-const handleSubmit = () => {
-    emit('submit', formData.value)
+const handleSubmit = async () => {
+    let enterpriseProfile=await api.get(`/enterprise-profiles/profile/${userStore.getUser().id}`)
+    let enterpriseId=enterpriseProfile.data[0].enterpriseId
+    console.log("tosend ",formData)
+    let response=await api.patch(`/enterprises/${enterpriseId}`,formData)
+    if (response.status>299){
+        //coso
+    }
+    else{
+        window.location.reload()
+    }
+    
 }
 
 const handleCancel = () => {
