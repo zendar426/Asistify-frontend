@@ -1,0 +1,43 @@
+name: Build and Push Frontend Image
+
+on:
+    push:
+        branches:
+            - main
+            - feature/ci-cd
+    pull_request:
+        branches:
+            - main
+
+jobs:
+    build-and-push:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Create .env file
+              env:
+                  PORT: ${{ secrets.PORT }}
+                  BACKEND_API_URL: ${{ secrets.BACKEND_API_URL }}
+              run: |
+                  echo "VITE_BACKEND_API_URL=$VITE_BACKEND_API_URL" > asistify-front/.env
+
+            - name: Set image name to lowercase
+              id: set_image_name
+              run: |
+                  echo "IMAGE_NAME=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+            - name: Log in to GitHub Container Registry
+              uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build and push Docker image
+              uses: docker/build-push-action@v5
+              with:
+                  context: asistify-front/
+                  push: true
+                  tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
