@@ -1,4 +1,5 @@
 <template>
+    <BaseButton variant="outline" size="lg" @click="showModal=true"> Editar empresa </BaseButton>
     <div class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8">
             <!-- Header Icon -->
@@ -68,6 +69,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+let showModal=ref(false)
 interface CompanyFormData {
     nombre: string
     categoria: string

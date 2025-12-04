@@ -17,5 +17,10 @@ export const useUserStore = defineStore('user', {
         updateUser(newData:any) {
             this.user=new User(newData)
         },
+
+        getUser(){
+            return this.user
+        }
     },
+    persist:true,
 })

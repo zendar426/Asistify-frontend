@@ -1,4 +1,5 @@
 export class User{
+    public id:string
     public name: String
     public surname:String
     public email:String
@@ -9,6 +10,7 @@ export class User{
         this.surname=json.surname
         this.email=json.email
         this.orgName=json.orgName
+        this.id=json.id
     }
 
     asJson():any{
