@@ -2,6 +2,7 @@
   import SideBar from '@/components/SideBar.vue';
   import ProfileInfoComponent from '../components/ProfileInfoComponent.vue';
 import PaymentMethods from '../components/PaymentMethods.vue';
+import EnterpriseInfoComponent from '../components/EnterpriseInfoComponent.vue';
 
 
 </script>
@@ -20,11 +21,14 @@ import PaymentMethods from '../components/PaymentMethods.vue';
 
         <ProfileInfoComponent></ProfileInfoComponent>
         
-        
+   
+        <Suspense>
+          <EnterpriseInfoComponent></EnterpriseInfoComponent>
+        </Suspense>
 
-        <div id="" class="mt-5 mx-auto">
+        <!-- <div id="" class="mt-5 mx-auto">
           <PaymentMethods></PaymentMethods>
-        </div>
+        </div> -->
       </div>
     </section>
 

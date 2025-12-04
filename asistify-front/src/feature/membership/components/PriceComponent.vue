@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import BaseButton from '@/components/BaseButton.vue'
 import { useMembershipStore } from '@/stores/membershipStore.ts'
-import { useRouter } from 'vue-router'
-
+import { useRoute, useRouter } from 'vue-router'
+let route=useRoute()
 const props = defineProps({
     id: {
         type: String,
@@ -38,7 +38,13 @@ const membershipStore = useMembershipStore()
 const router = useRouter()
 const handleSelectPlan = () => {
     membershipStore.setSelectedMembership(props.id)
-    router.push({ name: 'register' })
+    if (route.query.backToThingy){
+        router.push({name:'account'})
+    }
+    else{
+        router.push({ name: 'register' })
+    }
+    
 }
 </script>
 

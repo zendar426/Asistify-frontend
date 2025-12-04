@@ -81,7 +81,7 @@ const router = createRouter({
                 },
                 {
                     name: 'enterprise',
-                    path: '/empresa',
+                    path: 'empresa',
                     component: () => import('@/feature/enterprise/views/EnterpriseView.vue')
                 }
             ],

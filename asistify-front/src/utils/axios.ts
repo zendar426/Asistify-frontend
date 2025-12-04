@@ -15,6 +15,7 @@ api.interceptors.request.use(
         } else if (!IS_PROD) {
             config.headers.Authorization = `Bearer ${MOCK_BEARER_TOKEN}`
         }
+        config.headers.set("x-API-Version","1")
         return config
     },
     (error) => {
