@@ -35,7 +35,6 @@
                     </div>
 
                     <!-- Title -->
-                    <h2 class="text-2xl font-medium text-gray-900 ml-8">métricas de rendimiento</h2>
                 </div>
 
                 <!-- Branding -->
@@ -159,6 +158,7 @@ interface Props {
     contactCount?: string
     contacts?: Contact[]
 }
+// TODO: Definir que las props consuman a los endpoints reales.
 
 const props = withDefaults(defineProps<Props>(), {
     receptionistName: 'Recepcionista nuevos clientes',
@@ -167,7 +167,7 @@ const props = withDefaults(defineProps<Props>(), {
     callsComparison: '+2 que el día pasado.',
     avgResponseTime: '0.5s',
     responseComparison: '0.1s más rápido que el promedio semanal',
-    contactCount: '179.57.233.152',
+    contactCount: '179.57.233.152' || '',
     contacts: () => [
         {
             name: 'Sergio Sepulveda',

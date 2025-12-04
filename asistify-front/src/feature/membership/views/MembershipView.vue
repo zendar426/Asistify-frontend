@@ -45,7 +45,9 @@ const placeholderMemberShips = [
 </script>
 
 <template>
-    <div class="min-h-screen bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100">
+    <div
+        class="min-h-screen pb-12 bg-gradient-to-b from-tertiary from-0% via-white via-15% to-gray-100"
+    >
         <LandingNavbar />
         <br />
         <div class="mx-auto max-w-screen-md text-center mb-8 lg:mb-12">
@@ -58,8 +60,9 @@ const placeholderMemberShips = [
             </p>
         </div>
         <div v-if="loading" class="text-center">Cargando...</div>
+
         <div
-            class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0 justify-items-center max-w-6xl mx-auto px-4"
+            class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0 justify-items-center items-start max-w-6xl mx-auto px-4"
             v-else
         >
             <PriceComponent

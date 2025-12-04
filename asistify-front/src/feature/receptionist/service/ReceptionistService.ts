@@ -9,7 +9,7 @@ export class ReceptionistService {
     private readonly receptionistRepository: ReceptionistRepository;
 
     private constructor() {
-        this.receptionistRepository = ReceptionistRepositoryLocal.getInstance();
+        this.receptionistRepository = ReceptionistRepositoryApi.getInstance();
     }
 
     public static getInstance(): ReceptionistService {

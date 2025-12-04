@@ -1,7 +1,8 @@
+import { API_ROUTE } from '@/utils/config'
 import axios from 'axios'
 
 export const api = axios.create({
-    baseURL: import.meta.env.VITE_BACKEND_API_URL,
+    baseURL: API_ROUTE,
     // NO pongas el header Authorization aquí de forma estática
 })
 
@@ -24,12 +25,15 @@ api.interceptors.request.use(
         // 1. Obtener el token actualizado AL MOMENTO de la petición
         const token = localStorage.getItem('access_token') // Ojo: asegúrate que este sea el key correcto
 
-        // 2. Si existe, lo inyectamos
+        // 2. Aseguramos que config.headers exista
+        config.headers = config.headers || {}
+
+        // 3. Si existe el token, lo inyectamos
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
         }
 
-        // 3. Inyectamos la versión (para que coincida con tu NestJS Header Versioning)
+        // 4. Inyectamos la versión (para que coincida con tu NestJS Header Versioning)
         config.headers['X-Api-Version'] = '1'
 
         return config
@@ -84,7 +88,7 @@ api.interceptors.response.use(
                 originalRequest.headers = originalRequest.headers || {}
                 originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
                 return api(originalRequest)
-            } catch (e) {
+            } catch {
                 // Si el refresh falla, limpiamos y redirigimos a login
                 localStorage.removeItem('access_token')
                 try {

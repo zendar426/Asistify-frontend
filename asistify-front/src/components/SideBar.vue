@@ -29,16 +29,16 @@
           </RouterLink>
         </li>
         <li>
-          <a href="#" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group">
+          <RouterLink :to="{ name: 'home'}" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group">
             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
               <path d="M13.031,11.852 C12.603,11.313 11.908,10.532 11.313,10.458 C10.951,10.413 10.535,10.713 10.125,10.996 C10.045,11.036 9.427,11.404 9.352,11.426 C8.956,11.539 8.111,11.572 7.6,11.106 C7.108,10.656 6.33,9.823 5.702,9.06 C5.102,8.274 4.473,7.329 4.151,6.749 C3.815,6.148 4.057,5.353 4.265,5.003 C4.303,4.94 4.763,4.467 4.866,4.357 L4.881,4.375 C5.262,4.055 5.661,3.73 5.706,3.378 C5.78,2.792 5.181,1.939 4.753,1.399 C4.325,0.858 3.662,-0.089 2.759,0.045 C2.419,0.095 2.126,0.214 1.837,0.385 L1.829,0.376 C1.823,0.38 1.795,0.402 1.781,0.413 C1.772,0.418 1.764,0.421 1.756,0.426 L1.759,0.43 C1.593,0.558 1.119,0.912 1.065,0.96 C0.479,1.481 -0.403,2.708 0.279,4.915 C0.785,6.555 1.864,8.481 3.334,10.429 L3.326,10.436 C3.398,10.53 3.472,10.615 3.547,10.706 C3.617,10.799 3.686,10.891 3.758,10.983 L3.768,10.976 C5.328,12.855 6.964,14.357 8.457,15.243 C10.467,16.435 11.896,15.898 12.556,15.471 C12.618,15.43 13.09,15.063 13.25,14.942 L13.254,14.946 C13.26,14.94 13.264,14.932 13.272,14.926 C13.284,14.917 13.31,14.897 13.315,14.893 L13.309,14.885 C13.551,14.651 13.745,14.401 13.879,14.086 C14.23,13.257 13.459,12.393 13.031,11.852 L13.031,11.852 Z" class="si-glyph-fill"/>
             </svg>
             <span class="flex-1 ms-3 whitespace-nowrap">Llamadas</span>
             <span class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-800 bg-gray-100 rounded-full">Pro</span>
-          </a>
+          </RouterLink>
         </li>
         <li>
-          <RouterLink :to="{ name: 'receptionist' }" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
+          <RouterLink :to="{ name: 'receptionistDetailt' }" class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-indigo-200 group"
                       active-class="bg-indigo-200 text-blue-700 border-r-4 border-blue-600">
             <svg class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 group-[.router-link-active]:bg-indigo-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
               <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>

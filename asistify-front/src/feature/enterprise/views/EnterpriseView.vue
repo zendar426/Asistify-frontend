@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import ModalCreateEnterprise from '../components/ModalCreateEnterprise.vue'
 import ModalEditEnterprise from '../components/ModalEditEnterprise.vue'
 
-const showCreateModal = ref(false)
+const showCreateModal = ref(true)
 const showEditModal = ref(false)
 
 type FormData = {
@@ -23,10 +23,10 @@ function handleEditCancel() {
 
 <template>
     <div>
-        <div class="flex gap-4">
+        <!-- <div class="flex gap-4">
             <button @click="showCreateModal = true">Crear Empresa</button>
             <button @click="showEditModal = true">Editar Empresa</button>
-        </div>
+        </div> -->
         
         <ModalCreateEnterprise v-if="showCreateModal" @close="showCreateModal = false" />
         <ModalEditEnterprise 
