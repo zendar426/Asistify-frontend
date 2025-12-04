@@ -24,14 +24,14 @@ const emit = defineEmits<{
 
 const {
     name,
-    phoneNumber,
-    avatar,
-    clientInfo,
-    restrictions,
-    formalityLevel,
-    dynamismLevel,
-    appointmentMaxDays,
-    appointmentMinDays,
+    cellphone,
+    avatarId,
+    enterpriseInformation,
+    businessRestrictions,
+    levelFormality,
+    levelDynamism,
+    anticipationMaxDays,
+    anticipationMinDays,
     errors,
     validate,
     reset
@@ -41,14 +41,14 @@ const {
 onMounted(() => {
     if (props.isEditMode && props.receptionist) {
         name.value = props.receptionist.name
-        phoneNumber.value = props.receptionist.phoneNumber || ''
-        avatar.value = props.receptionist.avatar || ''
-        clientInfo.value = props.receptionist.clientInfo || ''
-        restrictions.value = props.receptionist.restrictions || ''
-        formalityLevel.value = props.receptionist.formalityLevel || 0.5
-        dynamismLevel.value = props.receptionist.dynamismLevel || 0.5
-        appointmentMaxDays.value = props.receptionist.appointmentMaxDays || 30
-        appointmentMinDays.value = props.receptionist.appointmentMinDays || 1
+        cellphone.value = props.receptionist.cellphone || ''
+        avatarId.value = props.receptionist.avatarId || ''
+        enterpriseInformation.value = props.receptionist.enterpriseInformation || ''
+        businessRestrictions.value = props.receptionist.businessRestrictions || ''
+        levelFormality.value = props.receptionist.levelFormality || 5
+        levelDynamism.value = props.receptionist.levelDynamism || 5
+        anticipationMaxDays.value = props.receptionist.anticipationMaxDays || 30
+        anticipationMinDays.value = props.receptionist.anticipationMinDays || 1
     }
 })
 
@@ -60,14 +60,14 @@ const handleSubmit = async () => {
     const formData = {
         id: props.isEditMode ? props.receptionist?.id : undefined,
         name: name.value,
-        phoneNumber: phoneNumber.value,
-        avatar: avatar.value,
-        clientInfo: clientInfo.value,
-        restrictions: restrictions.value,
-        formalityLevel: formalityLevel.value,
-        dynamismLevel: dynamismLevel.value,
-        appointmentMaxDays: appointmentMaxDays.value,
-        appointmentMinDays: appointmentMinDays.value
+        cellphone: cellphone.value,
+        avatarId: avatarId.value,
+        enterpriseInformation: enterpriseInformation.value,
+        businessRestrictions: businessRestrictions.value,
+        levelFormality: levelFormality.value,
+        levelDynamism: levelDynamism.value,
+        anticipationMaxDays: anticipationMaxDays.value,
+        anticipationMinDays: anticipationMinDays.value
     }
     
     emit('submit', formData)
@@ -100,85 +100,86 @@ const handleCancel = () => {
                     :required="true"
                 />
 
-                <!-- Phone Number -->
+                <!-- Cellphone -->
                 <FormInput
-                    v-model="phoneNumber"
+                    v-model="cellphone"
                     label="Número de teléfono"
                     type="tel"
                     placeholder="+56 9 1234 5678"
-                    :error="errors.phoneNumber"
+                    :error="errors.cellphone"
                     :maxlength="20"
                     :required="true"
                 />
 
-                <!-- Avatar URL -->
+                <!-- Avatar ID -->
                 <FormInput
-                    v-model="avatar"
-                    label="Avatar (URL)"
-                    type="url"
-                    placeholder="https://ejemplo.com/avatar.jpg"
-                    :error="errors.avatar"
-                    :maxlength="500"
+                    v-model="avatarId"
+                    label="Avatar ID"
+                    type="text"
+                    placeholder="UUID del avatar"
+                    :error="errors.avatarId"
+                    :maxlength="50"
+                    :required="true"
                 />
 
-                <!-- Client Info -->
+                <!-- Enterprise Information -->
                 <FormTextarea
-                    v-model="clientInfo"
+                    v-model="enterpriseInformation"
                     label="Información del cliente"
                     placeholder="Describe la información relevante sobre tus clientes"
-                    :error="errors.clientInfo"
+                    :error="errors.enterpriseInformation"
                     :maxlength="1000"
                     :rows="4"
                 />
 
-                <!-- Restrictions -->
+                <!-- Business Restrictions -->
                 <FormTextarea
-                    v-model="restrictions"
+                    v-model="businessRestrictions"
                     label="Restricciones"
                     placeholder="Define las restricciones o límites del recepcionista"
-                    :error="errors.restrictions"
+                    :error="errors.businessRestrictions"
                     :maxlength="500"
                     :rows="3"
                 />
 
                 <!-- Formality Level -->
                 <FormSlider
-                    v-model="formalityLevel"
+                    v-model="levelFormality"
                     label="Nivel de formalidad"
                     :min="0"
-                    :max="1"
-                    :step="0.1"
-                    :error="errors.formalityLevel"
+                    :max="10"
+                    :step="1"
+                    :error="errors.levelFormality"
                 />
 
                 <!-- Dynamism Level -->
                 <FormSlider
-                    v-model="dynamismLevel"
+                    v-model="levelDynamism"
                     label="Nivel de dinamismo"
                     :min="0"
-                    :max="1"
-                    :step="0.1"
-                    :error="errors.dynamismLevel"
+                    :max="10"
+                    :step="1"
+                    :error="errors.levelDynamism"
                 />
 
-                <!-- Appointment Min Days -->
+                <!-- Anticipation Min Days -->
                 <FormInput
-                    v-model="appointmentMinDays"
+                    v-model="anticipationMinDays"
                     label="Días mínimos para citas"
                     type="number"
                     placeholder="1"
-                    :error="errors.appointmentMinDays"
+                    :error="errors.anticipationMinDays"
                     :min="0"
                     :max="30"
                 />
 
-                <!-- Appointment Max Days -->
+                <!-- Anticipation Max Days -->
                 <FormInput
-                    v-model="appointmentMaxDays"
+                    v-model="anticipationMaxDays"
                     label="Días máximos para citas"
                     type="number"
                     placeholder="30"
-                    :error="errors.appointmentMaxDays"
+                    :error="errors.anticipationMaxDays"
                     :min="1"
                     :max="365"
                 />

@@ -1,4 +1,4 @@
-import api from '@/utils/axios'
+import { api } from '@/api/axios'
 import { Receptionist } from '../models/Receptionist'
 import type { ReceptionistRepository } from './ReceptionistRepository'
 import { logger } from '@/utils/logger'
@@ -29,7 +29,8 @@ export class ReceptionistRepositoryApi implements ReceptionistRepository {
 
             logger.info('[GET_RECEPTIONISTS]', 'response: ', response)
 
-            const validationResult = z.array(ReceptionistDtoSchema).safeParse(response.data)
+            // Extract data from PaginatedResponseDto
+            const validationResult = z.array(ReceptionistDtoSchema).safeParse(response.data.data)
 
             if (!validationResult.success) {
                 logger.error('[GET_RECEPTIONISTS] Validation failed:', validationResult.error)
@@ -100,7 +101,21 @@ export class ReceptionistRepositoryApi implements ReceptionistRepository {
 
     public async create(receptionist: Receptionist): Promise<Result<Receptionist | void>> {
         try {
-            const response = await api.post(`${API_ROUTE}/receptionists`, receptionist)
+            // Map Receptionist model to backend DTO structure
+            const payload = {
+                name: receptionist.name,
+                cellphone: receptionist.cellphone,
+                avatarId: receptionist.avatarId,
+                enterpriseInformation: receptionist.enterpriseInformation,
+                clientInformation: receptionist.clientInformation,
+                businessRestrictions: receptionist.businessRestrictions,
+                levelFormality: receptionist.levelFormality,
+                levelDynamism: receptionist.levelDynamism,
+                anticipationMaxDays: receptionist.anticipationMaxDays,
+                anticipationMinDays: receptionist.anticipationMinDays,
+            }
+
+            const response = await api.post(`${API_ROUTE}/receptionists`, payload)
 
             logger.info('[CREATE_RECEPTIONIST]', 'response: ', response)
 
@@ -133,9 +148,23 @@ export class ReceptionistRepositoryApi implements ReceptionistRepository {
 
     public async update(receptionist: Receptionist): Promise<Result<Receptionist | void>> {
         try {
-            const response = await api.put(
+             // Map Receptionist model to backend DTO structure
+             const payload = {
+                name: receptionist.name,
+                cellphone: receptionist.cellphone,
+                avatarId: receptionist.avatarId,
+                enterpriseInformation: receptionist.enterpriseInformation,
+                clientInformation: receptionist.clientInformation,
+                businessRestrictions: receptionist.businessRestrictions,
+                levelFormality: receptionist.levelFormality,
+                levelDynamism: receptionist.levelDynamism,
+                anticipationMaxDays: receptionist.anticipationMaxDays,
+                anticipationMinDays: receptionist.anticipationMinDays,
+            }
+
+            const response = await api.patch(
                 `${API_ROUTE}/receptionists/${receptionist.id}`,
-                receptionist,
+                payload,
             )
             logger.info('[UPDATE_RECEPTIONIST]', 'response: ', response)
 
@@ -170,7 +199,7 @@ export class ReceptionistRepositoryApi implements ReceptionistRepository {
 
             logger.info('[DELETE_RECEPTIONIST]', 'response: ', response)
 
-            if (response.status == 200) {
+            if (response.status == 204 || response.status == 200) {
                 this.receptionistStore.removeReceptionist(id)
 
                 return {
