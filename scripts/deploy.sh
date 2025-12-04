@@ -39,6 +39,7 @@ echo "Starting new container on port $PORT..."
 docker run -d \
   --name asistify-frontend \
   --restart unless-stopped \
+  --network asistify-network \
   -p $PORT:8080 \
   $IMAGE_TAG
 
