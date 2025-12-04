@@ -47,11 +47,14 @@ api.interceptors.request.use(
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
+        if (error.config.url=="/auth/login"){
+            return error
+        }
         const status = error.response?.status
         const originalRequest = error.config || {}
 
         // Si el token expiró (401), intentamos refrescar y reintentar la petición
-        if (status === 401 && !originalRequest._retry) {
+        if (status === 401 && !originalRequest._retry ) {
             originalRequest._retry = true
 
             // Si ya hay un refresh en curso, nos suscribimos y reintentamos cuando termine
