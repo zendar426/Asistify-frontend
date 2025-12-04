@@ -5,6 +5,7 @@ import type { Receptionist } from '../models/Receptionist'
 import { logger } from '@/utils/logger'
 import { api } from '@/api/axios'
 import { API_ROUTE } from '@/utils/config'
+import { CallHistoryRepositoryApi } from '../repository/CallHistoryRepositoryApi'
 interface Props {
     receptionist: Receptionist
     isOpen: boolean
@@ -22,6 +23,7 @@ const callStatus = ref<'disconnected' | 'ready' | 'connecting' | 'connected'>('d
 const statusMessage = ref('Initializing...')
 const identity = ref('user_' + Math.random().toString(36).substr(2, 9))
 const isCallInProgress = ref(false)
+const callStartTime = ref<Date | null>(null)
 
 // Server configuration
 const SERVER_URL = API_ROUTE || 'http://localhost:3000'
@@ -189,12 +191,35 @@ function setupCallHandlers(call: Call) {
     call.on('accept', () => {
         updateStatus('📞 Llamada en curso - ¡Habla ahora!', 'connected')
         isCallInProgress.value = true
+        callStartTime.value = new Date()
         logger.info('Call accepted and connected')
     })
 
-    call.on('disconnect', () => {
+    call.on('disconnect', async () => {
         updateStatus('✅ Listo para llamar!', 'ready')
         isCallInProgress.value = false
+        
+        if (callStartTime.value) {
+            const endTime = new Date()
+            const durationMs = endTime.getTime() - callStartTime.value.getTime()
+            const durationSeconds = Math.ceil(durationMs / 1000)
+
+            try {
+                const repository = CallHistoryRepositoryApi.getInstance()
+                await repository.save({
+                    date: callStartTime.value,
+                    clientName: 'Eduardo',
+                    durationInSeconds: durationSeconds,
+                    receptionistId: props.receptionist.id,
+                    state: 'completed'
+                })
+                logger.info('Call history saved successfully')
+            } catch (error) {
+                logger.error('Failed to save call history:', error)
+            }
+            callStartTime.value = null
+        }
+
         connection = null
         logger.info('Call disconnected')
     })
