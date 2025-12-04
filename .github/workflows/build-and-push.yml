@@ -56,17 +56,29 @@ jobs:
               run: |
                   echo "IMAGE_NAME_LOWER=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
+            - name: Copy deploy script to VM
+              uses: appleboy/scp-action@v0.1.7
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  source: 'scripts/deploy.sh'
+                  target: '~/deploy-scripts'
+
             - name: Deploy to VM via SSH
               uses: appleboy/ssh-action@v1.0.3
               env:
                   PORT: ${{ secrets.PORT }}
                   GITHUB_USERNAME: ${{ github.actor }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  IMAGE_TAG: ${{ env.IMAGE_NAME_LOWER }}
+                  IMAGE_TAG: ghcr.io/${{ env.IMAGE_NAME_LOWER }}:latest
               with:
                   host: ${{ secrets.SSH_HOST }}
                   username: ${{ secrets.SSH_USERNAME }}
                   key: ${{ secrets.SSH_KEY }}
                   port: ${{ secrets.SSH_PORT }}
                   envs: PORT,GITHUB_USERNAME,GITHUB_TOKEN,IMAGE_TAG
-                  script_path: scripts/deploy.sh
+                  script: |
+                      chmod +x ~/deploy-scripts/scripts/deploy.sh
+                      ~/deploy-scripts/scripts/deploy.sh
