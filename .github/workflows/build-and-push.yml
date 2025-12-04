@@ -16,13 +16,6 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Create .env file
-              env:
-                  PORT: ${{ secrets.PORT }}
-                  BACKEND_API_URL: ${{ secrets.BACKEND_API_URL }}
-              run: |
-                  echo "VITE_BACKEND_API_URL=$VITE_BACKEND_API_URL" > asistify-front/.env
-
             - name: Set image name to lowercase
               id: set_image_name
               run: |
@@ -41,6 +34,9 @@ jobs:
                   file: asistify-front/build/Dockerfile
                   push: true
                   tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
+                  build-args: |
+                    VITE_BACKEND_API_URL=${{ secrets.VITE_BACKEND_API_URL }}
+                    VITE_PORT=${{ secrets.PORT }}
 
     deploy:
         needs: build-and-push
