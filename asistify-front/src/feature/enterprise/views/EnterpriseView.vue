@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import ModalCreateEnterprise from '../components/ModalCreateEnterprise.vue'
 import ModalEditEnterprise from '../components/ModalEditEnterprise.vue'
 
-const showCreateModal = ref(false)
+const showCreateModal = ref(true)
 const showEditModal = ref(false)
 
 type FormData = {
