@@ -42,3 +42,31 @@ jobs:
                   file: asistify-front/build/Dockerfile
                   push: true
                   tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
+
+    deploy:
+        needs: build-and-push
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/ci-cd')
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set image name to lowercase
+              run: |
+                  echo "IMAGE_NAME_LOWER=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+            - name: Deploy to VM via SSH
+              uses: appleboy/ssh-action@v1.0.3
+              env:
+                  PORT: ${{ secrets.PORT }}
+                  GITHUB_USERNAME: ${{ github.actor }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  IMAGE_TAG: ${{ env.IMAGE_NAME_LOWER }}
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  key: ${{ secrets.SSH_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  envs: PORT,GITHUB_USERNAME,GITHUB_TOKEN,IMAGE_TAG
+                  script_path: scripts/deploy.sh
