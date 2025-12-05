@@ -20,13 +20,31 @@ const getStatusClass = (status: string) => {
 }
 
 // Helper para formatear la hora (asumiendo que viene fecha completa ISO)
-const formatTime = (dateString: string) => {
-    if (!dateString) return '-'
-    const date = new Date(dateString)
-    return new Intl.DateTimeFormat('es-CL', {
-        hour: '2-digit',
-        minute: '2-digit',
-    }).format(date)
+const formatTime = (secondsString: string) => {
+    // 1. Validaciones básicas
+    if (!secondsString) return '-'
+    const totalSeconds = parseInt(secondsString, 10)
+    if (isNaN(totalSeconds)) return '-'
+
+    // 2. Cálculo matemático
+    const minutes = Math.floor(totalSeconds / 60)
+    const seconds = totalSeconds % 60
+
+    // 3. Helper para agregar el cero a la izquierda (ej: 5 -> 05)
+    const pad = (num: number) => num.toString().padStart(2, '0')
+
+    // 4. Retorno formato 05:30
+    return `${pad(minutes)}:${pad(seconds)}`
+}
+const toSpanishState = (state: string) => {
+    switch (state) {
+        case 'completed':
+            return 'Atendida'
+        case 'missed':
+            return 'No Atendida'
+        default:
+            return state
+    }
 }
 
 // Helper para duración
@@ -93,10 +111,12 @@ const formatDuration = (seconds: number) => {
                         </td>
                         <td class="px-3 py-3 whitespace-nowrap">
                             <span :class="getStatusClass(call.state)">
-                                {{ call.state }}
+                                {{ toSpanishState(call.state) }}
                             </span>
                         </td>
-                        {{ formatDuration(call.durationInSeconds) }}
+                        {{
+                            formatTime(call.durationInSeconds)
+                        }}
                     </tr>
                 </tbody>
             </table>
