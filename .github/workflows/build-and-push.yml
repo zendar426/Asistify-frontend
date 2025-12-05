@@ -33,7 +33,9 @@ jobs:
                   context: asistify-front/
                   file: asistify-front/build/Dockerfile
                   push: true
-                  tags: ghcr.io/${{ env.IMAGE_NAME }}:latest
+                  tags: |
+                    ghcr.io/${{ env.IMAGE_NAME }}:latest
+                    ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
                   build-args: |
                     VITE_BACKEND_API_URL=${{ secrets.VITE_BACKEND_API_URL }}
                     VITE_PORT=${{ secrets.PORT }}
