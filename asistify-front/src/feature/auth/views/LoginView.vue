@@ -19,8 +19,8 @@ import PasswordModal from '../components/PasswordModal.vue'
                 <LoginFormComponent></LoginFormComponent>
 
                 <div id="additionalActions" class="mt-5 mx-auto">
-                    <label>¿Olvidó su contraseña? </label>
-                    <PasswordModal></PasswordModal>
+                    <!-- <label>¿Olvidó su contraseña? </label>
+                    <PasswordModal></PasswordModal> -->
 
                     <div class="mt-2 mb-2"></div>
 
