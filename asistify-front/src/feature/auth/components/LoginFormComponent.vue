@@ -22,8 +22,18 @@ function checkData(): boolean {
 
 async function handlelogin() {
     if (checkData()) {
-        await auth.loginUser({ email: email.value, password: password.value })
-        await router.push('/app/account')
+        try{
+            let loginResponse=await auth.loginUser({ email: email.value, password: password.value })
+            if (loginResponse.status>201){
+                showLoginIncorrect.value=true
+                return
+            }
+            await router.push('/app/account')
+        }
+        catch(e){
+            showLoginIncorrect.value=true
+        }
+        
     }
 }
 </script>

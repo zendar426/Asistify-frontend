@@ -50,8 +50,8 @@ async function toEdit() {
         <p class="text-2xl">{{ auth.userEmail }}</p>
     </div>
 
-    <div>
+    <!-- <div>
         <p class="text-2xl font-bold">Nombre de organización</p>
         <p class="text-2xl">{{ orgName }}</p>
-    </div>
+    </div> -->
 </template>

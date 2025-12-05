@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { api } from '@/api/axios.ts'
+import { useUserStore } from '@/feature/auth/stores/userStore'
 
 export interface RegisterUserDto {
     email: string
@@ -58,7 +59,11 @@ export const useAuthStore = defineStore('auth', {
         },
         async loginUser(userData: LoginUserDto) {
             const response = await api.post('/auth/login', userData, {})
-            console.log(response)
+            console.log("res ",response.status)
+            if (response.status>299){
+                console.log("gt 299")
+                return response;
+            }
             if (response.data.accessToken) {
                 this.setToken(response.data.accessToken)
             }
@@ -72,6 +77,8 @@ export const useAuthStore = defineStore('auth', {
                     phoneNumber: response.data.user.phoneNumber || null,
                     avatar: response.data.user.avatar || null,
                 }
+                let userStore=useUserStore()
+                userStore.setUser(response.data.user)
             }
             console.log('Login response:', response)
             return response

@@ -82,6 +82,10 @@ const cancelDelete = () => {
   receptionistToDelete.value = null
 }
 
+const handleCalendar = () => {
+    router.push({name:"overviewCalendar"})
+}
+
 /**
  * Fetch receptionists on component mount
  */
@@ -100,6 +104,25 @@ onMounted(() => {
           <p class="text-dark/80 mt-2">Gestiona tus recepcionistas virtuales</p>
         </div>
         <div class="flex items-center">
+
+          <BaseButton 
+            icon="fa-solid fa-calendar" 
+            variant="icon" 
+            size="md" 
+            :onClick="handleCalendar"
+            class="md:hidden mr-1"
+          />
+          <BaseButton 
+            v-if="receptionists.length>0"
+            icon="fa-solid fa-calendar" 
+            variant="secondary" 
+            size="md" 
+            :onClick="handleCalendar"
+            class="hidden md:flex mr-2"
+          >
+            Citas
+          </BaseButton>
+
           <!-- Mobile: Icon only -->
           <BaseButton 
             icon="fa-solid fa-plus" 
@@ -117,7 +140,7 @@ onMounted(() => {
             class="hidden md:flex"
           >
             Agregar Recepcionista
-          </BaseButton>
+          </BaseButton>         
         </div>
         
       </div>
