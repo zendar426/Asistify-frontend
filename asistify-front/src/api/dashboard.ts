@@ -1,3 +1,5 @@
+
+
 /**
  * Dashboard Interface
  * @example
@@ -52,7 +54,7 @@ export interface ICalendarMetrics {
 export interface ICallHistory {
     date: string
     clientName: string
-    durationInMinutes: number
+    durationInSeconds: number
     receptionistId: string
     state: string
 }
@@ -61,3 +63,4 @@ export interface IOverview {
     countCalls: number
     countReceptionist: number
 }
+

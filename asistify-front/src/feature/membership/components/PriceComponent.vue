@@ -2,38 +2,10 @@
 import BaseButton from '@/components/BaseButton.vue'
 import { useMembershipStore } from '@/stores/membershipStore.ts'
 import { useRouter } from 'vue-router'
+import type { IMembership } from '@/api/membership.ts'
 
-const props = defineProps({
-    id: {
-        type: String,
-        default: '',
-    },
-    name: {
-        type: String,
-        default: 'Standard plan',
-    },
-    price: {
-        type: Number,
-        default: 49990,
-    },
-    description: {
-        type: String,
-        default:
-            'The standard plan is perfect for small teams or individuals who need to manage their tasks and projects efficiently.',
-    },
-    functionalities: {
-        type: Array as () => string[],
-        default: () => [
-            '2 team members',
-            '20GB Cloud storage',
-            'Integration help',
-            'Sketch Files',
-            'API Access',
-            'Complete documentation',
-            '24×7 phone & email support',
-        ],
-    },
-})
+const props = defineProps<IMembership>()
+
 const membershipStore = useMembershipStore()
 const router = useRouter()
 const handleSelectPlan = () => {

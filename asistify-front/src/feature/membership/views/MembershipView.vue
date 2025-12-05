@@ -1,47 +1,13 @@
 <script setup lang="ts">
 import PriceComponent from '@/feature/membership/components/PriceComponent.vue'
-import { useMemberships } from '@/feature/membership/composables/useMemberships.ts'
 import { onMounted } from 'vue'
 import LandingNavbar from '@/feature/landing/components/LandingNavbar.vue'
+import { useMembershipStore } from '@/stores/membershipStore.ts'
 
-const { memberships, loading, error, fetchMemberships } = useMemberships()
-onMounted(fetchMemberships)
+const membershipsStore = useMembershipStore()
 
-const placeholderMemberShips = [
-    {
-        namePlan: 'Plan Básico',
-        price: 19990,
-        description: 'Para negocios que no quieran perder ni una llamada.',
-        features: [
-            '1 recepcionista virtual',
-            'Hasta 300 llamadas al mes',
-            'Memoria de hasta 50 clientes',
-            'Panel de métricas básico',
-        ],
-    },
-    {
-        namePlan: 'Plan Pro',
-        price: 49990,
-        description: 'La opción ideal para negocios en crecimiento que necesiten mayor capacidad.',
-        features: [
-            '3 recepcionistas virtuales',
-            'Hasta 1000 llamadas al mes',
-            'Memoria de hasta 500 clientes',
-            'Panel de métricas avanzado',
-        ],
-    },
-    {
-        namePlan: 'Plan Empresa',
-        price: 99990,
-        description: 'La solución completa para empresas que buscan escalar sin límites.',
-        features: [
-            'Recepcionistas virtuales ilimitados',
-            'Llamadas ilimitadas al mes',
-            'Memoria ilimitada de clientes',
-            'Panel de métricas completo',
-        ],
-    },
-]
+// Ensure fetchMemberships is called on mount (pass a function, don't invoke immediately)
+onMounted(() => membershipsStore.fetchMemberships())
 </script>
 
 <template>
@@ -59,15 +25,20 @@ const placeholderMemberShips = [
                 por lo que usas y escalas a medida que tu empresa crece.
             </p>
         </div>
-        <div v-if="loading" class="text-center">Cargando...</div>
+        <div
+            v-if="membershipsStore.getMemberships.length === 0"
+            class="text-center mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400"
+        >
+            Cargando...
+        </div>
 
         <div
             class="space-y-8 lg:grid lg:grid-cols-3 sm:gap-6 xl:gap-10 lg:space-y-0 justify-items-center items-start max-w-6xl mx-auto px-4"
             v-else
         >
             <PriceComponent
-                v-for="(plan, index) in memberships"
-                :key="index"
+                v-for="plan in membershipsStore.getMemberships"
+                :key="plan.id"
                 v-bind="plan"
             ></PriceComponent>
         </div>

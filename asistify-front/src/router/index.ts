@@ -60,8 +60,8 @@ const router = createRouter({
                     component: () => import('@/feature/receptionist/views/ReceptionistConfigEditView.vue'),
                 },
                 {
-                    name: 'receptionistDetailt',
-                    path: '/recepcionistas/:id?',
+                    name: 'receptionistDetail',
+                    path: '/recepcionistas/:id',
                     component: () => import('@/feature/receptionist/views/ReceptionistDetailView.vue'),
                 },
                 {
