@@ -16,7 +16,16 @@ let email = ref('')
 let orgName = ref('')
 let userStore = useUserStore()
 let auth = useAuthStore()
-let enterpriseProfile=await api.get(`/enterprise-profiles/profile/${userStore.getUser().id}`)
+let enterpriseProfile:any
+try{
+    enterpriseProfile=await api.get(`/enterprise-profiles/profile/${userStore.getUser().id}`)
+}
+catch(e){
+    console.log(e)
+    enterpriseProfile={
+        data:[]
+    }
+}
 let enterpriseDataRequest
 let enterpriseData
 let isOwner=false
