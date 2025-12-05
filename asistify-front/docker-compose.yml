@@ -1,0 +1,14 @@
+services:
+  asistify-frontend:
+    container_name: asistify-frontend
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    ports:
+      - 33000:8080
+    networks:
+      - asistify-network
+
+networks:
+  asistify-network:
+    external: true
