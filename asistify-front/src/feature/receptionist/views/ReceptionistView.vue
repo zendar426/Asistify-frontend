@@ -115,7 +115,7 @@ onMounted(() => {
           <BaseButton 
             v-if="receptionists.length>0"
             icon="fa-solid fa-calendar" 
-            variant="secondary" 
+            variant="primary" 
             size="md" 
             :onClick="handleCalendar"
             class="hidden md:flex mr-2"

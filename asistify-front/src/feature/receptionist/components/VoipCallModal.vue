@@ -373,7 +373,7 @@ onBeforeUnmount(() => {
                     </div>
 
                     <!-- Call Controls -->
-                    <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="grid grid-cols-2 gap-4 mb-6">
                         <button
                             @click="handleCall"
                             :disabled="!canCall"
@@ -390,7 +390,9 @@ onBeforeUnmount(() => {
                             <font-awesome-icon icon="fa-solid fa-phone-slash" class="mr-2" />
                             Colgar
                         </button>
-                        <button
+
+                        <!-- Push To Talk functionality, currently disabled -->
+                        <!-- <button
                             @mousedown="startTalking"
                             @mouseup="stopTalking"
                             @mouseleave="stopTalking"
@@ -402,7 +404,7 @@ onBeforeUnmount(() => {
                         >
                             <font-awesome-icon icon="fa-solid fa-microphone" class="mr-2" />
                             Push to Talk
-                        </button>
+                        </button> -->
                     </div>
 
                     <!-- Mic Gain Control -->

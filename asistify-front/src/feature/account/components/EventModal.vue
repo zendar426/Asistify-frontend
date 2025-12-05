@@ -188,7 +188,10 @@ const handleDelete=async ()=>{
         shown.value=false
     }
     else{
-        alert("Fallo al realizar accion")
+        if (deleteRes.status!=402){
+            alert("Fallo al realizar accion")
+        }
+        
         console.log(deleteRes.status)
     }
     

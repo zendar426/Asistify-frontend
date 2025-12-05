@@ -20,6 +20,10 @@ export const useUserStore = defineStore('user', {
 
         getUser(){
             return this.user
+        },
+
+        removeUser(){
+            this.user=null as unknown as User
         }
     },
     persist:true,
