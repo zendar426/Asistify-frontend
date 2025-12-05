@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         accessToken: null as string | null,
         userProfile: null as UserProfile | null,
-        refreshToken: null as string | null,
+        refreshTokenValue: null as string | null,
     }),
     actions: {
         setToken(token: string) {
@@ -34,14 +34,14 @@ export const useAuthStore = defineStore('auth', {
         },
         clearToken() {
             this.accessToken = null
-            this.refreshToken = null
+            this.refreshTokenValue = null
             try {
                 localStorage.removeItem('access_token')
                 localStorage.removeItem('refresh_token')
             } catch {}
         },
         setRefreshToken(token: string) {
-            this.refreshToken = token
+            this.refreshTokenValue = token
             try {
                 localStorage.setItem('refresh_token', token)
             } catch {}
@@ -84,8 +84,10 @@ export const useAuthStore = defineStore('auth', {
             return response
         },
         async refreshToken(){
-            const refresh = this.refreshToken || localStorage.getItem('refresh_token')
+            const refresh =  this.refreshTokenValue || localStorage.getItem('refresh_token')
+            console.log(refresh)
             const response = await api.post('/auth/refresh', { refreshToken: refresh }, {})
+            console.log("responseref  ",response)
             if (response.data.accessToken) {
                 this.setToken(response.data.accessToken)
             }

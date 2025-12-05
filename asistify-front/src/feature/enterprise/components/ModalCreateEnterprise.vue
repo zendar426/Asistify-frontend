@@ -3,6 +3,7 @@ import { api } from '@/api/axios'
 import BaseButton from '@/components/BaseButton.vue'
 import { useUserStore } from '@/feature/auth/stores/userStore'
 import router from '@/router'
+import { useAuthStore } from '@/stores/authStore'
 import { useMembershipStore } from '@/stores/membershipStore'
 
 import { reactive, ref } from 'vue'
@@ -56,7 +57,10 @@ async function handleSubmit() {
     //console.log((await api.post("/enterprise-profiles",enterpriseProfileBody)).headers)
     let profileRequest=await api.post("/enterprise-profiles",enterpriseProfileBody)
     console.log(profileRequest)
+    let authStore=useAuthStore()
+    await authStore.refreshToken()
     showModal.value=false
+
     window.location.reload()
 }
 
