@@ -4,10 +4,11 @@ import { ref } from 'vue'
 import router from '@/router'
 import BaseButton from '@/components/BaseButton.vue'
 import { useAuthStore } from '@/stores/authStore.ts'
-import api from '@/utils/axios'
+
 import { useUserStore } from '@/feature/auth/stores/userStore'
 import ModalCreateEnterprise from '@/feature/enterprise/components/ModalCreateEnterprise.vue'
 import ModalEditEnterprise from '@/feature/enterprise/components/ModalEditEnterprise.vue'
+import { api } from '@/api/axios'
 
 let userName = ref('')
 let userSurname = ref('')

@@ -61,6 +61,7 @@ export const useAuthStore = defineStore('auth', {
             const response = await api.post('/auth/login', userData, {})
             console.log("res ",response.status)
             if (response.status>299){
+                console.log("gt 299")
                 return response;
             }
             if (response.data.accessToken) {

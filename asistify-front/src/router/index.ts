@@ -83,6 +83,11 @@ const router = createRouter({
                     name: 'enterprise',
                     path: 'empresa',
                     component: () => import('@/feature/enterprise/views/EnterpriseView.vue')
+                },
+                {
+                    name:"overviewCalendar",
+                    path:"overviewcalendar",
+                    component:()=>import('@/feature/account/components/CalendarThingy.vue')
                 }
             ],
         },
