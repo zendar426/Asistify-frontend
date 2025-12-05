@@ -109,7 +109,7 @@ const handleSubmit = async () => {
     let enterpriseId=enterpriseProfile.data[0].enterpriseId
     console.log("tosend ",formData)
     let response=await api.patch(`/enterprises/${enterpriseId}`,formData)
-    if (response??{status:400}.status>299){
+    if (response.status>299){
         //coso
     }
     else{
