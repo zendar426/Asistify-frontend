@@ -1,5 +1,3 @@
-
-
 /**
  * Dashboard Interface
  * @example
@@ -19,21 +17,21 @@
  *     {
  *       "date": "2025-12-01T15:51:21.647Z",
  *       "clientName": "Client A",
- *       "durationInMinutes": 3,
+ *       "durationInSeconds": 3,
  *       "receptionistId": "receptionist1",
  *       "state": "completed"
  *     },
  *     {
  *       "date": "2025-12-01T15:51:21.647Z",
  *       "clientName": "Client B",
- *       "durationInMinutes": 0,
+ *       "durationInSeconds": 0,
  *       "receptionistId": "receptionist2",
  *       "state": "missed"
  *     },
  *     {
  *       "date": "2025-12-01T15:51:21.647Z",
  *       "clientName": "Client C",
- *       "durationInMinutes": 5,
+ *       "durationInSeconds": 5,
  *       "receptionistId": "receptionist3",
  *       "state": "completed"
  *     }
@@ -63,4 +61,3 @@ export interface IOverview {
     countCalls: number
     countReceptionist: number
 }
-

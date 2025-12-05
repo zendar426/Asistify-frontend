@@ -1,6 +1,6 @@
-import {defineStore} from 'pinia'
-import type {ICallHistory, IDashboard} from '@/api/dashboard.ts'
-import {api} from '@/api/axios.ts'
+import { defineStore } from 'pinia'
+import type { ICallHistory, IDashboard } from '@/api/dashboard.ts'
+import { api } from '@/api/axios.ts'
 
 export const useDashboardStore = defineStore('dashboard', {
     state: (): { dashboardData: IDashboard; isLoading: boolean } => ({
@@ -72,49 +72,49 @@ function mockDashboardData(): IDashboard {
             {
                 date: '2025-12-01T15:51:21.647Z',
                 clientName: 'Client A',
-                durationInMinutes: 3,
+                durationInSeconds: 300,
                 receptionistId: 'receptionist1',
                 state: 'completed',
             },
             {
                 date: '2025-12-01T15:51:21.647Z',
                 clientName: 'Client B',
-                durationInMinutes: 0,
+                durationInSeconds: 30,
                 receptionistId: 'receptionist2',
                 state: 'missed',
             },
             {
                 date: '2025-12-01T15:51:21.647Z',
                 clientName: 'Client C',
-                durationInMinutes: 5,
+                durationInSeconds: 286,
                 receptionistId: 'receptionist3',
                 state: 'completed',
             },
             {
                 date: '2025-12-02T15:51:21.647Z',
                 clientName: 'Client A',
-                durationInMinutes: 4,
+                durationInSeconds: 182,
                 receptionistId: 'receptionist3',
                 state: 'completed',
             },
             {
                 date: '2025-12-03T15:51:31.647Z',
                 clientName: 'Client A',
-                durationInMinutes: 4,
+                durationInSeconds: 182,
                 receptionistId: 'receptionist3',
                 state: 'completed',
             },
             {
                 date: '2025-12-02T13:51:27.647Z',
                 clientName: 'Client A',
-                durationInMinutes: 4,
+                durationInSeconds: 182,
                 receptionistId: 'receptionist3',
                 state: 'completed',
             },
             {
                 date: '2025-12-02T13:51:27.647Z',
                 clientName: 'Client B',
-                durationInMinutes: 4,
+                durationInSeconds: 182,
                 receptionistId: 'receptionist2',
                 state: 'completed',
             },
