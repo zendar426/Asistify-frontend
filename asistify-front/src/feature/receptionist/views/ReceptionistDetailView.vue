@@ -167,9 +167,9 @@ const props = withDefaults(defineProps<Props>(), {
     callsComparison: '+2 que el día pasado.',
     avgResponseTime: '0.5s',
     responseComparison: '0.1s más rápido que el promedio semanal',
-    contactCount: '179.57.233.152' || '',
+    contactCount: '179.57.233.152' ,
     contacts: () => [
-        {
+        {   
             name: 'Sergio Sepulveda',
             reception: 'satisfecho',
             number: '9645567698'
