@@ -53,6 +53,11 @@ api.interceptors.response.use(
         const status = error.response?.status
         const originalRequest = error.config || {}
 
+        if (status==402){
+            alert("Se requiere el pago de su suscripción (⁠◠⁠‿⁠・⁠)⁠—⁠☆")
+            return error
+        }
+
         // Si el token expiró (401), intentamos refrescar y reintentar la petición
         if (status === 401 && !originalRequest._retry ) {
             originalRequest._retry = true

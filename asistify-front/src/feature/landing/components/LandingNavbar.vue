@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/authStore'
 import BaseButton from '../../../components/BaseButton.vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/feature/auth/stores/userStore'
 
 const router = useRouter()
-
+const authStore=useAuthStore()
+let loggedIn=authStore.accessToken!=null
+let userStore=useUserStore()
 interface NavLink {
   label: string
   to: string
@@ -50,8 +54,12 @@ const navLinks: NavLink[] = [
 
         <!-- Action Buttons -->
         <div class="flex items-center space-x-3">
-          <BaseButton variant="text" size="sm" :onClick="() => router.push({name: 'login'})"> Iniciar sesión </BaseButton>
-          <BaseButton variant="background" size="sm" :onClick="() => router.push({name: 'register'})"> Regístrate </BaseButton>
+          <div v-if="loggedIn" class="justify-end font-bold">
+            <label for="username" class="pr-5"> {{ userStore.getUser().name }}</label>
+            <BaseButton variant="secondary" size="sm" :onClick="() => router.push({name: 'account'})"> Dashboard </BaseButton>  
+          </div>
+          <BaseButton v-if="!loggedIn" variant="text" size="sm" :onClick="() => router.push({name: 'login'})"> Iniciar sesión </BaseButton>
+          <BaseButton v-if="!loggedIn" variant="background" size="sm" :onClick="() => router.push({name: 'register'})"> Regístrate </BaseButton>
         </div>
       </div>
     </div>
